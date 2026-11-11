@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.vitest/
+test-results/
+playwright-report/
+.cache/
+artifacts/*.png
+artifacts/*.webm
+*.log
+.DS_Store

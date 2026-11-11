@@ -1,0 +1,66 @@
+{
+  "version": "demo-1",
+  "chapter": "Capitolo I · Il cortile delle fontane",
+  "room": "La Corte delle Meridiane",
+  "intro": "Le meridiane della corte si sono fermate e le fontane non seguono più il ritmo del sole. Ripristina i tre meccanismi calcolando le derivate che ne governano il movimento.",
+  "outro": "L'ultimo getto riprende a salire e le ombre tornano a scorrere sulle meridiane. Con un sommesso scatto, la porta della corte si apre verso il prossimo corridoio.",
+  "puzzles": [
+    {
+      "id": "c1-sigillo",
+      "order": 1,
+      "title": "Il sigillo solare",
+      "short_title": "Primo sigillo",
+      "mechanism": "seal",
+      "prompt": "La lastra solare reca un'incisione algebrica. Calcola la derivata rispetto a x della funzione mostrata per riallineare il sigillo.",
+      "function_sympy": "3*x^2 - 5*x + 4",
+      "function_latex": "3x^{2}-5x+4",
+      "derivative_sympy": "6*x-5",
+      "hints": [
+        "Considera separatamente i tre termini: la derivata di una somma si calcola termine a termine.",
+        "Per ogni potenza di x, porta l'esponente davanti al coefficiente e riducilo di uno; il termine costante non contribuisce.",
+        "Nel termine lineare resta soltanto il coefficiente di x: controlla segni e coefficienti prima di comporre il risultato."
+      ],
+      "target_seconds": 90,
+      "difficulty": 1,
+      "feedback_profile": "power_rule"
+    },
+    {
+      "id": "c1-ingranaggi",
+      "order": 2,
+      "title": "Gli ingranaggi gemelli",
+      "short_title": "Ingranaggi gemelli",
+      "mechanism": "gears",
+      "prompt": "I due ingranaggi trasmettono il moto come due fattori moltiplicati. Deriva la funzione rispetto a x senza spezzare il legame tra i fattori.",
+      "function_sympy": "(3*x^2 - 2)*(x + 1)",
+      "function_latex": "(3x^{2}-2)(x+1)",
+      "derivative_sympy": "9*x^2+6*x-2",
+      "hints": [
+        "Riconosci due funzioni moltiplicate: il primo fattore contiene una potenza, il secondo è un binomio.",
+        "Applica la regola del prodotto: deriva un fattore alla volta, lasciando invariato l'altro, poi somma i due contributi.",
+        "Dopo aver derivato i fattori, puoi espandere e raccogliere i termini simili per controllare che i due contributi siano stati inclusi."
+      ],
+      "target_seconds": 180,
+      "difficulty": 2,
+      "feedback_profile": "product_rule"
+    },
+    {
+      "id": "c1-fontana",
+      "order": 3,
+      "title": "La fontana del tempo",
+      "short_title": "Fontana del tempo",
+      "mechanism": "fountain",
+      "prompt": "Il getto della fontana segue potenze frazionarie e radicali. Trova la derivata rispetto a x per sincronizzare nuovamente il flusso.",
+      "function_sympy": "3*sqrt(x) + 2*x^(3/2)",
+      "function_latex": "3\\sqrt{x}+2x^{\\frac{3}{2}}",
+      "derivative_sympy": "3/(2*sqrt(x))+3*sqrt(x)",
+      "hints": [
+        "Riscrivi la radice quadrata come potenza con esponente 1/2, così ogni addendo ha la stessa struttura.",
+        "Usa la regola delle potenze anche con esponenti frazionari: moltiplica per l'esponente e sottrai 1.",
+        "Nei termini ottenuti compaiono denominatori con radice; riordina i coefficienti senza cambiare il dominio x > 0."
+      ],
+      "target_seconds": 240,
+      "difficulty": 3,
+      "feedback_profile": "radical_rule"
+    }
+  ]
+}
