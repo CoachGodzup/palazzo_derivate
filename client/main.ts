@@ -48,14 +48,19 @@ const mathDialog = new MathDialog({
 
     if (result.status === "correct") {
       courtyard.syncProgress(store.snapshot, puzzleId);
-      showToast(result.message, "✓");
+      const puzzle = content.puzzles.find((item) => item.id === puzzleId);
+      showToast(
+        `Ben fatto! ${puzzle ? `«${puzzle.short_title}» è tornato in vita.` : "Il meccanismo si riattiva."}`,
+        "✓",
+        "success",
+      );
       window.setTimeout(() => {
         if (activePuzzleId === puzzleId) mathDialog.close();
         updateCaption();
         if (store.snapshot.completed) {
-          completionTimer = window.setTimeout(() => showCompletion(), 1700);
+          completionTimer = window.setTimeout(() => showCompletion(), 2800);
         }
-      }, 1000);
+      }, 1900);
       if (score !== null) element("hud-score").textContent = String(store.stats.totalScore);
     }
     return result;
@@ -213,15 +218,19 @@ function resetDemo(): void {
   showToast("La corte è tornata al suo silenzio iniziale.", "↻");
 }
 
-function showToast(message: string, icon = "✦"): void {
+function showToast(message: string, icon = "✦", variant?: "success"): void {
   window.clearTimeout(toastTimer);
   element("toast-icon").textContent = icon;
   element("toast-message").textContent = message;
   const toast = element("toast");
+  toast.className = variant ? `toast is-${variant}` : "toast";
   toast.hidden = false;
-  toastTimer = window.setTimeout(() => {
-    toast.hidden = true;
-  }, 4200);
+  toastTimer = window.setTimeout(
+    () => {
+      toast.hidden = true;
+    },
+    variant === "success" ? 5200 : 4200,
+  );
 }
 
 function formatTime(totalSeconds: number): string {

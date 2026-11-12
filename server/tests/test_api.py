@@ -95,6 +95,16 @@ def test_radical_equivalences(client, answer):
     assert result["status"] == "correct"
 
 
+@pytest.mark.parametrize(
+    "answer",
+    ["6*x-5^", "6*x-5^{}", "6*x-5^(())", "6*x-5^  "],
+)
+def test_empty_exponent_is_ignored(client, answer):
+    result = verify(client, "c1-sigillo", answer)
+    assert result["status"] == "correct"
+    assert result["feedback_category"] is None
+
+
 def test_incorrect_answer_has_generic_feedback(client):
     result = verify(client, "c1-sigillo", "6*x+5")
     assert result == {

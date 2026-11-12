@@ -10,13 +10,15 @@ Principio guida: **il feedback positivo deve essere più ricco di quello negativ
 
 ### 1. Risposta corretta — momento di soddisfazione
 
-La modale non si chiude immediatamente. Per circa **800–1200 ms** il dialogo mostra un breve stato di successo.
+La modale non si chiude immediatamente. Per circa **1800–2000 ms** il dialogo mostra un breve stato di successo, più ampio e leggibile di quello di errore.
 
 Contenuto del feedback:
 
-- messaggio contestuale: «Esatto!» / «La derivata è corretta.» / «Il meccanismo si sta riattivando...»;
+- messaggio contestuale: «Ben fatto!» / «Esatto, la derivata è corretta.» / «Il meccanismo si sta riattivando...»;
 - input che diventa brevemente verde;
-- piccolo effetto di particelle o scintille;
+- effetto di particelle più ricco, con scintille di colori alternati;
+- pulse del riquadro di feedback e dell'icona di conferma;
+- toast di successo dedicato con testo «Ben fatto!» e maggiore durata (circa 5 s);
 - suono breve e gradevole, se l'audio è disponibile e non disattivato;
 - chiusura automatica della modale al termine dell'animazione.
 
@@ -64,6 +66,7 @@ Regola invariante: il feedback specifico è ammesso **solo** per errori riconosc
 
 - Stati server già distinti: `correct`, `incorrect`, `syntax_error`, `unsupported_expression`. Il feedback v0.2 mappa l'animazione e i messaggi su questi stati, senza alterare il contratto API.
 - Il messaggio di successo e l'animazione partono solo dopo la conferma del server: nessuna risposta preconfezionata lato client.
+- Un esponente lasciato vuoto (`x^`, `x^{}`, `x^(())` prodotto dal segnaposto di MathLive) viene trattato in correzione come assenza di esponente, non come errore di sintassi.
 - Focus e annunci accessibili: il messaggio di esito va annunciato (regione live) e il focus torna all'input dopo un errore. Il dialogo mantiene il focus nativo.
 - Rispetto di `prefers-reduced-motion`: shake, particelle e pulse del pulsante sono sostituiti da cambi di stato statici e dal solo testo.
 - Suono opzionale, breve, disattivabile e non necessario per capire l'esito.

@@ -1,6 +1,7 @@
 import "mathlive";
 import type { MathfieldElement } from "mathlive";
 import type { Puzzle, PuzzleProgress, VerifyResponse } from "../types";
+import { virtualKeyboardLayouts } from "./keyboard";
 
 interface MathDialogCallbacks {
   onSubmit: (answer: string) => Promise<VerifyResponse>;
@@ -17,7 +18,8 @@ const statusIcons: Record<string, string> = {
 };
 
 const SHAKE_DURATION = 380;
-const SPARK_COUNT = 8;
+const SPARK_COUNT = 14;
+const SPARK_DURATION = 1000;
 
 export class MathDialog {
   private readonly dialog = this.element<HTMLDialogElement>("puzzle-dialog");
@@ -38,6 +40,7 @@ export class MathDialog {
     this.answer.mathVirtualKeyboardPolicy = "auto";
     const virtualKeyboard = window.mathVirtualKeyboard;
     virtualKeyboard.container = this.dialog;
+    virtualKeyboard.layouts = [...virtualKeyboardLayouts];
     const syncKeyboardSpace = (): void => {
       const open = virtualKeyboard.visible;
       this.dialog.style.paddingBottom = open ? `${virtualKeyboard.boundingRect.height}px` : "";
@@ -185,7 +188,7 @@ export class MathDialog {
   }
 
   private showSuccess(serverMessage: string): void {
-    this.feedback.className = "feedback correct";
+    this.feedback.className = "feedback correct is-celebrating";
     this.feedback.replaceChildren();
     const icon = document.createElement("span");
     icon.className = "feedback-icon";
@@ -194,9 +197,10 @@ export class MathDialog {
     const copy = document.createElement("span");
     copy.className = "feedback-copy";
     const title = document.createElement("strong");
-    title.textContent = "Esatto!";
+    title.className = "feedback-title";
+    title.textContent = "Ben fatto!";
     const line = document.createElement("span");
-    line.textContent = " La derivata è corretta.";
+    line.textContent = "Esatto, la derivata è corretta.";
     const detail = document.createElement("span");
     detail.className = "feedback-detail";
     detail.textContent = "Il meccanismo si sta riattivando…";
@@ -254,15 +258,17 @@ export class MathDialog {
       spark.className = "success-spark";
       spark.setAttribute("aria-hidden", "true");
       const angle = (Math.PI * 2 * index) / SPARK_COUNT;
-      const distance = 26 + Math.random() * 18;
+      const distance = 26 + Math.random() * 26;
       spark.style.setProperty("--spark-x", `${Math.cos(angle) * distance}px`);
       spark.style.setProperty("--spark-y", `${Math.sin(angle) * distance}px`);
-      spark.style.animationDelay = `${Math.random() * 60}ms`;
+      spark.style.setProperty("--spark-delay", `${Math.random() * 80}ms`);
+      spark.style.setProperty("--spark-size", `${4 + Math.round(Math.random() * 4)}px`);
+      spark.style.animationDelay = `${Math.random() * 80}ms`;
       this.answerRow.append(spark);
     }
     this.sparkTimer = window.setTimeout(() => {
       this.answerRow.querySelectorAll(".success-spark").forEach((spark) => spark.remove());
-    }, 900);
+    }, SPARK_DURATION + 120);
   }
 
   private resetAnswerState(): void {

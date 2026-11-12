@@ -23,7 +23,7 @@ async function answer(page: Page, latex: string): Promise<void> {
 async function solve(page: Page, title: RegExp, latex: string): Promise<void> {
   await openPuzzle(page, title);
   await answer(page, latex);
-  await expect(page.locator("#verification-feedback")).toContainText("Esatto");
+  await expect(page.locator("#verification-feedback")).toContainText("Ben fatto");
   await expect(page.locator("#answer-row")).toHaveClass(/is-correct/);
   await expect(page.locator("#puzzle-dialog")).not.toBeVisible({ timeout: 5_000 });
 }
@@ -59,6 +59,25 @@ test.describe("vertical slice demo-1", () => {
     await page.getByRole("button", { name: /Rivela il primo indizio/ }).click();
     await expect(page.locator("#hint-count")).toHaveText("1 / 3");
     await expect(page.locator("#hint-list")).toContainText("tre termini");
+  });
+
+  test("la tastiera derivate prepara la potenza di x", async ({ page }) => {
+    await enterCourtyard(page);
+    await openPuzzle(page, /Primo sigillo/);
+
+    await page.getByRole("button", { name: /Tastiera matematica/ }).click();
+    const keyboard = page.locator(".ML__keyboard");
+    await expect(keyboard).toBeVisible();
+    const tabs = keyboard.getByRole("toolbar").first();
+    await expect(tabs.getByText("Derivate", { exact: true })).toBeVisible();
+    await expect(tabs.getByText("123", { exact: true })).toBeVisible();
+
+    await keyboard.locator('.MLK__keycap[data-keycap-value="x^{#?}"]').click();
+    await page.keyboard.press("2");
+    const answer = await page.locator("#answer-field").evaluate((field) => {
+      return (field as HTMLElement & { getValue(format: string): string }).getValue("ascii-math");
+    });
+    expect(answer).toBe("x^2");
   });
 
   test("completa la corte accettando forme equivalenti e apre la porta @smoke", async ({

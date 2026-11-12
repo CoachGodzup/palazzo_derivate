@@ -21,6 +21,9 @@ MAX_EXPONENT_DENOMINATOR = 20
 MAX_ABS_NUMBER = 10**12
 
 _ALLOWED_CHARACTERS = re.compile(r"[A-Za-z0-9+\-*/^(). \t]+\Z")
+# Un esponente lasciato vuoto (x^, x^{}, x^(()) dal segnaposto di MathLive)
+# equivale all'assenza dell'esponente, non a un errore di sintassi.
+_EMPTY_EXPONENT = re.compile(r"\^(?:\s*(?:\{[^{}]*\}|\(\s*[()\s]*\))\s*|\s*(?=\Z))")
 _ALLOWED_NAMES = {"x", "sqrt", "exp", "ln", "sin", "cos"}
 _NAME = re.compile(r"[A-Za-z]+")
 _NUMBER = re.compile(r"(?:\d+(?:\.\d*)?|\.\d+)")
@@ -53,6 +56,10 @@ class ExpressionError(ValueError):
 
 def _unsupported(message: str) -> ExpressionError:
     return ExpressionError("unsupported_expression", message)
+
+
+def _normalize_source(source: str) -> str:
+    return _EMPTY_EXPONENT.sub("", source)
 
 
 def _check_source(source: str) -> None:
@@ -135,6 +142,7 @@ def _check_expression(expression: object) -> sp.Expr:
 
 def parse_expression(source: str) -> sp.Expr:
     """Interpreta AsciiMath semplice senza importare un namespace globale."""
+    source = _normalize_source(source)
     _check_source(source)
     try:
         expression = parse_expr(
