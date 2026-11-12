@@ -16,9 +16,13 @@ const statusIcons: Record<string, string> = {
   error: "!",
 };
 
+const SHAKE_DURATION = 380;
+const SPARK_COUNT = 8;
+
 export class MathDialog {
   private readonly dialog = this.element<HTMLDialogElement>("puzzle-dialog");
   private readonly answer = this.element<MathfieldElement>("answer-field");
+  private readonly answerRow = this.element<HTMLDivElement>("answer-row");
   private readonly functionField = this.element<MathfieldElement>("function-field");
   private readonly form = this.element<HTMLFormElement>("answer-form");
   private readonly submit = this.element<HTMLButtonElement>("submit-answer");
@@ -26,6 +30,8 @@ export class MathDialog {
   private readonly hintList = this.element<HTMLOListElement>("hint-list");
   private puzzle?: Puzzle;
   private submitting = false;
+  private shakeTimer = 0;
+  private sparkTimer = 0;
 
   constructor(private readonly callbacks: MathDialogCallbacks) {
     this.functionField.readOnly = true;
@@ -89,14 +95,9 @@ export class MathDialog {
     this.answer.setValue("");
     this.answer.disabled = false;
     this.submit.disabled = false;
-    this.submit.replaceChildren();
-    const text = document.createElement("span");
-    text.textContent = "Verifica e attiva";
-    const rune = document.createElement("span");
-    rune.setAttribute("aria-hidden", "true");
-    rune.textContent = "✦";
-    this.submit.append(text, rune);
+    this.changeSubmitLabel("Verifica e attiva", "✦");
     this.feedback.hidden = true;
+    this.resetAnswerState();
     this.renderHints();
     if (!this.dialog.open) this.dialog.showModal();
     if (this.callbacks.getProgress().solved) {
@@ -143,9 +144,11 @@ export class MathDialog {
     const answer = this.answer.getValue("ascii-math").trim();
     if (!answer || answer === "?") {
       this.showRawFeedback("syntax_error", "Inserisci prima la derivata nel campo matematico.");
+      this.playError();
       this.answer.focus();
       return;
     }
+    this.resetAnswerState();
     this.submitting = true;
     this.submit.disabled = true;
     this.answer.disabled = true;
@@ -173,13 +176,100 @@ export class MathDialog {
   }
 
   private showFeedback(result: VerifyResponse): void {
+    if (result.status === "correct") {
+      this.showSuccess(result.message);
+      return;
+    }
     this.showRawFeedback(result.status, result.message);
+    this.playError();
+  }
+
+  private showSuccess(serverMessage: string): void {
+    this.feedback.className = "feedback correct";
+    this.feedback.replaceChildren();
+    const icon = document.createElement("span");
+    icon.className = "feedback-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "✓";
+    const copy = document.createElement("span");
+    copy.className = "feedback-copy";
+    const title = document.createElement("strong");
+    title.textContent = "Esatto!";
+    const line = document.createElement("span");
+    line.textContent = " La derivata è corretta.";
+    const detail = document.createElement("span");
+    detail.className = "feedback-detail";
+    detail.textContent = "Il meccanismo si sta riattivando…";
+    detail.title = serverMessage;
+    copy.append(title, line, detail);
+    this.feedback.append(icon, copy);
+    this.feedback.hidden = false;
+    this.answerRow.classList.add("is-correct");
+    this.changeSubmitLabel("Completato", "✓");
+    this.spawnSparks();
   }
 
   private showRawFeedback(status: string, message: string): void {
     this.feedback.className = `feedback ${status}`;
-    this.feedback.textContent = `${statusIcons[status] ?? "•"} ${message}`;
+    this.feedback.replaceChildren();
+    const icon = document.createElement("span");
+    icon.className = "feedback-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = statusIcons[status] ?? "•";
+    const copy = document.createElement("span");
+    copy.className = "feedback-copy";
+    copy.textContent = message;
+    this.feedback.append(icon, copy);
     this.feedback.hidden = false;
+  }
+
+  private playError(): void {
+    this.answerRow.classList.remove("is-correct");
+    this.answerRow.classList.add("is-error");
+    this.answerRow.classList.remove("is-shaking");
+    void this.answerRow.offsetWidth;
+    this.answerRow.classList.add("is-shaking");
+    window.clearTimeout(this.shakeTimer);
+    this.shakeTimer = window.setTimeout(() => {
+      this.answerRow.classList.remove("is-shaking");
+    }, SHAKE_DURATION);
+  }
+
+  private changeSubmitLabel(label: string, rune: string): void {
+    this.submit.replaceChildren();
+    const text = document.createElement("span");
+    text.textContent = label;
+    const icon = document.createElement("span");
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = rune;
+    this.submit.append(text, icon);
+  }
+
+  private spawnSparks(): void {
+    window.clearTimeout(this.sparkTimer);
+    this.answerRow.querySelectorAll(".success-spark").forEach((spark) => spark.remove());
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    for (let index = 0; index < SPARK_COUNT; index += 1) {
+      const spark = document.createElement("span");
+      spark.className = "success-spark";
+      spark.setAttribute("aria-hidden", "true");
+      const angle = (Math.PI * 2 * index) / SPARK_COUNT;
+      const distance = 26 + Math.random() * 18;
+      spark.style.setProperty("--spark-x", `${Math.cos(angle) * distance}px`);
+      spark.style.setProperty("--spark-y", `${Math.sin(angle) * distance}px`);
+      spark.style.animationDelay = `${Math.random() * 60}ms`;
+      this.answerRow.append(spark);
+    }
+    this.sparkTimer = window.setTimeout(() => {
+      this.answerRow.querySelectorAll(".success-spark").forEach((spark) => spark.remove());
+    }, 900);
+  }
+
+  private resetAnswerState(): void {
+    window.clearTimeout(this.shakeTimer);
+    window.clearTimeout(this.sparkTimer);
+    this.answerRow.classList.remove("is-correct", "is-error", "is-shaking");
+    this.answerRow.querySelectorAll(".success-spark").forEach((spark) => spark.remove());
   }
 
   private element<T extends HTMLElement = HTMLElement>(id: string): T {

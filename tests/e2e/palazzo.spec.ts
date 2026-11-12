@@ -23,7 +23,8 @@ async function answer(page: Page, latex: string): Promise<void> {
 async function solve(page: Page, title: RegExp, latex: string): Promise<void> {
   await openPuzzle(page, title);
   await answer(page, latex);
-  await expect(page.locator("#verification-feedback")).toContainText("Corretto");
+  await expect(page.locator("#verification-feedback")).toContainText("Esatto");
+  await expect(page.locator("#answer-row")).toHaveClass(/is-correct/);
   await expect(page.locator("#puzzle-dialog")).not.toBeVisible({ timeout: 5_000 });
 }
 
@@ -40,13 +41,16 @@ test.describe("vertical slice demo-1", () => {
     await expect(page.locator("#mechanism-list").getByRole("button").first()).toBeFocused();
   });
 
-  test("errore, sintassi e indizio restano nel pannello senza bloccare", async ({ page }) => {
+  test("errore, sintassi e indizio restano nel pannello senza bloccare @smoke", async ({
+    page,
+  }) => {
     await enterCourtyard(page);
     await openPuzzle(page, /Primo sigillo/);
 
     await answer(page, "x");
     const feedback = page.locator("#verification-feedback");
     await expect(feedback).toContainText("non è equivalente");
+    await expect(page.locator("#answer-row")).toHaveClass(/is-error/);
     await expect(page.locator("#puzzle-dialog")).toBeVisible();
 
     await answer(page, "6x+");
@@ -57,7 +61,9 @@ test.describe("vertical slice demo-1", () => {
     await expect(page.locator("#hint-list")).toContainText("tre termini");
   });
 
-  test("completa la corte accettando forme equivalenti e apre la porta", async ({ page }) => {
+  test("completa la corte accettando forme equivalenti e apre la porta @smoke", async ({
+    page,
+  }) => {
     await enterCourtyard(page);
 
     await solve(page, /Primo sigillo/, "6x-5");

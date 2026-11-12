@@ -40,7 +40,7 @@ npm run test:unit
 npm run build
 ```
 
-Per modifiche al gameplay valuta anche `npm run test:e2e` e la verifica manuale descritta nella skill `palazzo-demo`.
+Per modifiche al gameplay esegui `npm run test:local` (API + unit + E2E smoke desktop). La suite E2E completa gira in CI; usa `npm run test:e2e` solo per parità locale. Vedi anche la verifica manuale descritta nella skill `palazzo-demo`.
 
 ## Formato della risposta
 

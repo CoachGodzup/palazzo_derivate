@@ -41,7 +41,7 @@ A diagnostic hint is appropriate only if independently verified; otherwise show 
 
 Start with `npm run dev`, then use Playwright at desktop 1440×900 and portrait 390×844. Exercise the real backend and MathLive, not API mocks. Test keyboard operation, hints, reload persistence, final door and reset. Capture `artifacts/demo-desktop.png`, `artifacts/demo-mobile.png` and `artifacts/demo-complete.png` when completing a review build.
 
-Run `npm run build`, `npm run test:api`, `npm run test:unit`, and `npm run test:e2e` before reporting completion. If browser binaries are missing, install Chromium with `PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium`; keep dependencies inside the project.
+Run `npm run build` and `npm run test:local` before reporting completion locally: API and unit suites run in full, while E2E executes only the desktop `@smoke` subset. The full E2E matrix runs in GitHub Actions (`.github/workflows/ci.yml`); use `npm run test:e2e` locally only when CI parity is needed. If browser binaries are missing, install Chromium with `PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium`; keep dependencies inside the project.
 
 ## Finish
 

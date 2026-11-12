@@ -26,7 +26,8 @@ Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qu
 - `server/app/`: API FastAPI, validazione dei contenuti e motore simbolico.
 - `server/tests/`: test API e matematici.
 - `tests/`: test unitari TypeScript ed end-to-end Playwright.
-- `docs/`: scope e guida di revisione.
+- `docs/`: scope e guida di revisione; `docs/design/` raccoglie le decisioni di design (`gameplay.md` per il feedback, `testing.md` per la strategia locale/CI).
+- `.github/workflows/ci.yml`: suite completa (lint, build, API, unit, E2E desktop + portrait) su push e pull request; `deploy-pages.yml` resta dedicato al deploy.
 - `.opencode/skills/`: workflow specialistici OpenCode.
 - `.opencode/agent/`: subagenti specialistici:
   - `code-review.md`: code review (sola lettura, esegue lint e test);
@@ -59,8 +60,11 @@ npm run format:check
 npm run test:api
 npm run test:unit
 PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium
-npm run test:e2e
+npm run test:local      # API + unit + E2E smoke desktop
+npm run test:e2e        # suite E2E completa, desktop + portrait
 ```
+
+In locale si usa `npm run test:local` (API e unit completi, E2E smoke desktop); la suite E2E completa gira in CI su ogni push e pull request. Dettagli in `docs/design/testing.md`.
 
 I test E2E avviano automaticamente i servizi se non sono già attivi. Non usare risposte preconfezionate nel client per farli passare: devono verificare il backend SymPy reale.
 
@@ -83,6 +87,10 @@ I test E2E avviano automaticamente i servizi se non sono già attivi. Non usare 
 - Target touch di almeno 44 px, focus visibile, messaggi testuali oltre al colore, dialoghi con focus nativo e supporto `prefers-reduced-motion`.
 - Layout desktop e smartphone verticale sono entrambi criteri di accettazione.
 - Scene e illustrazioni demo sono procedurali; non introdurre asset esterni senza verificarne licenza e resa responsive.
+
+## Documentazione del design
+
+Ogni modifica di design va registrata nel design document dell'area interessata, in `docs/design/` (`frontend.md`, `gameplay.md`, `backend.md`, ...). Se il documento non esiste, crealo e aggiungilo alla sezione `docs/` di questo file. Non lasciare decisioni di design solo nel codice o nei messaggi di commit.
 
 ## Stile delle modifiche
 

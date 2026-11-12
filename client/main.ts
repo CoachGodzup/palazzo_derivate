@@ -55,7 +55,7 @@ const mathDialog = new MathDialog({
         if (store.snapshot.completed) {
           completionTimer = window.setTimeout(() => showCompletion(), 1700);
         }
-      }, 800);
+      }, 1000);
       if (score !== null) element("hud-score").textContent = String(store.stats.totalScore);
     }
     return result;

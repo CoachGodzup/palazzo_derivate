@@ -851,6 +851,7 @@ math-field {
   text-transform: uppercase;
 }
 .answer-row {
+  position: relative;
   min-height: 72px;
   display: flex;
   align-items: center;
@@ -858,10 +859,67 @@ math-field {
   padding: 10px 15px;
   border: 1px solid #5f716e;
   background: #071a22;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 .answer-row:focus-within {
   border-color: var(--teal);
   box-shadow: 0 0 0 2px #66d8c520;
+}
+.answer-row.is-correct {
+  border-color: #59c9a1;
+  box-shadow: 0 0 0 2px #59c9a140;
+}
+.answer-row.is-correct #answer-field {
+  color: #acebd5;
+}
+.answer-row.is-error {
+  border-color: #d28868;
+  box-shadow: 0 0 0 2px #d2886830;
+}
+.answer-row.is-shaking {
+  animation: answer-shake 380ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+@keyframes answer-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+.success-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d9f7c7;
+  box-shadow: 0 0 8px #8fe6bd;
+  pointer-events: none;
+  animation: success-spark 720ms ease-out forwards;
+}
+@keyframes success-spark {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--spark-x)), calc(-50% + var(--spark-y))) scale(0);
+    opacity: 0;
+  }
 }
 #answer-field {
   width: 100%;
@@ -895,11 +953,31 @@ math-field {
   font-size: 10px;
 }
 .feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
   margin: 12px 0 0;
   padding: 11px 13px;
   border-left: 3px solid;
   font-size: 11px;
   line-height: 1.5;
+}
+.feedback-icon {
+  flex-shrink: 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.feedback-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.feedback-copy strong {
+  font: 13px var(--serif);
+}
+.feedback-detail {
+  color: #9dc9ba;
+  font-size: 10px;
 }
 .feedback.correct {
   color: #acebd5;
