@@ -1,4 +1,5 @@
 import "./styles.css";
+import { AmbientMusic } from "./audio/AmbientMusic";
 import { createCourtyard } from "./game/CourtyardScene";
 import { gameEvents } from "./events";
 import { fetchDemo, verifyAnswer } from "./services";
@@ -24,6 +25,7 @@ let activePuzzleId: string | null = null;
 let toastTimer = 0;
 let completionTimer = 0;
 const courtyard = createCourtyard();
+const music = new AmbientMusic(window.localStorage);
 
 const welcomeDialog = element<HTMLDialogElement>("welcome-dialog");
 const journalDialog = element<HTMLDialogElement>("journal-dialog");
@@ -165,6 +167,7 @@ function showWelcome(): void {
 function enterGame(): void {
   sessionStorage.setItem("palazzo-entered", "1");
   welcomeDialog.close();
+  void music.start().then(() => renderAudioButton());
   if (store.stats.solved < content.puzzles.length) {
     const next = content.puzzles.find(
       (puzzle) => !store.snapshot.puzzles[puzzle.id].solved && store.isUnlocked(puzzle.id),
@@ -205,6 +208,7 @@ function showCompletion(): void {
 function resetDemo(): void {
   window.clearTimeout(completionTimer);
   activePuzzleId = null;
+  music.stop();
   store.reset();
   courtyard.resetVisuals();
   courtyard.syncProgress(store.snapshot);
@@ -239,7 +243,35 @@ function formatTime(totalSeconds: number): string {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
+function renderAudioButton(): void {
+  const button = element<HTMLButtonElement>("audio-button");
+  const playing = music.isEnabled && music.isPlaying;
+  const label = playing ? "Disattiva la musica" : "Attiva la musica";
+  button.classList.toggle("is-muted", !playing);
+  button.setAttribute("aria-pressed", String(playing));
+  button.setAttribute("aria-label", label);
+  button.title = label;
+}
+
 function bindInterface(): void {
+  renderAudioButton();
+  element("audio-button").addEventListener("click", () => {
+    void (async () => {
+      if (music.isEnabled && !music.isPlaying) {
+        await music.start();
+      } else {
+        music.toggle();
+      }
+      renderAudioButton();
+    })();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      music.pause();
+    } else {
+      music.resume();
+    }
+  });
   element("enter-button").addEventListener("click", enterGame);
   element("close-completion").addEventListener("click", () => completionDialog.close());
   element("replay-button").addEventListener("click", resetDemo);

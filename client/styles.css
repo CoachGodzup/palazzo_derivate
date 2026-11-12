@@ -141,7 +141,7 @@ button:disabled {
   letter-spacing: 0.3px;
 }
 .brand-copy i {
-  color: var(--gold-pale);
+  color: inherit;
   font-weight: 400;
 }
 .topbar-actions {
@@ -214,6 +214,22 @@ button:disabled {
   border-color: var(--gold);
   color: var(--gold-pale);
   background: #183641;
+}
+.audio-toggle {
+  position: relative;
+}
+.audio-toggle.is-muted {
+  color: var(--muted);
+}
+.audio-toggle.is-muted::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25px;
+  height: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .game-layout {
@@ -939,6 +955,9 @@ math-field {
 }
 #answer-field::part(container) {
   background: transparent;
+}
+math-field::part(menu-toggle) {
+  display: none;
 }
 .puzzle-modal .ML__keyboard {
   position: fixed;

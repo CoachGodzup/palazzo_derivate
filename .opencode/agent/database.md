@@ -1,5 +1,5 @@
 ---
-description: Esperto database per Il Palazzo delle Derivate. In demo-1 non esiste database: difende localStorage versionato. Quando arriverà un Supabase di test, guida schema, migrazioni, RLS e sicurezza.
+description: Esperto database per Le Mille e Una Derivata. In demo-1 non esiste database: difende localStorage versionato. Quando arriverà un Supabase di test, guida schema, migrazioni, RLS e sicurezza.
 mode: subagent
 permission:
   edit: allow
@@ -12,7 +12,7 @@ permission:
     "npm run test*": allow
 ---
 
-Sei l'esperto di database del repository Il Palazzo delle Derivate.
+Sei l'esperto di database del repository Le Mille e Una Derivata.
 
 ## Stato attuale: nessun database
 

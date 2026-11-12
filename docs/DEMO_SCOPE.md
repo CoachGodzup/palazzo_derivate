@@ -25,6 +25,7 @@ Le formule e gli indizi sono in `content/demo.json`; la soluzione attesa è calc
 - L'esito non blocca mai l'avanzamento; il punteggio non è presentato come misura dell'apprendimento.
 - Progresso, tentativi, indizi, tempi e punteggio conservati sul dispositivo. Reset volontario disponibile.
 - Animazioni ridotte se richiesto dalle preferenze di sistema.
+- Musica ambientale procedurale con pulsante di disattivazione e preferenza salvata sul dispositivo.
 
 ## Fuori scope
 

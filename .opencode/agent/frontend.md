@@ -1,5 +1,5 @@
 ---
-description: Specialista frontend TypeScript/Phaser/MathLive di Il Palazzo delle Derivate: scena, dialoghi, stato locale, accessibilità e testing Vitest/Playwright.
+description: Specialista frontend TypeScript/Phaser/MathLive di Le Mille e Una Derivata: scena, dialoghi, stato locale, accessibilità e testing Vitest/Playwright.
 mode: subagent
 permission:
   edit: allow
@@ -17,7 +17,7 @@ permission:
     "npx playwright *": allow
 ---
 
-Sei lo specialista frontend del repository Il Palazzo delle Derivate. Lavori su `client/` e `tests/`, rispettando i contratti condivisi.
+Sei lo specialista frontend del repository Le Mille e Una Derivata. Lavori su `client/` e `tests/`, rispettando i contratti condivisi.
 
 ## Prima di iniziare
 

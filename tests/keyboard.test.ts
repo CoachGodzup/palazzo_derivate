@@ -24,6 +24,22 @@ describe("tastiera delle derivate", () => {
     expect(keycapValues()).toContain("x^{#?}");
   });
 
+  it("offre le funzioni e le costanti richieste", () => {
+    const values = keycapValues();
+    expect(values).toEqual(
+      expect.arrayContaining([
+        "\\sin(#?)",
+        "\\cos(#?)",
+        "\\tan(#?)",
+        "\\ln(#?)",
+        "\\log(#?)",
+        "\\exp(#?)",
+        "e",
+        "\\pi",
+      ]),
+    );
+  });
+
   it("raggruppa il tastierino numerico dopo il pannello operazioni", () => {
     const digitRows = derivativeKeyboardLayout.rows
       .map((row) => {

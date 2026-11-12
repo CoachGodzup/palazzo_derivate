@@ -6,18 +6,18 @@
     <meta name="theme-color" content="#071923" />
     <meta
       name="description"
-      content="Una vertical slice giocabile del Palazzo delle Derivate: attiva tre antichi meccanismi con il calcolo differenziale."
+      content="Una vertical slice giocabile di Le Mille e Una Derivata: attiva tre antichi meccanismi con il calcolo differenziale."
     />
-    <title>Il Palazzo delle Derivate · Demo giocabile</title>
+    <title>Le Mille e Una Derivata · Demo giocabile</title>
   </head>
   <body>
     <div id="app">
       <header class="topbar">
-        <a class="brand" href="./" aria-label="Il Palazzo delle Derivate, torna all'inizio">
+        <a class="brand" href="./" aria-label="Le Mille e Una Derivata, torna all'inizio">
           <span class="brand-mark" aria-hidden="true"><span>∂</span></span>
           <span class="brand-copy"
             ><span class="eyebrow">Un'avventura nel calcolo</span
-            ><strong>Il Palazzo <i>delle Derivate</i></strong></span
+            ><strong>Le Mille <i>e Una Derivata</i></strong></span
           >
         </a>
         <div class="topbar-actions">
@@ -28,6 +28,16 @@
           <div class="score-chip" aria-label="Punteggio attuale">
             <span id="hud-score">0</span><small>/ 300</small>
           </div>
+          <button
+            class="icon-button audio-toggle"
+            id="audio-button"
+            type="button"
+            aria-label="Disattiva la musica"
+            aria-pressed="true"
+            title="Disattiva la musica"
+          >
+            <span aria-hidden="true">♪</span>
+          </button>
           <button
             class="icon-button"
             id="help-button"

@@ -1,4 +1,4 @@
-# Il Palazzo delle Derivate
+# Le Mille e Una Derivata
 
 ## Game Design Document
 
@@ -12,7 +12,7 @@
 
 ## 1. Visione del progetto
 
-**Il Palazzo delle Derivate** è un'escape room didattica / puzzle adventure per studenti della scuola superiore. Il giocatore attraversa un palazzo fantasy ispirato alle *Mille e una notte*, ad Aladdin e all'avventura di *Prince of Persia*. Le stanze sono ambienti 2D a schermata fissa; porte, fontane, ingranaggi, specchi e altri dispositivi si attivano risolvendo enigmi basati sul calcolo delle derivate.
+**Le Mille e Una Derivata** è un'escape room didattica / puzzle adventure per studenti della scuola superiore. Il giocatore attraversa un palazzo fantasy ispirato alle *Mille e una notte*, ad Aladdin e all'avventura di *Prince of Persia*. Le stanze sono ambienti 2D a schermata fissa; porte, fontane, ingranaggi, specchi e altri dispositivi si attivano risolvendo enigmi basati sul calcolo delle derivate.
 
 La meccanica centrale è la derivazione simbolica con **inserimento libero della risposta**. Il giocatore non sceglie da un elenco la regola da applicare: deve riconoscere la struttura della funzione, decidere come procedere e digitare la derivata. Un motore simbolico verifica la correttezza, accettando forme matematicamente equivalenti.
 
@@ -22,7 +22,7 @@ Il principio guida è che la matematica costituisca il gameplay. Il calcolo non 
 
 | Elemento | Definizione |
 |---|---|
-| Titolo | Il Palazzo delle Derivate |
+| Titolo | Le Mille e Una Derivata |
 | Genere | Escape room / puzzle adventure didattico |
 | Destinatari | Studenti della scuola superiore, indicativamente quarto e quinto anno |
 | Modalità | Giocatore singolo |
@@ -458,4 +458,4 @@ La PoC è riuscita se uno studente può leggere un enigma, inserire liberamente 
 
 ## Principio guida
 
-> Il Palazzo delle Derivate deve portare lo studente dal saper applicare le regole al saper riconoscere, scegliere e utilizzare autonomamente gli strumenti del calcolo differenziale.
+> Le Mille e Una Derivata deve portare lo studente dal saper applicare le regole al saper riconoscere, scegliere e utilizzare autonomamente gli strumenti del calcolo differenziale.

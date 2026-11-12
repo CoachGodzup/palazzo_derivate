@@ -7,6 +7,16 @@ export const derivativeKeyboardLayout = {
   displayEditToolbar: false,
   rows: [
     [
+      { latex: "\\sin", insert: "\\sin(#?)", label: "sin", tooltip: "Seno" },
+      { latex: "\\cos", insert: "\\cos(#?)", label: "cos", tooltip: "Coseno" },
+      { latex: "\\tan", insert: "\\tan(#?)", label: "tan", tooltip: "Tangente" },
+      { latex: "\\ln", insert: "\\ln(#?)", label: "ln", tooltip: "Logaritmo naturale" },
+      { latex: "\\log", insert: "\\log(#?)", label: "log", tooltip: "Logaritmo" },
+      { latex: "\\exp", insert: "\\exp(#?)", label: "exp", tooltip: "Esponenziale" },
+      { latex: "e", label: "e", tooltip: "Numero di Nepero" },
+      { latex: "\\pi", label: "π", tooltip: "Pi greco" },
+    ],
+    [
       { latex: "x", tooltip: "Variabile x" },
       {
         latex: "x^{#?}",

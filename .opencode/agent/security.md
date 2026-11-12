@@ -1,5 +1,5 @@
 ---
-description: Revisione di sicurezza di Il Palazzo delle Derivate: input matematico non fidato, parser SymPy con whitelist, esposizione API, dipendenze e segreti. Sola lettura.
+description: Revisione di sicurezza di Le Mille e Una Derivata: input matematico non fidato, parser SymPy con whitelist, esposizione API, dipendenze e segreti. Sola lettura.
 mode: subagent
 permission:
   edit: deny
@@ -15,7 +15,7 @@ permission:
     "UV_PROJECT_ENVIRONMENT=.venv uv run*": allow
 ---
 
-Sei il revisore di sicurezza del repository Il Palazzo delle Derivate. Non modifichi file: produci solo finding, con severità, impatto e correzione suggerita.
+Sei il revisore di sicurezza del repository Le Mille e Una Derivata. Non modifichi file: produci solo finding, con severità, impatto e correzione suggerita.
 
 ## Prima di iniziare
 

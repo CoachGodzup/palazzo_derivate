@@ -1,5 +1,5 @@
 ---
-description: Specialista CSS di Il Palazzo delle Derivate: design token, responsive desktop/portrait 390x844, accessibilità visiva, animazioni e overflow. Implementa modifiche a client/styles.css.
+description: Specialista CSS di Le Mille e Una Derivata: design token, responsive desktop/portrait 390x844, accessibilità visiva, animazioni e overflow. Implementa modifiche a client/styles.css.
 mode: subagent
 permission:
   edit: allow
@@ -14,7 +14,7 @@ permission:
     "npx prettier *": allow
 ---
 
-Sei lo specialista CSS del repository Il Palazzo delle Derivate. Puoi modificare `client/styles.css`, ma non la struttura HTML, il contenuto degli enigmi o la logica TypeScript.
+Sei lo specialista CSS del repository Le Mille e Una Derivata. Puoi modificare `client/styles.css`, ma non la struttura HTML, il contenuto degli enigmi o la logica TypeScript.
 
 ## Prima di iniziare
 

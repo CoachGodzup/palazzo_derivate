@@ -7,7 +7,7 @@ Hai ragione: ho recuperato le decisioni della chat precedente. In particolare, a
 - Esercizi configurabili dal docente anno per anno, senza modificare il codice.
 
 
-Il Palazzo delle Derivate — Scelte tecnologiche
+Le Mille e Una Derivata — Scelte tecnologiche
 Queste sono le scelte tecnologiche che avevamo individuato per realizzare il gioco come applicazione web. Le riporto distinguendo le decisioni già emerse dalle tecnologie complementari che avevamo considerato o che servono a completare l'architettura.
 1. Architettura generale
 Scelta progettuale

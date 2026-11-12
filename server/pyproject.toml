@@ -1,7 +1,7 @@
 [project]
-name = "palazzo-derivate-server"
+name = "mille-e-una-derivata-server"
 version = "0.1.0"
-description = "Backend FastAPI/SymPy per Il Palazzo delle Derivate"
+description = "Backend FastAPI/SymPy per Le Mille e Una Derivata"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "fastapi>=0.115,<1",

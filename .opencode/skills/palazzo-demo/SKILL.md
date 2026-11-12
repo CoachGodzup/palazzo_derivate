@@ -1,9 +1,9 @@
 ---
 name: palazzo-demo
-description: Use when implementing, debugging or reviewing Il Palazzo delle Derivate, demo-1, Phaser rooms, MathLive answers, SymPy verification, puzzle JSON or local game progress.
+description: Use when implementing, debugging or reviewing Le Mille e Una Derivata, demo-1, Phaser rooms, MathLive answers, SymPy verification, puzzle JSON or local game progress.
 ---
 
-# Palazzo delle Derivate — Demo workflow
+# Le Mille e Una Derivata — Demo workflow
 
 Use this skill for gameplay and math changes in this repository.
 

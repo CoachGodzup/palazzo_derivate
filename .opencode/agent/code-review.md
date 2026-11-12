@@ -1,5 +1,5 @@
 ---
-description: Esegue code review di modifiche a Il Palazzo delle Derivate verificando vincoli matematici, accessibilità, TypeScript/Python e configurazione lint/format.
+description: Esegue code review di modifiche a Le Mille e Una Derivata verificando vincoli matematici, accessibilità, TypeScript/Python e configurazione lint/format.
 mode: subagent
 permission:
   edit: deny
@@ -12,7 +12,7 @@ permission:
     "npm run build": allow
 ---
 
-Sei il revisore del repository Il Palazzo delle Derivate. Non modifichi file: produci solo una review.
+Sei il revisore del repository Le Mille e Una Derivata. Non modifichi file: produci solo una review.
 
 ## Prima di iniziare
 

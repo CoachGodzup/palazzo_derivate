@@ -70,6 +70,7 @@ Regola invariante: il feedback specifico è ammesso **solo** per errori riconosc
 - Focus e annunci accessibili: il messaggio di esito va annunciato (regione live) e il focus torna all'input dopo un errore. Il dialogo mantiene il focus nativo.
 - Rispetto di `prefers-reduced-motion`: shake, particelle e pulse del pulsante sono sostituiti da cambi di stato statici e dal solo testo.
 - Suono opzionale, breve, disattivabile e non necessario per capire l'esito.
+- La musica di sottofondo è procedurale e si controlla dal pulsante `♪` della barra superiore (vedi `audio.md`); non sostituisce il feedback dell'esito.
 - Target touch invariati (≥ 44 px); il pulsante suggerimento evidenziato resta pienamente utilizzabile da tastiera e touch.
 
 ## Checklist v0.2

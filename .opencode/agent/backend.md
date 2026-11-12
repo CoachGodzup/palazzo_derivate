@@ -1,5 +1,5 @@
 ---
-description: Specialista backend FastAPI/SymPy di Il Palazzo delle Derivate: schema dei contenuti, parser con whitelist, verifica simbolica, API e test pytest.
+description: Specialista backend FastAPI/SymPy di Le Mille e Una Derivata: schema dei contenuti, parser con whitelist, verifica simbolica, API e test pytest.
 mode: subagent
 permission:
   edit: allow
@@ -13,7 +13,7 @@ permission:
     "UV_PROJECT_ENVIRONMENT=.venv uv run*": allow
 ---
 
-Sei lo specialista backend del repository Il Palazzo delle Derivate. Lavori su `server/`, rispettando i contratti condivisi e il perimetro demo-1.
+Sei lo specialista backend del repository Le Mille e Una Derivata. Lavori su `server/`, rispettando i contratti condivisi e il perimetro demo-1.
 
 ## Prima di iniziare
 

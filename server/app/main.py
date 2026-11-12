@@ -11,7 +11,7 @@ from app.symbolic import (
     parse_expression,
 )
 
-app = FastAPI(title="Il Palazzo delle Derivate API", version="demo-1")
+app = FastAPI(title="Le Mille e Una Derivata API", version="demo-1")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
