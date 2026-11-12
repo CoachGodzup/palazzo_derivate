@@ -1,8 +1,5 @@
 export type VerificationStatus =
-  | "correct"
-  | "incorrect"
-  | "syntax_error"
-  | "unsupported_expression";
+  "correct" | "incorrect" | "syntax_error" | "unsupported_expression";
 
 export interface Puzzle {
   id: string;

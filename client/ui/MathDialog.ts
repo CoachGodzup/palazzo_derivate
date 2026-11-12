@@ -1,4 +1,5 @@
-import { MathfieldElement } from "mathlive";
+import "mathlive";
+import type { MathfieldElement } from "mathlive";
 import type { Puzzle, PuzzleProgress, VerifyResponse } from "../types";
 
 interface MathDialogCallbacks {
@@ -29,6 +30,14 @@ export class MathDialog {
   constructor(private readonly callbacks: MathDialogCallbacks) {
     this.functionField.readOnly = true;
     this.answer.mathVirtualKeyboardPolicy = "auto";
+    const virtualKeyboard = window.mathVirtualKeyboard;
+    virtualKeyboard.container = this.dialog;
+    const syncKeyboardSpace = (): void => {
+      const open = virtualKeyboard.visible;
+      this.dialog.style.paddingBottom = open ? `${virtualKeyboard.boundingRect.height}px` : "";
+    };
+    virtualKeyboard.addEventListener("virtual-keyboard-toggle", syncKeyboardSpace);
+    virtualKeyboard.addEventListener("geometrychange", syncKeyboardSpace);
     this.element("close-puzzle").addEventListener("click", () => this.dialog.close());
     this.element("keyboard-button").addEventListener("click", () => {
       if (window.mathVirtualKeyboard.visible) window.mathVirtualKeyboard.hide();
@@ -57,18 +66,23 @@ export class MathDialog {
         document.querySelector<HTMLButtonElement>(`[data-puzzle-id="${this.puzzle.id}"]`)?.focus();
       }
     });
-    document.addEventListener("keydown", (event) => {
-      if (event.key !== "Escape" || !this.dialog.open) return;
-      event.preventDefault();
-      this.dialog.close();
-    }, true);
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key !== "Escape" || !this.dialog.open) return;
+        event.preventDefault();
+        this.dialog.close();
+      },
+      true,
+    );
   }
 
   open(puzzle: Puzzle): void {
     this.puzzle = puzzle;
     this.submitting = false;
     this.element("puzzle-step").textContent = `ENIGMA ${puzzle.order} DI 3`;
-    this.element("puzzle-difficulty").textContent = `${"◆".repeat(puzzle.difficulty)}${"◇".repeat(3 - puzzle.difficulty)} COMPLESSITÀ`;
+    this.element("puzzle-difficulty").textContent =
+      `${"◆".repeat(puzzle.difficulty)}${"◇".repeat(3 - puzzle.difficulty)} COMPLESSITÀ`;
     this.element("puzzle-title").textContent = puzzle.title;
     this.element("puzzle-prompt").textContent = puzzle.prompt;
     this.functionField.setValue(puzzle.function_latex);
@@ -88,7 +102,12 @@ export class MathDialog {
     if (this.callbacks.getProgress().solved) {
       this.answer.disabled = true;
       this.submit.disabled = true;
-      this.showFeedback({ status: "correct", message: "Questo meccanismo è già attivo. Puoi rivedere la funzione e gli indizi consultati.", feedback_category: null });
+      this.showFeedback({
+        status: "correct",
+        message:
+          "Questo meccanismo è già attivo. Puoi rivedere la funzione e gli indizi consultati.",
+        feedback_category: null,
+      });
     } else {
       window.setTimeout(() => this.answer.focus(), 80);
     }
@@ -115,9 +134,8 @@ export class MathDialog {
     const button = this.element<HTMLButtonElement>("hint-button");
     const allRevealed = progress.hintsUsed >= this.puzzle.hints.length;
     button.hidden = allRevealed || progress.solved;
-    this.element("hint-button-label").textContent = progress.hintsUsed === 0
-      ? "Rivela il primo indizio"
-      : "Rivela un altro indizio";
+    this.element("hint-button-label").textContent =
+      progress.hintsUsed === 0 ? "Rivela il primo indizio" : "Rivela un altro indizio";
   }
 
   private async submitAnswer(): Promise<void> {
@@ -143,7 +161,10 @@ export class MathDialog {
         this.answer.focus();
       }
     } catch (error) {
-      this.showRawFeedback("error", error instanceof Error ? error.message : "Verifica non disponibile. Riprova.");
+      this.showRawFeedback(
+        "error",
+        error instanceof Error ? error.message : "Verifica non disponibile. Riprova.",
+      );
       this.answer.disabled = false;
       this.submit.disabled = false;
     } finally {

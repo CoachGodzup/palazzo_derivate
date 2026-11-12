@@ -74,7 +74,9 @@ export class CourtyardScene extends Phaser.Scene {
 
     for (const puzzle of this.puzzles) {
       const solved = progress.puzzles[puzzle.id]?.solved ?? false;
-      this.stateLabels.get(puzzle.id)?.setText(solved ? "ATTIVO" : this.isUnlocked(puzzle.id) ? "SELEZIONA" : "IN ATTESA");
+      this.stateLabels
+        .get(puzzle.id)
+        ?.setText(solved ? "ATTIVO" : this.isUnlocked(puzzle.id) ? "SELEZIONA" : "IN ATTESA");
       this.updateMarker(puzzle.id);
       if (!solved || this.activated.has(puzzle.id)) continue;
       this.activated.add(puzzle.id);
@@ -111,7 +113,9 @@ export class CourtyardScene extends Phaser.Scene {
       this.water.clear();
       if (this.activated.has("c1-fontana")) this.animateWater(time);
     }
-    const next = this.puzzles.find((puzzle) => !this.activated.has(puzzle.id) && this.isUnlocked(puzzle.id));
+    const next = this.puzzles.find(
+      (puzzle) => !this.activated.has(puzzle.id) && this.isUnlocked(puzzle.id),
+    );
     if (next && !this.reducedMotion) {
       const marker = this.markers.get(next.id);
       if (marker) marker.setAlpha(0.82 + Math.sin(time * 0.003) * 0.18);
@@ -126,8 +130,8 @@ export class CourtyardScene extends Phaser.Scene {
     background.fillRect(0, 510, 1280, 210);
 
     for (let index = 0; index < 85; index += 1) {
-      const x = (index * 149 + 47) % 1240 + 20;
-      const y = (index * 71 + 23) % 300 + 20;
+      const x = ((index * 149 + 47) % 1240) + 20;
+      const y = ((index * 71 + 23) % 300) + 20;
       background.fillStyle(index % 7 === 0 ? PALE_GOLD : 0x8fc2c8, 0.18 + (index % 4) * 0.08);
       background.fillCircle(x, y, index % 9 === 0 ? 1.8 : 1);
     }
@@ -151,9 +155,27 @@ export class CourtyardScene extends Phaser.Scene {
 
     for (const center of [100, 350, 930, 1180]) {
       walls.fillStyle(0x061923);
-      walls.fillPoints(points([[center - 70, 365], [center - 70, 240], [center, 145], [center + 70, 240], [center + 70, 365]]), true);
+      walls.fillPoints(
+        points([
+          [center - 70, 365],
+          [center - 70, 240],
+          [center, 145],
+          [center + 70, 240],
+          [center + 70, 365],
+        ]),
+        true,
+      );
       walls.lineStyle(4, GOLD, 0.25);
-      walls.strokePoints(points([[center - 78, 365], [center - 78, 238], [center, 134], [center + 78, 238], [center + 78, 365]]), false);
+      walls.strokePoints(
+        points([
+          [center - 78, 365],
+          [center - 78, 238],
+          [center, 134],
+          [center + 78, 238],
+          [center + 78, 365],
+        ]),
+        false,
+      );
     }
 
     const columns = this.add.graphics();
@@ -176,27 +198,65 @@ export class CourtyardScene extends Phaser.Scene {
     floor.strokeEllipse(640, 626, 600, 140);
     floor.strokeEllipse(640, 626, 510, 108);
 
-    this.add.text(640, 43, "✦   L A   C O R T E   D E L L E   M E R I D I A N E   ✦", {
-      fontFamily: "Georgia, serif", fontSize: "16px", color: "#bda776",
-    }).setOrigin(0.5);
+    this.add
+      .text(640, 43, "✦   L A   C O R T E   D E L L E   M E R I D I A N E   ✦", {
+        fontFamily: "Georgia, serif",
+        fontSize: "16px",
+        color: "#bda776",
+      })
+      .setOrigin(0.5);
   }
 
   private drawDoor(): void {
     const frame = this.add.graphics();
     frame.fillStyle(0x030b10);
-    frame.fillPoints(points([[505, 510], [505, 275], [640, 115], [775, 275], [775, 510]]), true);
+    frame.fillPoints(
+      points([
+        [505, 510],
+        [505, 275],
+        [640, 115],
+        [775, 275],
+        [775, 510],
+      ]),
+      true,
+    );
     this.doorLight = this.add.graphics();
     this.doorLight.fillGradientStyle(0x0a777b, 0x0a777b, 0x48c9b7, 0x48c9b7, 0.85);
-    this.doorLight.fillPoints(points([[520, 505], [520, 278], [640, 140], [760, 278], [760, 505]]), true);
+    this.doorLight.fillPoints(
+      points([
+        [520, 505],
+        [520, 278],
+        [640, 140],
+        [760, 278],
+        [760, 505],
+      ]),
+      true,
+    );
     this.doorLight.lineStyle(2, PALE_GOLD, 0.7);
     for (let y = 180; y < 500; y += 28) this.doorLight.lineBetween(590, y, 690, y + 50);
     this.doorLight.setAlpha(0.12);
 
     const left = this.add.graphics();
     left.fillGradientStyle(0x173947, 0x214958, 0x0c2530, 0x102c38, 1);
-    left.fillPoints(points([[0, 310], [0, 85], [120, 0], [120, 310]]), true);
+    left.fillPoints(
+      points([
+        [0, 310],
+        [0, 85],
+        [120, 0],
+        [120, 310],
+      ]),
+      true,
+    );
     left.lineStyle(4, GOLD, 0.65);
-    left.strokePoints(points([[5, 303], [5, 90], [117, 8], [117, 303]]), false);
+    left.strokePoints(
+      points([
+        [5, 303],
+        [5, 90],
+        [117, 8],
+        [117, 303],
+      ]),
+      false,
+    );
     left.lineStyle(2, GOLD, 0.35);
     left.strokeRect(20, 155, 82, 125);
     left.lineBetween(20, 220, 102, 155);
@@ -205,9 +265,25 @@ export class CourtyardScene extends Phaser.Scene {
 
     const right = this.add.graphics();
     right.fillGradientStyle(0x214958, 0x173947, 0x102c38, 0x0c2530, 1);
-    right.fillPoints(points([[0, 0], [120, 85], [120, 310], [0, 310]]), true);
+    right.fillPoints(
+      points([
+        [0, 0],
+        [120, 85],
+        [120, 310],
+        [0, 310],
+      ]),
+      true,
+    );
     right.lineStyle(4, GOLD, 0.65);
-    right.strokePoints(points([[3, 8], [115, 90], [115, 303], [3, 303]]), false);
+    right.strokePoints(
+      points([
+        [3, 8],
+        [115, 90],
+        [115, 303],
+        [3, 303],
+      ]),
+      false,
+    );
     right.lineStyle(2, GOLD, 0.35);
     right.strokeRect(18, 155, 82, 125);
     right.lineBetween(18, 155, 100, 220);
@@ -216,8 +292,21 @@ export class CourtyardScene extends Phaser.Scene {
 
     const arch = this.add.graphics();
     for (const offset of [0, 12, 25]) {
-      arch.lineStyle(offset === 12 ? 7 : 2, offset === 12 ? 0x6b5835 : GOLD, offset === 12 ? 1 : 0.6);
-      arch.strokePoints(points([[500 - offset / 3, 512], [500 - offset / 3, 273], [640, 105 - offset], [780 + offset / 3, 273], [780 + offset / 3, 512]]), false);
+      arch.lineStyle(
+        offset === 12 ? 7 : 2,
+        offset === 12 ? 0x6b5835 : GOLD,
+        offset === 12 ? 1 : 0.6,
+      );
+      arch.strokePoints(
+        points([
+          [500 - offset / 3, 512],
+          [500 - offset / 3, 273],
+          [640, 105 - offset],
+          [780 + offset / 3, 273],
+          [780 + offset / 3, 512],
+        ]),
+        false,
+      );
     }
     for (let index = 0; index < 9; index += 1) {
       const angle = Math.PI + (index / 8) * Math.PI;
@@ -232,14 +321,34 @@ export class CourtyardScene extends Phaser.Scene {
     lock.strokeCircle(0, 0, 36);
     lock.strokeCircle(0, 0, 26);
     lock.fillStyle(GOLD);
-    lock.fillPoints(points([[0, -15], [6, -4], [18, 0], [6, 5], [0, 16], [-6, 5], [-18, 0], [-6, -4]]), true);
+    lock.fillPoints(
+      points([
+        [0, -15],
+        [6, -4],
+        [18, 0],
+        [6, 5],
+        [0, 16],
+        [-6, 5],
+        [-18, 0],
+        [-6, -4],
+      ]),
+      true,
+    );
     this.doorLock = this.add.container(640, 345, [lock]);
   }
 
   private drawSeal(): void {
     const pedestal = this.add.graphics();
     pedestal.fillGradientStyle(0x1e414e, 0x122d38, 0x0c222c, 0x0c222c, 1);
-    pedestal.fillPoints(points([[180, 450], [320, 450], [300, 370], [200, 370]]), true);
+    pedestal.fillPoints(
+      points([
+        [180, 450],
+        [320, 450],
+        [300, 370],
+        [200, 370],
+      ]),
+      true,
+    );
     pedestal.fillStyle(0x264b56);
     pedestal.fillRect(170, 445, 160, 16);
     pedestal.lineStyle(2, GOLD, 0.4);
@@ -259,7 +368,12 @@ export class CourtyardScene extends Phaser.Scene {
     for (let index = 0; index < 24; index += 1) {
       const angle = (index / 24) * Math.PI * 2;
       const inner = index % 2 === 0 ? 59 : 65;
-      rotor.lineBetween(Math.cos(angle) * inner, Math.sin(angle) * inner, Math.cos(angle) * 76, Math.sin(angle) * 76);
+      rotor.lineBetween(
+        Math.cos(angle) * inner,
+        Math.sin(angle) * inner,
+        Math.cos(angle) * 76,
+        Math.sin(angle) * 76,
+      );
     }
     rotor.strokeCircle(0, 0, 52);
     this.sealRotor = this.add.container(250, 288, [rotor]);
@@ -270,7 +384,19 @@ export class CourtyardScene extends Phaser.Scene {
     disc.lineStyle(2, PALE_GOLD, 0.8);
     disc.strokeCircle(250, 288, 42);
     disc.fillStyle(PALE_GOLD, 0.8);
-    disc.fillPoints(points([[250, 252], [258, 276], [284, 288], [258, 298], [250, 324], [240, 298], [216, 288], [240, 276]]), true);
+    disc.fillPoints(
+      points([
+        [250, 252],
+        [258, 276],
+        [284, 288],
+        [258, 298],
+        [250, 324],
+        [240, 298],
+        [216, 288],
+        [240, 276],
+      ]),
+      true,
+    );
     disc.fillStyle(0x183440);
     disc.fillCircle(250, 288, 10);
   }
@@ -292,7 +418,12 @@ export class CourtyardScene extends Phaser.Scene {
     for (let index = 0; index < 8; index += 1) {
       const angle = (index / 8) * Math.PI * 2;
       gear.lineStyle(10, 0x9b773d);
-      gear.lineBetween(Math.cos(angle) * 10, Math.sin(angle) * 10, Math.cos(angle) * radius * 0.57, Math.sin(angle) * radius * 0.57);
+      gear.lineBetween(
+        Math.cos(angle) * 10,
+        Math.sin(angle) * 10,
+        Math.cos(angle) * radius * 0.57,
+        Math.sin(angle) * radius * 0.57,
+      );
     }
     gear.fillStyle(0x142e38);
     gear.fillCircle(0, 0, radius * 0.2);
@@ -311,7 +442,15 @@ export class CourtyardScene extends Phaser.Scene {
     this.gearB = this.makeGear(1090, 251, 50);
     const mount = this.add.graphics();
     mount.fillStyle(0x16333e);
-    mount.fillPoints(points([[975, 455], [1140, 455], [1090, 375], [1025, 375]]), true);
+    mount.fillPoints(
+      points([
+        [975, 455],
+        [1140, 455],
+        [1090, 375],
+        [1025, 375],
+      ]),
+      true,
+    );
     mount.fillRect(965, 450, 185, 15);
   }
 
@@ -327,7 +466,15 @@ export class CourtyardScene extends Phaser.Scene {
     fountain.lineStyle(3, GOLD, 0.45);
     fountain.strokeEllipse(640, 435, 190, 42);
     fountain.fillGradientStyle(0x2a535e, 0x183b48, 0x102d39, 0x102d39, 1);
-    fountain.fillPoints(points([[475, 538], [805, 538], [765, 605], [515, 605]]), true);
+    fountain.fillPoints(
+      points([
+        [475, 538],
+        [805, 538],
+        [765, 605],
+        [515, 605],
+      ]),
+      true,
+    );
     fountain.fillStyle(0x315b64);
     fountain.fillEllipse(640, 540, 340, 72);
     fountain.fillStyle(0x09242f);
@@ -335,7 +482,8 @@ export class CourtyardScene extends Phaser.Scene {
     fountain.lineStyle(3, GOLD, 0.42);
     fountain.strokeEllipse(640, 540, 340, 72);
     fountain.lineStyle(1, GOLD, 0.28);
-    for (const x of [540, 575, 610, 670, 705, 740]) fountain.lineBetween(x, 568, x + (640 - x) * 0.08, 596);
+    for (const x of [540, 575, 610, 670, 705, 740])
+      fountain.lineBetween(x, 568, x + (640 - x) * 0.08, 596);
     this.water = this.add.graphics();
   }
 
@@ -363,16 +511,23 @@ export class CourtyardScene extends Phaser.Scene {
         this.water.moveTo(640, 435);
         for (let step = 0; step <= 20; step += 1) {
           const t = step / 20;
-          this.water.lineTo(640 + direction * t * (95 + jet * 25), 430 - Math.sin(t * Math.PI) * (68 + jet * 9) + t * 100);
+          this.water.lineTo(
+            640 + direction * t * (95 + jet * 25),
+            430 - Math.sin(t * Math.PI) * (68 + jet * 9) + t * 100,
+          );
         }
         this.water.strokePath();
       }
     }
     for (let drop = 0; drop < 16; drop += 1) {
-      const t = ((time * 0.00035 + drop * 0.13) % 1);
+      const t = (time * 0.00035 + drop * 0.13) % 1;
       const angle = drop * 2.4;
       this.water.fillStyle(0x93fff0, 1 - t);
-      this.water.fillCircle(640 + Math.cos(angle) * t * 130, 430 + Math.sin(angle) * t * 28 - Math.sin(t * Math.PI) * 75, 2.2);
+      this.water.fillCircle(
+        640 + Math.cos(angle) * t * 130,
+        430 + Math.sin(angle) * t * 28 - Math.sin(t * Math.PI) * 75,
+        2.2,
+      );
     }
   }
 
@@ -386,13 +541,29 @@ export class CourtyardScene extends Phaser.Scene {
     for (const puzzle of this.puzzles) {
       const [x, y] = positions[puzzle.id];
       if (!this.markers.has(puzzle.id)) {
-        const label = this.add.text(0, 0, `${["I", "II", "III"][puzzle.order - 1]}  ·  ${puzzle.short_title.toUpperCase()}`, {
-          fontFamily: "Georgia, serif", fontSize: "15px", color: "#e5c98b", align: "center",
-          backgroundColor: "#071923cc", padding: { x: 12, y: 7 },
-        }).setOrigin(0.5);
-        const status = this.add.text(0, 31, "SELEZIONA", {
-          fontFamily: "Arial, sans-serif", fontSize: "9px", color: "#76acae", letterSpacing: 2,
-        }).setOrigin(0.5);
+        const label = this.add
+          .text(
+            0,
+            0,
+            `${["I", "II", "III"][puzzle.order - 1]}  ·  ${puzzle.short_title.toUpperCase()}`,
+            {
+              fontFamily: "Georgia, serif",
+              fontSize: "15px",
+              color: "#e5c98b",
+              align: "center",
+              backgroundColor: "#071923cc",
+              padding: { x: 12, y: 7 },
+            },
+          )
+          .setOrigin(0.5);
+        const status = this.add
+          .text(0, 31, "SELEZIONA", {
+            fontFamily: "Arial, sans-serif",
+            fontSize: "9px",
+            color: "#76acae",
+            letterSpacing: 2,
+          })
+          .setOrigin(0.5);
         this.markers.set(puzzle.id, this.add.container(x, y, [label, status]));
         this.stateLabels.set(puzzle.id, status);
       }

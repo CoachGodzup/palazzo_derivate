@@ -95,7 +95,11 @@ function renderMechanisms(): void {
     title.textContent = puzzle.short_title;
     const status = document.createElement("span");
     status.className = "mechanism-score";
-    status.textContent = progress.solved ? `${progress.score} punti` : unlocked ? "Da attivare" : "In attesa";
+    status.textContent = progress.solved
+      ? `${progress.score} punti`
+      : unlocked
+        ? "Da attivare"
+        : "In attesa";
     copy.append(label, title, status);
 
     const arrow = document.createElement("span");
@@ -109,7 +113,9 @@ function renderMechanisms(): void {
   element("progress-fraction").textContent = `${solvedCount} / ${content.puzzles.length}`;
   element("progress-bar").style.width = `${(solvedCount / content.puzzles.length) * 100}%`;
   element("hud-score").textContent = String(store.stats.totalScore);
-  element("scene-state").textContent = snapshot.completed ? "LA PORTA È APERTA" : "IL TEMPO È SOSPESO";
+  element("scene-state").textContent = snapshot.completed
+    ? "LA PORTA È APERTA"
+    : "IL TEMPO È SOSPESO";
 }
 
 function updateCaption(): void {
@@ -142,8 +148,10 @@ function showWelcome(): void {
   element("welcome-copy").textContent = content.intro;
   const button = element<HTMLButtonElement>("enter-button");
   if (stats.solved > 0) {
-    element("welcome-title").textContent = stats.solved === content.puzzles.length ? "La corte ti attende." : "Il tuo viaggio continua.";
-    button.firstChild!.textContent = stats.solved === content.puzzles.length ? "Rivedi la corte " : "Continua l'esplorazione ";
+    element("welcome-title").textContent =
+      stats.solved === content.puzzles.length ? "La corte ti attende." : "Il tuo viaggio continua.";
+    button.firstChild!.textContent =
+      stats.solved === content.puzzles.length ? "Rivedi la corte " : "Continua l'esplorazione ";
   }
   welcomeDialog.showModal();
   button.focus();
@@ -153,9 +161,13 @@ function enterGame(): void {
   sessionStorage.setItem("palazzo-entered", "1");
   welcomeDialog.close();
   if (store.stats.solved < content.puzzles.length) {
-    const next = content.puzzles.find((puzzle) => !store.snapshot.puzzles[puzzle.id].solved && store.isUnlocked(puzzle.id));
+    const next = content.puzzles.find(
+      (puzzle) => !store.snapshot.puzzles[puzzle.id].solved && store.isUnlocked(puzzle.id),
+    );
     if (next) {
-      element("mechanism-list").querySelector<HTMLButtonElement>(`[data-puzzle-id="${next.id}"]`)?.focus();
+      element("mechanism-list")
+        .querySelector<HTMLButtonElement>(`[data-puzzle-id="${next.id}"]`)
+        ?.focus();
     }
   }
 }
@@ -223,7 +235,11 @@ function bindInterface(): void {
   element("close-completion").addEventListener("click", () => completionDialog.close());
   element("replay-button").addEventListener("click", resetDemo);
   element("reset-button").addEventListener("click", () => {
-    if (store.stats.solved === 0 && store.stats.totalAttempts === 0 && store.stats.totalHints === 0) {
+    if (
+      store.stats.solved === 0 &&
+      store.stats.totalAttempts === 0 &&
+      store.stats.totalHints === 0
+    ) {
       resetDemo();
     } else {
       confirmDialog.showModal();
@@ -266,7 +282,8 @@ async function start(): Promise<void> {
     hydrateContent();
   } catch (error) {
     element("loading-title").textContent = "La porta resta chiusa";
-    element("loading-message").textContent = error instanceof Error ? error.message : "Impossibile caricare il palazzo.";
+    element("loading-message").textContent =
+      error instanceof Error ? error.message : "Impossibile caricare il palazzo.";
     element<HTMLButtonElement>("retry-button").hidden = false;
     element<HTMLButtonElement>("retry-button").focus();
   }

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.cache/
+.venv/
+__pycache__/
+.ruff_cache/
+.vitest/
+artifacts/
+package-lock.json
+content/demo.json
+Il_Palazzo_delle_Derivate_GDD_v1.1.md
+transcript_architecture_requirements.md

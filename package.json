@@ -13,7 +13,10 @@
     "test:api": "UV_PROJECT_ENVIRONMENT=.venv uv run --project server pytest server/tests",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "lint": "UV_PROJECT_ENVIRONMENT=.venv uv run --project server ruff check server && tsc --noEmit"
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint:ts": "eslint .",
+    "lint": "UV_PROJECT_ENVIRONMENT=.venv uv run --project server ruff check server && eslint . && prettier --check . && tsc --noEmit"
   },
   "dependencies": {
     "mathlive": "^0.111.4",
@@ -23,7 +26,11 @@
     "@playwright/test": "^1.65.0",
     "@types/node": "^24.19.2",
     "concurrently": "^9.2.5",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.10.0",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.2",
     "vite": "^8.3.8",
     "vitest": "^4.1.12"
   }

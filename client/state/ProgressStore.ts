@@ -1,10 +1,4 @@
-import type {
-  GameProgress,
-  GameStats,
-  Puzzle,
-  PuzzleProgress,
-  VerificationStatus,
-} from "../types";
+import type { GameProgress, GameStats, Puzzle, PuzzleProgress, VerificationStatus } from "../types";
 
 export interface StorageLike {
   getItem(key: string): string | null;
@@ -118,7 +112,10 @@ export class ProgressStore {
 
   private elapsedSeconds(progress: PuzzleProgress): number {
     if (progress.startedAt === null) return 0;
-    return Math.max(0, Math.floor(((progress.completedAt ?? this.now()) - progress.startedAt) / 1000));
+    return Math.max(
+      0,
+      Math.floor(((progress.completedAt ?? this.now()) - progress.startedAt) / 1000),
+    );
   }
 
   private requirePuzzle(puzzleId: string): Puzzle {
@@ -164,9 +161,7 @@ export class ProgressStore {
   }
 
   private nonNegativeInteger(value: unknown): number {
-    return typeof value === "number" && Number.isFinite(value)
-      ? Math.max(0, Math.floor(value))
-      : 0;
+    return typeof value === "number" && Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
   }
 
   private validTimestamp(value: unknown): number | null {

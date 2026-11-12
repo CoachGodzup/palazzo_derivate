@@ -1,3 +1,4 @@
+import { stubVerifyAnswer } from "./stub";
 import type { DemoContent, VerifyResponse } from "./types";
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
@@ -21,13 +22,23 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
   return (await response.json()) as T;
 }
 
-export function fetchDemo(): Promise<DemoContent> {
-  return request<DemoContent>("/api/demo");
+export async function fetchDemo(): Promise<DemoContent> {
+  try {
+    return await request<DemoContent>("/api/demo");
+  } catch (error) {
+    const response = await fetch(`${import.meta.env.BASE_URL}demo.json`);
+    if (!response.ok) throw error;
+    return (await response.json()) as DemoContent;
+  }
 }
 
-export function verifyAnswer(puzzleId: string, answer: string): Promise<VerifyResponse> {
-  return request<VerifyResponse>(`/api/puzzles/${encodeURIComponent(puzzleId)}/verify`, {
-    method: "POST",
-    body: JSON.stringify({ answer }),
-  });
+export async function verifyAnswer(puzzleId: string, answer: string): Promise<VerifyResponse> {
+  try {
+    return await request<VerifyResponse>(`/api/puzzles/${encodeURIComponent(puzzleId)}/verify`, {
+      method: "POST",
+      body: JSON.stringify({ answer }),
+    });
+  } catch {
+    return stubVerifyAnswer(puzzleId, answer);
+  }
 }

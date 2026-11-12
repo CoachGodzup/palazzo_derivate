@@ -88,17 +88,24 @@ test.describe("vertical slice demo-1", () => {
   });
 
   test("la scena resta giocabile e senza overflow sul portrait", async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== "portrait-chromium", "Controllo specifico del formato verticale");
+    test.skip(
+      testInfo.project.name !== "portrait-chromium",
+      "Controllo specifico del formato verticale",
+    );
     await enterCourtyard(page);
     await expect(page.locator("#game-container canvas")).toBeVisible();
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
     expect(overflow).toBeLessThanOrEqual(1);
     await page.screenshot({ path: "artifacts/demo-mobile.png", fullPage: true });
 
     await openPuzzle(page, /Primo sigillo/);
     await expect(page.locator("#answer-field")).toBeVisible();
     await expect(page.getByRole("button", { name: /Verifica e attiva/ })).toBeVisible();
-    const panelOverflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    const panelOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
     expect(panelOverflow).toBeLessThanOrEqual(1);
   });
 

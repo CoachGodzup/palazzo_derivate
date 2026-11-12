@@ -28,6 +28,15 @@ Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qu
 - `tests/`: test unitari TypeScript ed end-to-end Playwright.
 - `docs/`: scope e guida di revisione.
 - `.opencode/skills/`: workflow specialistici OpenCode.
+- `.opencode/agent/`: subagenti specialistici:
+  - `code-review.md`: code review (sola lettura, esegue lint e test);
+  - `security.md`: revisione di sicurezza (sola lettura);
+  - `css.md`: stile e responsive di `client/styles.css`;
+  - `frontend.md`: TypeScript/Phaser/MathLive e test client;
+  - `backend.md`: FastAPI/SymPy, parser con whitelist e test pytest;
+  - `database.md`: guardiano del perimetro senza DB; supporto a un futuro Supabase di test.
+
+MCP in `opencode.json`: `playwright` e `chrome-devtools` per il browser, `context7` per le documentazioni, `github` per repository e avvisi di sicurezza. Il server `supabase` è predisposto in sola lettura ma disabilitato finché non esiste un progetto di test (`project_ref`).
 
 MathLive rimane un elemento HTML nel `dialog`, mai disegnato dentro il canvas Phaser. La UI HTML replica le azioni essenziali del canvas per consentire uso da tastiera e touch.
 
@@ -46,6 +55,7 @@ Aprire `http://localhost:5173`; API su `http://localhost:8000`, documentazione O
 ```bash
 npm run build
 npm run lint
+npm run format:check
 npm run test:api
 npm run test:unit
 PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium

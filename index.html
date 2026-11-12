@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#071923" />
-    <meta name="description" content="Una vertical slice giocabile del Palazzo delle Derivate: attiva tre antichi meccanismi con il calcolo differenziale." />
+    <meta
+      name="description"
+      content="Una vertical slice giocabile del Palazzo delle Derivate: attiva tre antichi meccanismi con il calcolo differenziale."
+    />
     <title>Il Palazzo delle Derivate · Demo giocabile</title>
   </head>
   <body>
@@ -12,75 +15,269 @@
       <header class="topbar">
         <a class="brand" href="./" aria-label="Il Palazzo delle Derivate, torna all'inizio">
           <span class="brand-mark" aria-hidden="true"><span>∂</span></span>
-          <span class="brand-copy"><span class="eyebrow">Un'avventura nel calcolo</span><strong>Il Palazzo <i>delle Derivate</i></strong></span>
+          <span class="brand-copy"
+            ><span class="eyebrow">Un'avventura nel calcolo</span
+            ><strong>Il Palazzo <i>delle Derivate</i></strong></span
+          >
         </a>
         <div class="topbar-actions">
-          <div class="chapter-chip"><span class="chapter-glyph" aria-hidden="true">I</span><span><small>Capitolo</small><strong>Il cortile delle fontane</strong></span></div>
-          <div class="score-chip" aria-label="Punteggio attuale"><span id="hud-score">0</span><small>/ 300</small></div>
-          <button class="icon-button" id="help-button" type="button" aria-label="Come si gioca" title="Come si gioca">?</button>
-          <button class="icon-button" id="reset-button" type="button" aria-label="Ricomincia la demo" title="Ricomincia la demo">↻</button>
+          <div class="chapter-chip">
+            <span class="chapter-glyph" aria-hidden="true">I</span
+            ><span><small>Capitolo</small><strong>Il cortile delle fontane</strong></span>
+          </div>
+          <div class="score-chip" aria-label="Punteggio attuale">
+            <span id="hud-score">0</span><small>/ 300</small>
+          </div>
+          <button
+            class="icon-button"
+            id="help-button"
+            type="button"
+            aria-label="Come si gioca"
+            title="Come si gioca"
+          >
+            ?
+          </button>
+          <button
+            class="icon-button"
+            id="reset-button"
+            type="button"
+            aria-label="Ricomincia la demo"
+            title="Ricomincia la demo"
+          >
+            ↻
+          </button>
         </div>
       </header>
 
       <main class="game-layout">
         <section class="world-column" aria-label="Il mondo di gioco">
           <div class="world-frame">
-            <div class="frame-corner corner-tl" aria-hidden="true"></div><div class="frame-corner corner-tr" aria-hidden="true"></div>
-            <div id="game-container" role="img" aria-label="La Corte delle Meridiane: un cortile notturno con tre meccanismi e una porta sigillata"></div>
-            <div class="scene-topline"><span class="live-dot" aria-hidden="true"></span><span>LA CORTE DELLE MERIDIANE</span><span class="scene-separator"></span><span id="scene-state">IL TEMPO È SOSPESO</span></div>
-            <div id="scene-caption" class="scene-caption"><span class="caption-rune" aria-hidden="true">✦</span><p>Scegli il <strong>sigillo solare</strong> per iniziare.</p></div>
+            <div class="frame-corner corner-tl" aria-hidden="true"></div>
+            <div class="frame-corner corner-tr" aria-hidden="true"></div>
+            <div
+              id="game-container"
+              role="img"
+              aria-label="La Corte delle Meridiane: un cortile notturno con tre meccanismi e una porta sigillata"
+            ></div>
+            <div class="scene-topline">
+              <span class="live-dot" aria-hidden="true"></span><span>LA CORTE DELLE MERIDIANE</span
+              ><span class="scene-separator"></span><span id="scene-state">IL TEMPO È SOSPESO</span>
+            </div>
+            <div id="scene-caption" class="scene-caption">
+              <span class="caption-rune" aria-hidden="true">✦</span>
+              <p>Scegli il <strong>sigillo solare</strong> per iniziare.</p>
+            </div>
             <div id="loading-screen" class="loading-screen" role="status">
-              <div class="loading-sigil" aria-hidden="true">∂</div><strong id="loading-title">Il palazzo si desta…</strong><p id="loading-message">Preparazione del motore simbolico</p><button id="retry-button" class="secondary-button" type="button" hidden>Riprova</button>
+              <div class="loading-sigil" aria-hidden="true">∂</div>
+              <strong id="loading-title">Il palazzo si desta…</strong>
+              <p id="loading-message">Preparazione del motore simbolico</p>
+              <button id="retry-button" class="secondary-button" type="button" hidden>
+                Riprova
+              </button>
             </div>
           </div>
-          <div class="world-footer"><span><kbd>Mouse</kbd> o <kbd>touch</kbd> per esplorare</span><span class="footer-divider"></span><span><kbd>Tab</kbd> per navigare i comandi</span><span class="demo-label">VERTICAL SLICE · DEMO 01</span></div>
+          <div class="world-footer">
+            <span><kbd>Mouse</kbd> o <kbd>touch</kbd> per esplorare</span
+            ><span class="footer-divider"></span><span><kbd>Tab</kbd> per navigare i comandi</span
+            ><span class="demo-label">VERTICAL SLICE · DEMO 01</span>
+          </div>
         </section>
 
         <aside class="mission-panel" aria-labelledby="mission-title">
-          <div class="panel-heading"><span class="eyebrow">Il tuo obiettivo</span><span id="progress-fraction" class="progress-fraction">0 / 3</span></div>
+          <div class="panel-heading">
+            <span class="eyebrow">Il tuo obiettivo</span
+            ><span id="progress-fraction" class="progress-fraction">0 / 3</span>
+          </div>
           <h1 id="mission-title">Ridai movimento<br /><span>alla corte.</span></h1>
-          <p id="room-intro" class="room-intro">Tre meccanismi custodiscono il ritmo del palazzo. La matematica è la chiave per riattivarli.</p>
-          <div id="mechanism-list" class="mechanism-list" aria-label="Meccanismi della stanza"></div>
+          <p id="room-intro" class="room-intro">
+            Tre meccanismi custodiscono il ritmo del palazzo. La matematica è la chiave per
+            riattivarli.
+          </p>
+          <div
+            id="mechanism-list"
+            class="mechanism-list"
+            aria-label="Meccanismi della stanza"
+          ></div>
           <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
-          <div class="sand-note"><span class="sand-icon" aria-hidden="true">◈</span><p><strong>Nessuna fretta.</strong><br />Gli errori fanno parte dell'esplorazione. Gli enigmi si possono riprovare.</p></div>
-          <button id="journal-button" class="text-button" type="button"><span aria-hidden="true">⌘</span> Consulta le regole <span aria-hidden="true">→</span></button>
+          <div class="sand-note">
+            <span class="sand-icon" aria-hidden="true">◈</span>
+            <p>
+              <strong>Nessuna fretta.</strong><br />Gli errori fanno parte dell'esplorazione. Gli
+              enigmi si possono riprovare.
+            </p>
+          </div>
+          <button id="journal-button" class="text-button" type="button">
+            <span aria-hidden="true">⌘</span> Consulta le regole <span aria-hidden="true">→</span>
+          </button>
         </aside>
       </main>
 
-      <footer class="site-footer"><span>Una stanza. Tre enigmi. Il calcolo prende vita.</span><span id="save-status"><span class="save-dot" aria-hidden="true"></span> Progresso salvato su questo dispositivo</span></footer>
+      <footer class="site-footer">
+        <span>Una stanza. Tre enigmi. Il calcolo prende vita.</span
+        ><span id="save-status"
+          ><span class="save-dot" aria-hidden="true"></span> Progresso salvato su questo
+          dispositivo</span
+        >
+      </footer>
     </div>
 
     <dialog id="welcome-dialog" class="modal welcome-modal" aria-labelledby="welcome-title">
-      <div class="modal-ornament" aria-hidden="true">✦</div><span class="eyebrow">Il cortile delle fontane · Capitolo I</span>
+      <div class="modal-ornament" aria-hidden="true">✦</div>
+      <span class="eyebrow">Il cortile delle fontane · Capitolo I</span>
       <h2 id="welcome-title">Il tempo ha smesso<br />di scorrere.</h2>
-      <p id="welcome-copy">Le meridiane della corte si sono fermate. Ripristina i tre meccanismi calcolando le derivate che ne governano il movimento.</p>
-      <div class="tutorial-steps"><div><span>01</span><p><strong>Osserva</strong>Seleziona un meccanismo.</p></div><div><span>02</span><p><strong>Deriva</strong>Scrivi liberamente f′(x).</p></div><div><span>03</span><p><strong>Attiva</strong>Guarda il mondo reagire.</p></div></div>
-      <button id="enter-button" class="primary-button" type="button">Entra nella corte <span aria-hidden="true">→</span></button><p class="modal-footnote">Nessun game over · Indizi disponibili · Progresso locale</p>
+      <p id="welcome-copy">
+        Le meridiane della corte si sono fermate. Ripristina i tre meccanismi calcolando le derivate
+        che ne governano il movimento.
+      </p>
+      <div class="tutorial-steps">
+        <div>
+          <span>01</span>
+          <p><strong>Osserva</strong>Seleziona un meccanismo.</p>
+        </div>
+        <div>
+          <span>02</span>
+          <p><strong>Deriva</strong>Scrivi liberamente f′(x).</p>
+        </div>
+        <div>
+          <span>03</span>
+          <p><strong>Attiva</strong>Guarda il mondo reagire.</p>
+        </div>
+      </div>
+      <button id="enter-button" class="primary-button" type="button">
+        Entra nella corte <span aria-hidden="true">→</span>
+      </button>
+      <p class="modal-footnote">Nessun game over · Indizi disponibili · Progresso locale</p>
     </dialog>
 
     <dialog id="puzzle-dialog" class="modal puzzle-modal" aria-labelledby="puzzle-title">
-      <button class="modal-close" id="close-puzzle" type="button" aria-label="Chiudi l'enigma">×</button>
-      <div class="puzzle-topline"><span id="puzzle-step" class="eyebrow"></span><span id="puzzle-difficulty" class="difficulty-label"></span></div>
-      <h2 id="puzzle-title"></h2><p id="puzzle-prompt" class="puzzle-prompt"></p>
-      <div class="formula-board"><span class="formula-label">FUNZIONE DEL MECCANISMO</span><div class="formula-row"><span class="formula-prefix">f(x) =</span><math-field id="function-field" read-only aria-label="Funzione da derivare"></math-field></div></div>
+      <button class="modal-close" id="close-puzzle" type="button" aria-label="Chiudi l'enigma">
+        ×
+      </button>
+      <div class="puzzle-topline">
+        <span id="puzzle-step" class="eyebrow"></span
+        ><span id="puzzle-difficulty" class="difficulty-label"></span>
+      </div>
+      <h2 id="puzzle-title"></h2>
+      <p id="puzzle-prompt" class="puzzle-prompt"></p>
+      <div class="formula-board">
+        <span class="formula-label">FUNZIONE DEL MECCANISMO</span>
+        <div class="formula-row">
+          <span class="formula-prefix">f(x) =</span
+          ><math-field id="function-field" read-only aria-label="Funzione da derivare"></math-field>
+        </div>
+      </div>
       <form id="answer-form" novalidate>
-        <div class="answer-heading"><label id="answer-label">La tua derivata</label><span>Inserimento libero</span></div>
-        <div class="answer-row"><span class="answer-prefix">f′(x) =</span><math-field id="answer-field" aria-labelledby="answer-label" placeholder="?" virtual-keyboard-policy="auto"></math-field></div>
-        <div class="editor-tools"><button id="keyboard-button" class="text-button compact" type="button">⌨ Tastiera matematica</button><span>Potenza: <kbd>^</kbd> · Radice: <kbd>sqrt</kbd></span></div>
-        <div id="verification-feedback" class="feedback" role="status" aria-live="polite" hidden></div>
-        <button id="submit-answer" class="primary-button" type="submit"><span>Verifica e attiva</span><span aria-hidden="true">✦</span></button>
+        <div class="answer-heading">
+          <label id="answer-label">La tua derivata</label><span>Inserimento libero</span>
+        </div>
+        <div class="answer-row">
+          <span class="answer-prefix">f′(x) =</span
+          ><math-field
+            id="answer-field"
+            aria-labelledby="answer-label"
+            placeholder="?"
+            virtual-keyboard-policy="auto"
+          ></math-field>
+        </div>
+        <div class="editor-tools">
+          <button id="keyboard-button" class="text-button compact" type="button">
+            ⌨ Tastiera matematica</button
+          ><span>Potenza: <kbd>^</kbd> · Radice: <kbd>sqrt</kbd></span>
+        </div>
+        <div
+          id="verification-feedback"
+          class="feedback"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+        <button id="submit-answer" class="primary-button" type="submit">
+          <span>Verifica e attiva</span><span aria-hidden="true">✦</span>
+        </button>
       </form>
-      <section class="hints-section" aria-labelledby="hints-title"><div class="hints-heading"><h3 id="hints-title">Hai bisogno di un aiuto?</h3><span id="hint-count">0 / 3</span></div><button id="hint-button" class="hint-button" type="button"><span aria-hidden="true">✧</span><span id="hint-button-label">Rivela il primo indizio</span><span aria-hidden="true">+</span></button><ol id="hint-list" class="hint-list"></ol></section>
-      <p class="score-note">Puoi ottenere fino a 100 punti. Indizi ed errori riducono il punteggio, mai le possibilità di proseguire.</p>
+      <section class="hints-section" aria-labelledby="hints-title">
+        <div class="hints-heading">
+          <h3 id="hints-title">Hai bisogno di un aiuto?</h3>
+          <span id="hint-count">0 / 3</span>
+        </div>
+        <button id="hint-button" class="hint-button" type="button">
+          <span aria-hidden="true">✧</span
+          ><span id="hint-button-label">Rivela il primo indizio</span
+          ><span aria-hidden="true">+</span>
+        </button>
+        <ol id="hint-list" class="hint-list"></ol>
+      </section>
+      <p class="score-note">
+        Puoi ottenere fino a 100 punti. Indizi ed errori riducono il punteggio, mai le possibilità
+        di proseguire.
+      </p>
     </dialog>
 
-    <dialog id="journal-dialog" class="modal journal-modal" aria-labelledby="journal-title"><button class="modal-close" id="close-journal" type="button" aria-label="Chiudi le regole">×</button><span class="eyebrow">Il taccuino del viaggiatore</span><h2 id="journal-title">Regole nel palazzo</h2><p>Un breve richiamo, quando serve.</p><div class="rule-card"><span>Potenza</span><math-field read-only class="rule-formula">\\frac{d}{dx}x^n=n\\cdot x^{n-1}</math-field><p>Moltiplica per l'esponente e riducilo di uno.</p></div><div class="rule-card"><span>Somma</span><math-field read-only class="rule-formula">(f+g)'=f'+g'</math-field><p>Deriva ciascun termine.</p></div><div class="rule-card"><span>Prodotto</span><math-field read-only class="rule-formula">(f\\cdot g)'=f'\\cdot g+f\\cdot g'</math-field><p>Un fattore alla volta, poi somma.</p></div><div class="rule-card"><span>Radice</span><math-field read-only class="rule-formula">\\sqrt{x}=x^{\\frac{1}{2}}</math-field><p>Una radice è una potenza frazionaria.</p></div><p class="journal-note">Suggerimento: puoi inserire la risposta nella forma che preferisci. Il palazzo riconosce le espressioni matematicamente equivalenti.</p></dialog>
+    <dialog id="journal-dialog" class="modal journal-modal" aria-labelledby="journal-title">
+      <button class="modal-close" id="close-journal" type="button" aria-label="Chiudi le regole">
+        ×</button
+      ><span class="eyebrow">Il taccuino del viaggiatore</span>
+      <h2 id="journal-title">Regole nel palazzo</h2>
+      <p>Un breve richiamo, quando serve.</p>
+      <div class="rule-card">
+        <span>Potenza</span
+        ><math-field read-only class="rule-formula">\\frac{d}{dx}x^n=n\\cdot x^{n-1}</math-field>
+        <p>Moltiplica per l'esponente e riducilo di uno.</p>
+      </div>
+      <div class="rule-card">
+        <span>Somma</span><math-field read-only class="rule-formula">(f+g)'=f'+g'</math-field>
+        <p>Deriva ciascun termine.</p>
+      </div>
+      <div class="rule-card">
+        <span>Prodotto</span
+        ><math-field read-only class="rule-formula">(f\\cdot g)'=f'\\cdot g+f\\cdot g'</math-field>
+        <p>Un fattore alla volta, poi somma.</p>
+      </div>
+      <div class="rule-card">
+        <span>Radice</span
+        ><math-field read-only class="rule-formula">\\sqrt{x}=x^{\\frac{1}{2}}</math-field>
+        <p>Una radice è una potenza frazionaria.</p>
+      </div>
+      <p class="journal-note">
+        Suggerimento: puoi inserire la risposta nella forma che preferisci. Il palazzo riconosce le
+        espressioni matematicamente equivalenti.
+      </p>
+    </dialog>
 
-    <dialog id="completion-dialog" class="modal completion-modal" aria-labelledby="completion-title"><div class="completion-burst" aria-hidden="true">✦</div><span class="eyebrow">La corte torna a respirare</span><h2 id="completion-title">La via è aperta.</h2><p id="completion-copy"></p><div class="final-score"><span id="final-score">0</span><small>/ 300 PUNTI</small></div><div class="completion-stats"><div><strong id="final-attempts">0</strong><span>Tentativi</span></div><div><strong id="final-hints">0</strong><span>Indizi</span></div><div><strong id="final-time">0:00</strong><span>Tempo attivo</span></div></div><p class="mastery-note">Il punteggio racconta questa partita, non il tuo apprendimento.</p><button id="close-completion" class="primary-button" type="button">Ammira la corte <span aria-hidden="true">→</span></button><button id="replay-button" class="text-button" type="button">Ricomincia la demo</button></dialog>
+    <dialog
+      id="completion-dialog"
+      class="modal completion-modal"
+      aria-labelledby="completion-title"
+    >
+      <div class="completion-burst" aria-hidden="true">✦</div>
+      <span class="eyebrow">La corte torna a respirare</span>
+      <h2 id="completion-title">La via è aperta.</h2>
+      <p id="completion-copy"></p>
+      <div class="final-score"><span id="final-score">0</span><small>/ 300 PUNTI</small></div>
+      <div class="completion-stats">
+        <div><strong id="final-attempts">0</strong><span>Tentativi</span></div>
+        <div><strong id="final-hints">0</strong><span>Indizi</span></div>
+        <div><strong id="final-time">0:00</strong><span>Tempo attivo</span></div>
+      </div>
+      <p class="mastery-note">Il punteggio racconta questa partita, non il tuo apprendimento.</p>
+      <button id="close-completion" class="primary-button" type="button">
+        Ammira la corte <span aria-hidden="true">→</span></button
+      ><button id="replay-button" class="text-button" type="button">Ricomincia la demo</button>
+    </dialog>
 
-    <dialog id="confirm-dialog" class="modal confirm-modal" aria-labelledby="confirm-title"><span class="eyebrow">Ricominciare</span><h2 id="confirm-title">Cancellare il progresso?</h2><p>Meccanismi, punteggio e indizi torneranno allo stato iniziale.</p><div class="confirm-actions"><button id="cancel-reset" class="secondary-button" type="button">Continua a giocare</button><button id="confirm-reset" class="danger-button" type="button">Sì, ricomincia</button></div></dialog>
+    <dialog id="confirm-dialog" class="modal confirm-modal" aria-labelledby="confirm-title">
+      <span class="eyebrow">Ricominciare</span>
+      <h2 id="confirm-title">Cancellare il progresso?</h2>
+      <p>Meccanismi, punteggio e indizi torneranno allo stato iniziale.</p>
+      <div class="confirm-actions">
+        <button id="cancel-reset" class="secondary-button" type="button">Continua a giocare</button
+        ><button id="confirm-reset" class="danger-button" type="button">Sì, ricomincia</button>
+      </div>
+    </dialog>
 
-    <div id="toast" class="toast" role="status" aria-live="polite" hidden><span id="toast-icon" aria-hidden="true">✦</span><span id="toast-message"></span></div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden>
+      <span id="toast-icon" aria-hidden="true">✦</span><span id="toast-message"></span>
+    </div>
     <script type="module" src="/client/main.ts"></script>
   </body>
 </html>

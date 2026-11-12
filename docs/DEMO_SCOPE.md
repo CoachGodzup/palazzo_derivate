@@ -8,11 +8,11 @@ Flusso: benvenuto → osservazione → primo sigillo → ingranaggi → fontana 
 
 ## Enigmi
 
-| Dispositivo | Funzione | Competenza | Forme da accettare |
-|---|---|---|---|
-| Sigillo solare | `3*x^2-5*x+4` | Potenze e somme | `6*x-5`, `3*2*x-5` |
-| Ingranaggi gemelli | `(3*x^2-2)*(x+1)` | Regola del prodotto | `9*x^2+6*x-2`, `6*x*(x+1)+3*x^2-2` |
-| Fontana del tempo | `3*sqrt(x)+2*x^(3/2)` | Radicali e potenze frazionarie | `3/(2*sqrt(x))+3*sqrt(x)`, `(3+6*x)/(2*sqrt(x))` |
+| Dispositivo        | Funzione              | Competenza                     | Forme da accettare                               |
+| ------------------ | --------------------- | ------------------------------ | ------------------------------------------------ |
+| Sigillo solare     | `3*x^2-5*x+4`         | Potenze e somme                | `6*x-5`, `3*2*x-5`                               |
+| Ingranaggi gemelli | `(3*x^2-2)*(x+1)`     | Regola del prodotto            | `9*x^2+6*x-2`, `6*x*(x+1)+3*x^2-2`               |
+| Fontana del tempo  | `3*sqrt(x)+2*x^(3/2)` | Radicali e potenze frazionarie | `3/(2*sqrt(x))+3*sqrt(x)`, `(3+6*x)/(2*sqrt(x))` |
 
 Le formule e gli indizi sono in `content/demo.json`; la soluzione attesa è calcolata sul server e non viene inviata al client.
 
