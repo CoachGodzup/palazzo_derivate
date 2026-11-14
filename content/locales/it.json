@@ -1,0 +1,244 @@
+{
+  "language": "it",
+  "meta": {
+    "title": "Le Mille e Una Derivata · Demo giocabile",
+    "description": "Una vertical slice giocabile di Le Mille e Una Derivata: attiva tre antichi meccanismi con il calcolo differenziale."
+  },
+  "ui": {
+    "brand": {
+      "aria": "Le Mille e Una Derivata, torna all'inizio",
+      "eyebrow": "Un'avventura nel calcolo",
+      "nameHtml": "Le Mille <i>e Una Derivata</i>"
+    },
+    "chapter": {
+      "number": "I",
+      "label": "Capitolo",
+      "title": "Il cortile delle fontane"
+    },
+    "score": {
+      "aria": "Punteggio attuale"
+    },
+    "audio": {
+      "on": "Disattiva la musica",
+      "off": "Attiva la musica"
+    },
+    "help": "Come si gioca",
+    "reset": "Ricomincia la demo",
+    "world": {
+      "aria": "Il mondo di gioco",
+      "canvasAria": "La Corte delle Meridiane: un cortile notturno con tre meccanismi e una porta sigillata",
+      "stateSuspended": "IL TEMPO È SOSPESO",
+      "stateOpen": "LA PORTA È APERTA"
+    },
+    "loading": {
+      "title": "Il palazzo si desta…",
+      "message": "Preparazione del motore simbolico",
+      "retry": "Riprova",
+      "errorTitle": "La porta resta chiusa",
+      "errorFallback": "Impossibile caricare il palazzo."
+    },
+    "footer": {
+      "explore": "per esplorare",
+      "navigate": "per navigare i comandi",
+      "demoLabel": "VERTICAL SLICE · DEMO 01"
+    },
+    "mission": {
+      "eyebrow": "Il tuo obiettivo",
+      "titleHtml": "Ridai movimento<br /><span>alla corte.</span>",
+      "mechanismsAria": "Meccanismi della stanza",
+      "sandTitle": "Nessuna fretta.",
+      "sandBody": "Gli errori fanno parte dell'esplorazione. Gli enigmi si possono riprovare.",
+      "journal": "Consulta le regole",
+      "journalAria": "Consulta le regole. {count} meccanismi da riattivare"
+    },
+    "siteFooter": {
+      "tagline": "Una stanza. Tre enigmi. Il calcolo prende vita.",
+      "saved": "Progresso salvato su questo dispositivo"
+    },
+    "mechanism": {
+      "enigma": "Enigma {number}",
+      "points": "{score} punti",
+      "ready": "Da attivare",
+      "waiting": "In attesa",
+      "solvedAria": "Attivo, {score} punti",
+      "readyAria": "Da attivare",
+      "waitingAria": "In attesa del meccanismo precedente"
+    },
+    "caption": {
+      "doorOpen": "La porta è aperta. ",
+      "doorOpenStrong": "Attraversa la corte",
+      "doorOpenEnd": " per concludere.",
+      "chooseFirst": "Scegli il ",
+      "chooseNext": "Ora seleziona ",
+      "startEnd": " per iniziare.",
+      "nextEnd": "."
+    },
+    "toast": {
+      "solved": "Ben fatto! «{title}» è tornato in vita.",
+      "solvedFallback": "Ben fatto! Il meccanismo si riattiva.",
+      "locked": "Prima riattiva {title}.",
+      "lockedFallback": "Prima riattiva il meccanismo precedente.",
+      "reset": "La corte è tornata al suo silenzio iniziale."
+    }
+  },
+  "welcome": {
+    "eyebrow": "Il cortile delle fontane · Capitolo I",
+    "title": "Il tempo ha smesso<br />di scorrere.",
+    "resumedTitle": "Il tuo viaggio continua.",
+    "completedTitle": "La corte ti attende.",
+    "enter": "Entra nella corte",
+    "continue": "Continua l'esplorazione",
+    "review": "Rivedi la corte",
+    "footnote": "Nessun game over · Indizi disponibili · Progresso locale",
+    "step1Title": "Osserva",
+    "step1Body": "Seleziona un meccanismo.",
+    "step2Title": "Deriva",
+    "step2Body": "Scrivi liberamente f′(x).",
+    "step3Title": "Attiva",
+    "step3Body": "Guarda il mondo reagire."
+  },
+  "puzzleDialog": {
+    "close": "Chiudi l'enigma",
+    "formulaLabel": "FUNZIONE DEL MECCANISMO",
+    "functionAria": "Funzione da derivare",
+    "answerLabel": "La tua derivata",
+    "freeInput": "Inserimento libero",
+    "keyboard": "⌨ Tastiera matematica",
+    "syntaxHint": "Potenza: <kbd>x^</kbd> · Radice: <kbd>sqrt</kbd>",
+    "hintsTitle": "Hai bisogno di un aiuto?",
+    "scoreNote": "Puoi ottenere fino a 100 punti. Indizi ed errori riducono il punteggio, mai le possibilità di proseguire."
+  },
+  "journal": {
+    "close": "Chiudi le regole",
+    "eyebrow": "Il taccuino del viaggiatore",
+    "title": "Regole nel palazzo",
+    "intro": "Un breve richiamo, quando serve.",
+    "power": "Potenza",
+    "powerBody": "Moltiplica per l'esponente e riducilo di uno.",
+    "sum": "Somma",
+    "sumBody": "Deriva ciascun termine.",
+    "product": "Prodotto",
+    "productBody": "Un fattore alla volta, poi somma.",
+    "root": "Radice",
+    "rootBody": "Una radice è una potenza frazionaria.",
+    "note": "Suggerimento: puoi inserire la risposta nella forma che preferisci. Il palazzo riconosce le espressioni matematicamente equivalenti."
+  },
+  "completion": {
+    "eyebrow": "La corte torna a respirare",
+    "title": "La via è aperta.",
+    "points": "/ 300 PUNTI",
+    "attempts": "Tentativi",
+    "hints": "Indizi",
+    "time": "Tempo attivo",
+    "mastery": "Il punteggio racconta questa partita, non il tuo apprendimento.",
+    "close": "Ammira la corte",
+    "replay": "Ricomincia la demo"
+  },
+  "confirm": {
+    "eyebrow": "Ricominciare",
+    "title": "Cancellare il progresso?",
+    "body": "Meccanismi, punteggio e indizi torneranno allo stato iniziale.",
+    "cancel": "Continua a giocare",
+    "confirm": "Sì, ricomincia"
+  },
+  "math": {
+    "step": "ENIGMA {current} DI {total}",
+    "complexity": "COMPLESSITÀ",
+    "alreadySolved": "Questo meccanismo è già attivo. Puoi rivedere la funzione e gli indizi consultati.",
+    "submit": "Verifica e attiva",
+    "submitDone": "Completato",
+    "emptyAnswer": "Inserisci prima la derivata nel campo matematico.",
+    "comparing": "Il palazzo confronta le forme simboliche…",
+    "errorFallback": "Verifica non disponibile. Riprova.",
+    "successTitle": "Ben fatto!",
+    "successLine": "Esatto, la derivata è corretta.",
+    "successDetail": "Il meccanismo si sta riattivando…",
+    "hintFirst": "Rivela il primo indizio",
+    "hintNext": "Rivela un altro indizio"
+  },
+  "scene": {
+    "select": "SELEZIONA",
+    "active": "ATTIVO",
+    "waiting": "IN ATTESA"
+  },
+  "keyboard": {
+    "label": "Derivate",
+    "tooltip": "Tastiera essenziale per le derivate",
+    "sin": "Seno",
+    "cos": "Coseno",
+    "tan": "Tangente",
+    "ln": "Logaritmo naturale",
+    "log": "Logaritmo",
+    "exp": "Esponenziale",
+    "e": "Numero di Nepero",
+    "pi": "Pi greco",
+    "variable": "Variabile x",
+    "power": "Potenza di x: scrivi solo l'esponente"
+  },
+  "feedback": {
+    "correct": "Corretto: il meccanismo si riattiva!",
+    "incorrect": "La derivata non è equivalente: rivedi la regola applicata e i calcoli.",
+    "productRule": "Hai moltiplicato le derivate dei due fattori. Per un prodotto servono entrambi i contributi: deriva un fattore mentre lasci invariato l'altro.",
+    "puzzleNotFound": "Puzzle non trovato.",
+    "emptyInput": "Inserisci un'espressione matematica.",
+    "tooLong": "L'espressione supera il limite di 240 caratteri.",
+    "invalidCharacters": "L'espressione contiene caratteri o costrutti non supportati.",
+    "invalidNames": "Sono ammessi solo x e le funzioni sqrt, exp, ln, sin e cos.",
+    "numberTooLong": "Un letterale numerico supera il limite consentito.",
+    "parenthesesDepth": "L'espressione ha troppi livelli di parentesi.",
+    "notExpression": "La risposta non è un'espressione matematica supportata.",
+    "extraSymbols": "L'espressione può contenere soltanto la variabile x.",
+    "nonFinite": "NaN e infiniti non sono ammessi.",
+    "tooComplex": "L'espressione supera il limite di complessità.",
+    "unsupportedFunction": "La funzione utilizzata non è supportata.",
+    "nonFiniteNumber": "I numeri devono essere finiti.",
+    "unsupportedNumber": "Il numero utilizzato non è supportato.",
+    "exponentNotConstant": "Sono ammessi soltanto esponenti numerici costanti.",
+    "exponentTooLarge": "L'esponente supera il limite consentito.",
+    "fractionExponentTooLarge": "L'esponente frazionario supera il limite consentito.",
+    "decimalExponentTooLarge": "L'esponente decimale supera il limite consentito.",
+    "unsupportedExponent": "Sono ammessi soltanto esponenti interi, frazionari o decimali.",
+    "syntaxIncomplete": "La sintassi non è completa: controlla parentesi, operatori e frazioni.",
+    "unsupportedConstruct": "L'espressione utilizza un costrutto non supportato.",
+    "engineOffline": "Il motore simbolico non risponde. Verifica che il server FastAPI sia attivo e riprova.",
+    "verifyUnavailable": "La verifica non è disponibile in questo momento."
+  },
+  "content": {
+    "chapter": "Capitolo I · Il cortile delle fontane",
+    "room": "La Corte delle Meridiane",
+    "intro": "Le meridiane della corte si sono fermate e le fontane non seguono più il ritmo del sole. Ripristina i tre meccanismi calcolando le derivate che ne governano il movimento.",
+    "outro": "L'ultimo getto riprende a salire e le ombre tornano a scorrere sulle meridiane. Con un sommesso scatto, la porta della corte si apre verso il prossimo corridoio.",
+    "puzzles": {
+      "c1-sigillo": {
+        "title": "Il sigillo solare",
+        "short_title": "Primo sigillo",
+        "prompt": "La lastra solare reca un'incisione algebrica. Calcola la derivata rispetto a x della funzione mostrata per riallineare il sigillo.",
+        "hints": [
+          "Considera separatamente i tre termini: la derivata di una somma si calcola termine a termine.",
+          "Per ogni potenza di x, porta l'esponente davanti al coefficiente e riducilo di uno; il termine costante non contribuisce.",
+          "Nel termine lineare resta soltanto il coefficiente di x: controlla segni e coefficienti prima di comporre il risultato."
+        ]
+      },
+      "c1-ingranaggi": {
+        "title": "Gli ingranaggi gemelli",
+        "short_title": "Ingranaggi gemelli",
+        "prompt": "I due ingranaggi trasmettono il moto come due fattori moltiplicati. Deriva la funzione rispetto a x senza spezzare il legame tra i fattori.",
+        "hints": [
+          "Riconosci due funzioni moltiplicate: il primo fattore contiene una potenza, il secondo è un binomio.",
+          "Applica la regola del prodotto: deriva un fattore alla volta, lasciando invariato l'altro, poi somma i due contributi.",
+          "Dopo aver derivato i fattori, puoi espandere e raccogliere i termini simili per controllare che i due contributi siano stati inclusi."
+        ]
+      },
+      "c1-fontana": {
+        "title": "La fontana del tempo",
+        "short_title": "Fontana del tempo",
+        "prompt": "Il getto della fontana segue potenze frazionarie e radicali. Trova la derivata rispetto a x per sincronizzare nuovamente il flusso.",
+        "hints": [
+          "Riscrivi la radice quadrata come potenza con esponente 1/2, così ogni addendo ha la stessa struttura.",
+          "Usa la regola delle potenze anche con esponenti frazionari: moltiplica per l'esponente e sottrai 1.",
+          "Nei termini ottenuti compaiono denominatori con radice; riordina i coefficienti senza cambiare il dominio x > 0."
+        ]
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { getLocale, t } from "./i18n";
 import { stubVerifyAnswer } from "./stub";
 import type { DemoContent, VerifyResponse } from "./types";
 
@@ -10,21 +11,19 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
       signal: AbortSignal.timeout(15_000),
     });
   } catch {
-    throw new Error(
-      "Il motore simbolico non risponde. Verifica che il server FastAPI sia attivo e riprova.",
-    );
+    throw new Error(t("feedback.engineOffline"));
   }
 
   if (!response.ok) {
     const body = (await response.json().catch(() => null)) as { detail?: string } | null;
-    throw new Error(body?.detail ?? "La verifica non è disponibile in questo momento.");
+    throw new Error(body?.detail ?? t("feedback.verifyUnavailable"));
   }
   return (await response.json()) as T;
 }
 
 export async function fetchDemo(): Promise<DemoContent> {
   try {
-    return await request<DemoContent>("/api/demo");
+    return await request<DemoContent>(`/api/demo?lang=${encodeURIComponent(getLocale())}`);
   } catch (error) {
     const response = await fetch(`${import.meta.env.BASE_URL}demo.json`);
     if (!response.ok) throw error;
@@ -36,7 +35,7 @@ export async function verifyAnswer(puzzleId: string, answer: string): Promise<Ve
   try {
     return await request<VerifyResponse>(`/api/puzzles/${encodeURIComponent(puzzleId)}/verify`, {
       method: "POST",
-      body: JSON.stringify({ answer }),
+      body: JSON.stringify({ answer, lang: getLocale() }),
     });
   } catch {
     return stubVerifyAnswer(puzzleId, answer);

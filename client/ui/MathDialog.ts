@@ -1,7 +1,8 @@
 import "mathlive";
 import type { MathfieldElement } from "mathlive";
+import { t } from "../i18n";
 import type { Puzzle, PuzzleProgress, VerifyResponse } from "../types";
-import { virtualKeyboardLayouts } from "./keyboard";
+import { createVirtualKeyboardLayouts } from "./keyboard";
 
 interface MathDialogCallbacks {
   onSubmit: (answer: string) => Promise<VerifyResponse>;
@@ -40,7 +41,7 @@ export class MathDialog {
     this.answer.mathVirtualKeyboardPolicy = "auto";
     const virtualKeyboard = window.mathVirtualKeyboard;
     virtualKeyboard.container = this.dialog;
-    virtualKeyboard.layouts = [...virtualKeyboardLayouts];
+    virtualKeyboard.layouts = [...createVirtualKeyboardLayouts()];
     const syncKeyboardSpace = (): void => {
       const open = virtualKeyboard.visible;
       this.dialog.style.paddingBottom = open ? `${virtualKeyboard.boundingRect.height}px` : "";
@@ -89,16 +90,19 @@ export class MathDialog {
   open(puzzle: Puzzle): void {
     this.puzzle = puzzle;
     this.submitting = false;
-    this.element("puzzle-step").textContent = `ENIGMA ${puzzle.order} DI 3`;
+    this.element("puzzle-step").textContent = t("math.step", {
+      current: puzzle.order,
+      total: 3,
+    });
     this.element("puzzle-difficulty").textContent =
-      `${"◆".repeat(puzzle.difficulty)}${"◇".repeat(3 - puzzle.difficulty)} COMPLESSITÀ`;
+      `${"◆".repeat(puzzle.difficulty)}${"◇".repeat(3 - puzzle.difficulty)} ${t("math.complexity")}`;
     this.element("puzzle-title").textContent = puzzle.title;
     this.element("puzzle-prompt").textContent = puzzle.prompt;
     this.functionField.setValue(puzzle.function_latex);
     this.answer.setValue("");
     this.answer.disabled = false;
     this.submit.disabled = false;
-    this.changeSubmitLabel("Verifica e attiva", "✦");
+    this.changeSubmitLabel(t("math.submit"), "✦");
     this.feedback.hidden = true;
     this.resetAnswerState();
     this.renderHints();
@@ -108,8 +112,7 @@ export class MathDialog {
       this.submit.disabled = true;
       this.showFeedback({
         status: "correct",
-        message:
-          "Questo meccanismo è già attivo. Puoi rivedere la funzione e gli indizi consultati.",
+        message: t("math.alreadySolved"),
         feedback_category: null,
       });
     } else {
@@ -139,14 +142,14 @@ export class MathDialog {
     const allRevealed = progress.hintsUsed >= this.puzzle.hints.length;
     button.hidden = allRevealed || progress.solved;
     this.element("hint-button-label").textContent =
-      progress.hintsUsed === 0 ? "Rivela il primo indizio" : "Rivela un altro indizio";
+      progress.hintsUsed === 0 ? t("math.hintFirst") : t("math.hintNext");
   }
 
   private async submitAnswer(): Promise<void> {
     if (!this.puzzle || this.submitting || this.callbacks.getProgress().solved) return;
     const answer = this.answer.getValue("ascii-math").trim();
     if (!answer || answer === "?") {
-      this.showRawFeedback("syntax_error", "Inserisci prima la derivata nel campo matematico.");
+      this.showRawFeedback("syntax_error", t("math.emptyAnswer"));
       this.playError();
       this.answer.focus();
       return;
@@ -157,7 +160,7 @@ export class MathDialog {
     this.answer.disabled = true;
     this.feedback.hidden = false;
     this.feedback.className = "feedback";
-    this.feedback.textContent = "Il palazzo confronta le forme simboliche…";
+    this.feedback.textContent = t("math.comparing");
     try {
       const result = await this.callbacks.onSubmit(answer);
       this.showFeedback(result);
@@ -169,7 +172,7 @@ export class MathDialog {
     } catch (error) {
       this.showRawFeedback(
         "error",
-        error instanceof Error ? error.message : "Verifica non disponibile. Riprova.",
+        error instanceof Error ? error.message : t("math.errorFallback"),
       );
       this.answer.disabled = false;
       this.submit.disabled = false;
@@ -198,18 +201,18 @@ export class MathDialog {
     copy.className = "feedback-copy";
     const title = document.createElement("strong");
     title.className = "feedback-title";
-    title.textContent = "Ben fatto!";
+    title.textContent = t("math.successTitle");
     const line = document.createElement("span");
-    line.textContent = "Esatto, la derivata è corretta.";
+    line.textContent = t("math.successLine");
     const detail = document.createElement("span");
     detail.className = "feedback-detail";
-    detail.textContent = "Il meccanismo si sta riattivando…";
+    detail.textContent = t("math.successDetail");
     detail.title = serverMessage;
     copy.append(title, line, detail);
     this.feedback.append(icon, copy);
     this.feedback.hidden = false;
     this.answerRow.classList.add("is-correct");
-    this.changeSubmitLabel("Completato", "✓");
+    this.changeSubmitLabel(t("math.submitDone"), "✓");
     this.spawnSparks();
   }
 

@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { selectMechanism } from "../events";
+import { getLocale, t } from "../i18n";
 import type { GameProgress, Puzzle } from "../types";
 
 const GOLD = 0xd5ae62;
@@ -25,6 +26,8 @@ export class CourtyardScene extends Phaser.Scene {
   private doorRight?: Phaser.GameObjects.Container;
   private doorLight?: Phaser.GameObjects.Graphics;
   private doorLock?: Phaser.GameObjects.Container;
+  private roomLabel?: Phaser.GameObjects.Text;
+  private roomName = "";
   private readonly stateLabels = new Map<string, Phaser.GameObjects.Text>();
   private readonly markers = new Map<string, Phaser.GameObjects.Container>();
   private hotspotsCreated = false;
@@ -33,8 +36,10 @@ export class CourtyardScene extends Phaser.Scene {
     super("courtyard");
   }
 
-  setContent(puzzles: Puzzle[]): void {
+  setContent(puzzles: Puzzle[], roomName: string): void {
     this.puzzles = puzzles;
+    this.roomName = roomName;
+    this.roomLabel?.setText(this.sceneTitle());
     if (!this.scene.isActive()) return;
     this.drawLabels();
     if (!this.hotspotsCreated) {
@@ -63,7 +68,7 @@ export class CourtyardScene extends Phaser.Scene {
       this.doorRight.setX(640);
     }
     for (const puzzle of this.puzzles) {
-      this.stateLabels.get(puzzle.id)?.setText("SELEZIONA").setColor("#76acae");
+      this.stateLabels.get(puzzle.id)?.setText(t("scene.select")).setColor("#76acae");
       this.markers.get(puzzle.id)?.setAlpha(1);
     }
   }
@@ -76,7 +81,13 @@ export class CourtyardScene extends Phaser.Scene {
       const solved = progress.puzzles[puzzle.id]?.solved ?? false;
       this.stateLabels
         .get(puzzle.id)
-        ?.setText(solved ? "ATTIVO" : this.isUnlocked(puzzle.id) ? "SELEZIONA" : "IN ATTESA");
+        ?.setText(
+          solved
+            ? t("scene.active")
+            : this.isUnlocked(puzzle.id)
+              ? t("scene.select")
+              : t("scene.waiting"),
+        );
       this.updateMarker(puzzle.id);
       if (!solved || this.activated.has(puzzle.id)) continue;
       this.activated.add(puzzle.id);
@@ -198,13 +209,18 @@ export class CourtyardScene extends Phaser.Scene {
     floor.strokeEllipse(640, 626, 600, 140);
     floor.strokeEllipse(640, 626, 510, 108);
 
-    this.add
-      .text(640, 43, "✦   L A   C O R T E   D E L L E   M E R I D I A N E   ✦", {
+    this.roomLabel = this.add
+      .text(640, 43, this.sceneTitle(), {
         fontFamily: "Georgia, serif",
         fontSize: "16px",
         color: "#bda776",
       })
       .setOrigin(0.5);
+  }
+
+  private sceneTitle(): string {
+    const room = (this.roomName || t("content.room")).toLocaleUpperCase(getLocale());
+    return `✦   ${[...room].join(" ")}   ✦`;
   }
 
   private drawDoor(): void {
@@ -557,7 +573,7 @@ export class CourtyardScene extends Phaser.Scene {
           )
           .setOrigin(0.5);
         const status = this.add
-          .text(0, 31, "SELEZIONA", {
+          .text(0, 31, t("scene.select"), {
             fontFamily: "Arial, sans-serif",
             fontSize: "9px",
             color: "#76acae",

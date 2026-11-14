@@ -48,14 +48,20 @@ _ALLOWED_FUNCTIONS = {sp.sin, sp.cos, sp.exp, sp.log}
 
 
 class ExpressionError(ValueError):
-    def __init__(self, status: Literal["syntax_error", "unsupported_expression"], message: str):
-        super().__init__(message)
+    """Errore con una chiave di testo, tradotta dal livello API."""
+
+    def __init__(
+        self,
+        status: Literal["syntax_error", "unsupported_expression"],
+        key: str,
+    ):
+        super().__init__(key)
         self.status = status
-        self.message = message
+        self.key = key
 
 
-def _unsupported(message: str) -> ExpressionError:
-    return ExpressionError("unsupported_expression", message)
+def _unsupported(key: str) -> ExpressionError:
+    return ExpressionError("unsupported_expression", key)
 
 
 def _normalize_source(source: str) -> str:
@@ -64,27 +70,27 @@ def _normalize_source(source: str) -> str:
 
 def _check_source(source: str) -> None:
     if not source.strip():
-        raise ExpressionError("syntax_error", "Inserisci un'espressione matematica.")
+        raise ExpressionError("syntax_error", "emptyInput")
     if len(source) > MAX_EXPRESSION_LENGTH:
-        raise _unsupported("L'espressione supera il limite di 240 caratteri.")
+        raise _unsupported("tooLong")
     if _ALLOWED_CHARACTERS.fullmatch(source) is None:
-        raise _unsupported("L'espressione contiene caratteri o costrutti non supportati.")
+        raise _unsupported("invalidCharacters")
 
     for match in _NAME.finditer(source):
         if match.group() not in _ALLOWED_NAMES:
-            raise _unsupported("Sono ammessi solo x e le funzioni sqrt, exp, ln, sin e cos.")
+            raise _unsupported("invalidNames")
 
     for match in _NUMBER.finditer(source):
         digits = match.group().replace(".", "")
         if len(digits) > MAX_LITERAL_DIGITS:
-            raise _unsupported("Un letterale numerico supera il limite consentito.")
+            raise _unsupported("numberTooLong")
 
     depth = 0
     for character in source:
         if character == "(":
             depth += 1
             if depth > MAX_PARENTHESES_DEPTH:
-                raise _unsupported("L'espressione ha troppi livelli di parentesi.")
+                raise _unsupported("parenthesesDepth")
         elif character == ")":
             depth -= 1
             if depth < 0:
@@ -93,49 +99,49 @@ def _check_source(source: str) -> None:
 
 def _check_expression(expression: object) -> sp.Expr:
     if not isinstance(expression, sp.Expr):
-        raise _unsupported("La risposta non è un'espressione matematica supportata.")
+        raise _unsupported("notExpression")
     if expression.free_symbols - {_X}:
-        raise _unsupported("L'espressione può contenere soltanto la variabile x.")
+        raise _unsupported("extraSymbols")
     if expression.has(sp.nan, sp.oo, -sp.oo, sp.zoo):
-        raise _unsupported("NaN e infiniti non sono ammessi.")
+        raise _unsupported("nonFinite")
 
     nodes = 0
     for _ in sp.preorder_traversal(expression):
         nodes += 1
         if nodes > MAX_NODES:
-            raise _unsupported("L'espressione supera il limite di complessità.")
+            raise _unsupported("tooComplex")
 
     for function in expression.atoms(sp.Function):
         if function.func not in _ALLOWED_FUNCTIONS:
-            raise _unsupported("La funzione utilizzata non è supportata.")
+            raise _unsupported("unsupportedFunction")
 
     for number in expression.atoms(sp.Number):
         if isinstance(number, sp.Float) and not number.is_finite:
-            raise _unsupported("I numeri devono essere finiti.")
+            raise _unsupported("nonFiniteNumber")
         try:
             if abs(number) > MAX_ABS_NUMBER:
-                raise _unsupported("Un letterale numerico supera il limite consentito.")
+                raise _unsupported("numberTooLong")
         except TypeError as error:
-            raise _unsupported("Il numero utilizzato non è supportato.") from error
+            raise _unsupported("unsupportedNumber") from error
 
     for power in expression.atoms(sp.Pow):
         exponent = power.exp
         if exponent.free_symbols or not exponent.is_number:
-            raise _unsupported("Sono ammessi soltanto esponenti numerici costanti.")
+            raise _unsupported("exponentNotConstant")
         if exponent.is_Integer:
             if abs(exponent) > MAX_ABS_EXPONENT:
-                raise _unsupported("L'esponente supera il limite consentito.")
+                raise _unsupported("exponentTooLarge")
         elif exponent.is_Rational:
             if (
                 abs(exponent.p) > MAX_ABS_EXPONENT
                 or exponent.q > MAX_EXPONENT_DENOMINATOR
             ):
-                raise _unsupported("L'esponente frazionario supera il limite consentito.")
+                raise _unsupported("fractionExponentTooLarge")
         elif exponent.is_Float:
             if not exponent.is_finite or abs(exponent) > MAX_ABS_EXPONENT:
-                raise _unsupported("L'esponente decimale supera il limite consentito.")
+                raise _unsupported("decimalExponentTooLarge")
         else:
-            raise _unsupported("Sono ammessi soltanto esponenti interi, frazionari o decimali.")
+            raise _unsupported("unsupportedExponent")
 
     return expression
 
@@ -153,10 +159,7 @@ def parse_expression(source: str) -> sp.Expr:
             evaluate=True,
         )
     except (SyntaxError, tokenize.TokenError, IndentationError) as error:
-        raise ExpressionError(
-            "syntax_error",
-            "La sintassi non è completa: controlla parentesi, operatori e frazioni.",
-        ) from error
+        raise ExpressionError("syntax_error", "syntaxIncomplete") from error
     except (
         SympifyError,
         NameError,
@@ -167,7 +170,7 @@ def parse_expression(source: str) -> sp.Expr:
         NotImplementedError,
         RecursionError,
     ) as error:
-        raise _unsupported("L'espressione utilizza un costrutto non supportato.") from error
+        raise _unsupported("unsupportedConstruct") from error
     return _check_expression(expression)
 
 
@@ -186,10 +189,31 @@ def _is_zero(expression: sp.Expr) -> bool:
     return expression == sp.S.Zero or expression.is_zero is True
 
 
+def _exact_literals(expression: sp.Expr) -> sp.Expr:
+    """Riporta i letterali decimali alla frazione esatta che rappresentano.
+
+    ``0.5`` e ``1.5`` sono scritture di ``1/2`` e ``3/2``: senza questa
+    normalizzazione SymPy le tiene come ``Float`` e non le riconduce a
+    ``sqrt(x)``, così una risposta corretta ma scritta con esponenti o
+    coefficienti decimali verrebbe rifiutata. La conversione parte dalla
+    rappresentazione decimale del letterale, quindi non introduce tolleranze
+    né campionamenti.
+    """
+    replacements: dict[sp.Float, sp.Rational] = {}
+    for number in expression.atoms(sp.Float):
+        if not number.is_finite:
+            continue
+        try:
+            replacements[number] = sp.Rational(str(number))
+        except (TypeError, ValueError):
+            continue
+    return expression.xreplace(replacements) if replacements else expression
+
+
 def expressions_equivalent(left: sp.Expr, right: sp.Expr) -> bool:
     """Confronto simbolico, senza campionamento né semplificazioni force."""
-    difference = left - right
-    simplifiers = [sp.expand, sp.cancel, sp.radsimp]
+    difference = _exact_literals(left) - _exact_literals(right)
+    simplifiers = [sp.expand, sp.cancel, sp.radsimp, sp.ratsimp]
     if difference.has(sp.sin, sp.cos):
         simplifiers.append(lambda value: sp.trigsimp(sp.expand(value)))
     simplifiers.append(sp.simplify)

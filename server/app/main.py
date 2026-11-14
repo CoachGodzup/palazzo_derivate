@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.content import get_content
+from app.i18n import DEFAULT_LOCALE, message, resolve_locale
 from app.schemas import HealthResponse, PublicDemo, VerifyRequest, VerifyResponse
 from app.symbolic import (
     ExpressionError,
@@ -28,22 +29,23 @@ def health() -> HealthResponse:
 
 
 @app.get("/api/demo", response_model=PublicDemo)
-def demo() -> PublicDemo:
-    return get_content().to_public()
+def demo(lang: str = DEFAULT_LOCALE) -> PublicDemo:
+    return get_content(resolve_locale(lang)).to_public()
 
 
 @app.post("/api/puzzles/{puzzle_id}/verify", response_model=VerifyResponse)
 def verify_answer(puzzle_id: str, request: VerifyRequest) -> VerifyResponse:
-    puzzle = next((item for item in get_content().puzzles if item.id == puzzle_id), None)
+    lang = resolve_locale(request.lang)
+    puzzle = next((item for item in get_content(lang).puzzles if item.id == puzzle_id), None)
     if puzzle is None:
-        raise HTTPException(status_code=404, detail="Puzzle non trovato.")
+        raise HTTPException(status_code=404, detail=message("puzzleNotFound", lang))
 
     try:
         answer = parse_expression(request.answer)
     except ExpressionError as error:
         return VerifyResponse(
             status=error.status,
-            message=error.message,
+            message=message(error.key, lang),
             feedback_category=None,
         )
 
@@ -51,7 +53,7 @@ def verify_answer(puzzle_id: str, request: VerifyRequest) -> VerifyResponse:
     if expressions_equivalent(answer, expected):
         return VerifyResponse(
             status="correct",
-            message="Corretto: il meccanismo si riattiva!",
+            message=message("correct", lang),
             feedback_category=None,
         )
 
@@ -60,15 +62,12 @@ def verify_answer(puzzle_id: str, request: VerifyRequest) -> VerifyResponse:
     ):
         return VerifyResponse(
             status="incorrect",
-            message=(
-                "Hai moltiplicato le derivate dei due fattori. Per un prodotto servono "
-                "entrambi i contributi: deriva un fattore mentre lasci invariato l'altro."
-            ),
+            message=message("productRule", lang),
             feedback_category="product_rule",
         )
 
     return VerifyResponse(
         status="incorrect",
-        message="La derivata non è equivalente: rivedi la regola applicata e i calcoli.",
+        message=message("incorrect", lang),
         feedback_category=None,
     )

@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { derivativeKeyboardLayout, virtualKeyboardLayouts } from "../client/ui/keyboard";
+import {
+  createDerivativeKeyboardLayout,
+  createVirtualKeyboardLayouts,
+} from "../client/ui/keyboard";
 
-type Keycap = (typeof derivativeKeyboardLayout.rows)[number][number];
+type Keycap = ReturnType<typeof createDerivativeKeyboardLayout>["rows"][number][number];
+
+const derivativeKeyboardLayout = createDerivativeKeyboardLayout();
 
 function keycapValue(keycap: Keycap): string {
   if (typeof keycap === "string") return keycap;
@@ -15,8 +20,9 @@ function keycapValues(): string[] {
 
 describe("tastiera delle derivate", () => {
   it("mantiene la tastiera completa come seconda tab", () => {
-    expect(virtualKeyboardLayouts[0]).toBe(derivativeKeyboardLayout);
-    expect(virtualKeyboardLayouts[1]).toBe("default");
+    const layouts = createVirtualKeyboardLayouts();
+    expect(layouts[0]).toEqual(derivativeKeyboardLayout);
+    expect(layouts[1]).toBe("default");
     expect(derivativeKeyboardLayout.label).toBe("Derivate");
   });
 

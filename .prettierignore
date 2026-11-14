@@ -13,3 +13,4 @@ package-lock.json
 content/demo.json
 Il_Palazzo_delle_Derivate_GDD_v1.1.md
 transcript_architecture_requirements.md
+.playwright-mcp/

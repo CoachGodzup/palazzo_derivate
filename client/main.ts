@@ -2,6 +2,7 @@ import "./styles.css";
 import { AmbientMusic } from "./audio/AmbientMusic";
 import { createCourtyard } from "./game/CourtyardScene";
 import { gameEvents } from "./events";
+import { getLocale, initI18n, t } from "./i18n";
 import { fetchDemo, verifyAnswer } from "./services";
 import { ProgressStore } from "./state/ProgressStore";
 import { MathDialog } from "./ui/MathDialog";
@@ -24,6 +25,7 @@ let store: ProgressStore;
 let activePuzzleId: string | null = null;
 let toastTimer = 0;
 let completionTimer = 0;
+initI18n();
 const courtyard = createCourtyard();
 const music = new AmbientMusic(window.localStorage);
 
@@ -52,7 +54,7 @@ const mathDialog = new MathDialog({
       courtyard.syncProgress(store.snapshot, puzzleId);
       const puzzle = content.puzzles.find((item) => item.id === puzzleId);
       showToast(
-        `Ben fatto! ${puzzle ? `«${puzzle.short_title}» è tornato in vita.` : "Il meccanismo si riattiva."}`,
+        puzzle ? t("ui.toast.solved", { title: puzzle.short_title }) : t("ui.toast.solvedFallback"),
         "✓",
         "success",
       );
@@ -85,7 +87,13 @@ function renderMechanisms(): void {
     button.disabled = !unlocked;
     button.setAttribute(
       "aria-label",
-      `${puzzle.short_title}. ${progress.solved ? `Attivo, ${progress.score} punti` : unlocked ? "Da attivare" : "In attesa del meccanismo precedente"}`,
+      `${puzzle.short_title}. ${
+        progress.solved
+          ? t("ui.mechanism.solvedAria", { score: progress.score })
+          : unlocked
+            ? t("ui.mechanism.readyAria")
+            : t("ui.mechanism.waitingAria")
+      }`,
     );
     button.addEventListener("click", () => openPuzzle(puzzle.id));
 
@@ -97,16 +105,18 @@ function renderMechanisms(): void {
     const copy = document.createElement("span");
     copy.className = "mechanism-copy";
     const label = document.createElement("small");
-    label.textContent = `Enigma 0${index + 1}`;
+    label.textContent = t("ui.mechanism.enigma", {
+      number: String(index + 1).padStart(2, "0"),
+    });
     const title = document.createElement("strong");
     title.textContent = puzzle.short_title;
     const status = document.createElement("span");
     status.className = "mechanism-score";
     status.textContent = progress.solved
-      ? `${progress.score} punti`
+      ? t("ui.mechanism.points", { score: progress.score })
       : unlocked
-        ? "Da attivare"
-        : "In attesa";
+        ? t("ui.mechanism.ready")
+        : t("ui.mechanism.waiting");
     copy.append(label, title, status);
 
     const arrow = document.createElement("span");
@@ -121,8 +131,8 @@ function renderMechanisms(): void {
   element("progress-bar").style.width = `${(solvedCount / content.puzzles.length) * 100}%`;
   element("hud-score").textContent = String(store.stats.totalScore);
   element("scene-state").textContent = snapshot.completed
-    ? "LA PORTA È APERTA"
-    : "IL TEMPO È SOSPESO";
+    ? t("ui.world.stateOpen")
+    : t("ui.world.stateSuspended");
 }
 
 function updateCaption(): void {
@@ -136,15 +146,15 @@ function updateCaption(): void {
   const snapshot = store.snapshot;
   const next = content.puzzles.find((puzzle) => !snapshot.puzzles[puzzle.id].solved);
   if (snapshot.completed) {
-    text.append("La porta è aperta. ");
+    text.append(t("ui.caption.doorOpen"));
     const strong = document.createElement("strong");
-    strong.textContent = "Attraversa la corte";
-    text.append(strong, " per concludere.");
+    strong.textContent = t("ui.caption.doorOpenStrong");
+    text.append(strong, t("ui.caption.doorOpenEnd"));
   } else if (next) {
-    text.append(next.order === 1 ? "Scegli il " : "Ora seleziona ");
+    text.append(next.order === 1 ? t("ui.caption.chooseFirst") : t("ui.caption.chooseNext"));
     const strong = document.createElement("strong");
-    strong.textContent = next.short_title.toLowerCase();
-    text.append(strong, next.order === 1 ? " per iniziare." : ".");
+    strong.textContent = next.short_title.toLocaleLowerCase(getLocale());
+    text.append(strong, next.order === 1 ? t("ui.caption.startEnd") : t("ui.caption.nextEnd"));
   }
   caption.append(rune, text);
 }
@@ -156,9 +166,11 @@ function showWelcome(): void {
   const button = element<HTMLButtonElement>("enter-button");
   if (stats.solved > 0) {
     element("welcome-title").textContent =
-      stats.solved === content.puzzles.length ? "La corte ti attende." : "Il tuo viaggio continua.";
-    button.firstChild!.textContent =
-      stats.solved === content.puzzles.length ? "Rivedi la corte " : "Continua l'esplorazione ";
+      stats.solved === content.puzzles.length
+        ? t("welcome.completedTitle")
+        : t("welcome.resumedTitle");
+    button.firstElementChild!.textContent =
+      stats.solved === content.puzzles.length ? t("welcome.review") : t("welcome.continue");
   }
   welcomeDialog.showModal();
   button.focus();
@@ -185,7 +197,12 @@ function openPuzzle(puzzleId: string): void {
   if (!puzzle) return;
   if (!store.isUnlocked(puzzleId)) {
     const previous = content.puzzles[puzzle.order - 2];
-    showToast(`Prima riattiva ${previous?.short_title ?? "il meccanismo precedente"}.`, "◈");
+    showToast(
+      previous
+        ? t("ui.toast.locked", { title: previous.short_title })
+        : t("ui.toast.lockedFallback"),
+      "◈",
+    );
     return;
   }
   activePuzzleId = puzzleId;
@@ -219,7 +236,7 @@ function resetDemo(): void {
   updateCaption();
   welcomeDialog.showModal();
   element("enter-button").focus();
-  showToast("La corte è tornata al suo silenzio iniziale.", "↻");
+  showToast(t("ui.toast.reset"), "↻");
 }
 
 function showToast(message: string, icon = "✦", variant?: "success"): void {
@@ -246,7 +263,7 @@ function formatTime(totalSeconds: number): string {
 function renderAudioButton(): void {
   const button = element<HTMLButtonElement>("audio-button");
   const playing = music.isEnabled && music.isPlaying;
-  const label = playing ? "Disattiva la musica" : "Attiva la musica";
+  const label = playing ? t("ui.audio.on") : t("ui.audio.off");
   button.classList.toggle("is-muted", !playing);
   button.setAttribute("aria-pressed", String(playing));
   button.setAttribute("aria-label", label);
@@ -302,11 +319,12 @@ function bindInterface(): void {
 
 function hydrateContent(): void {
   element("room-intro").textContent = content.intro;
+  element("scene-room").textContent = content.room.toLocaleUpperCase(getLocale());
   element<HTMLButtonElement>("journal-button").setAttribute(
     "aria-label",
-    `Consulta le regole. ${content.puzzles.length} meccanismi da riattivare`,
+    t("ui.mission.journalAria", { count: content.puzzles.length }),
   );
-  courtyard.setContent(content.puzzles);
+  courtyard.setContent(content.puzzles, content.room);
   courtyard.syncProgress(store.snapshot);
   store.subscribe(() => renderMechanisms());
   renderMechanisms();
@@ -322,9 +340,9 @@ async function start(): Promise<void> {
     bindInterface();
     hydrateContent();
   } catch (error) {
-    element("loading-title").textContent = "La porta resta chiusa";
+    element("loading-title").textContent = t("ui.loading.errorTitle");
     element("loading-message").textContent =
-      error instanceof Error ? error.message : "Impossibile caricare il palazzo.";
+      error instanceof Error ? error.message : t("ui.loading.errorFallback");
     element<HTMLButtonElement>("retry-button").hidden = false;
     element<HTMLButtonElement>("retry-button").focus();
   }

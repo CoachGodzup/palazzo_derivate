@@ -12,3 +12,5 @@ artifacts/*.png
 artifacts/*.webm
 *.log
 .DS_Store
+
+.playwright-mcp/

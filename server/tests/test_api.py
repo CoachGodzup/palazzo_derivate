@@ -19,8 +19,11 @@ PUBLIC_PUZZLE_KEYS = {
 }
 
 
-def verify(client, puzzle_id: str, answer: str):
-    response = client.post(f"/api/puzzles/{puzzle_id}/verify", json={"answer": answer})
+def verify(client, puzzle_id: str, answer: str, lang: str | None = None):
+    payload = {"answer": answer}
+    if lang is not None:
+        payload["lang"] = lang
+    response = client.post(f"/api/puzzles/{puzzle_id}/verify", json=payload)
     assert response.status_code == 200
     assert set(response.json()) == {"status", "message", "feedback_category"}
     return response.json()
@@ -59,6 +62,28 @@ def test_content_loads_independently_from_cwd(monkeypatch):
         "c1-ingranaggi",
         "c1-fontana",
     ]
+
+
+def test_demo_falls_back_to_italian_for_unknown_language(client):
+    response = client.get("/api/demo?lang=xx")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["chapter"] == "Capitolo I · Il cortile delle fontane"
+    assert payload["puzzles"][0]["title"] == "Il sigillo solare"
+
+
+def test_feedback_comes_from_the_language_catalog(client):
+    result = verify(client, "c1-sigillo", "6x+", lang="it")
+    assert result["status"] == "syntax_error"
+    assert result["message"] == (
+        "La sintassi non è completa: controlla parentesi, operatori e frazioni."
+    )
+
+
+def test_unknown_language_on_verify_uses_italian(client):
+    result = verify(client, "c1-sigillo", "6*x-5", lang="xx")
+    assert result["status"] == "correct"
+    assert result["message"] == "Corretto: il meccanismo si riattiva!"
 
 
 @pytest.mark.parametrize("answer", ["6*x-5", "6x - 5", "-5+6*x"])

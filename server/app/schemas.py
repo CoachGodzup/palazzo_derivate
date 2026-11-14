@@ -33,10 +33,57 @@ class PublicDemo(BaseModel):
     puzzles: list[PublicPuzzle]
 
 
-class Puzzle(PublicPuzzle):
+class PuzzleStructure(BaseModel):
+    """Dati non testuali di un enigma, definiti in content/demo.json."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(min_length=1, max_length=80, pattern=r"^[a-z0-9-]+$")
+    order: int = Field(ge=1, le=3)
+    mechanism: Literal["seal", "gears", "fountain"]
     function_sympy: str = Field(min_length=1, max_length=240, repr=False)
+    function_latex: str = Field(min_length=1, max_length=600)
     derivative_sympy: str = Field(min_length=1, max_length=240, repr=False)
+    target_seconds: int = Field(gt=0, le=3600)
+    difficulty: int = Field(ge=1, le=3)
     feedback_profile: Literal["power_rule", "product_rule", "radical_rule"]
+
+
+class DemoStructure(BaseModel):
+    """Struttura della demo senza testi, che vivono nel catalogo di lingua."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    version: str = Field(min_length=1, max_length=40)
+    puzzles: list[PuzzleStructure] = Field(min_length=3, max_length=3)
+
+
+class PuzzleTexts(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    title: str = Field(min_length=1, max_length=160)
+    short_title: str = Field(min_length=1, max_length=80)
+    prompt: str = Field(min_length=1, max_length=1200)
+    hints: list[str] = Field(min_length=3, max_length=3)
+
+
+class ContentTexts(BaseModel):
+    """Testi narrativi della demo, tradotti nel catalogo di lingua."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    chapter: str = Field(min_length=1, max_length=200)
+    room: str = Field(min_length=1, max_length=200)
+    intro: str = Field(min_length=1, max_length=1600)
+    outro: str = Field(min_length=1, max_length=1600)
+    puzzles: dict[str, PuzzleTexts]
+
+
+class Puzzle(PuzzleStructure):
+    title: str = Field(min_length=1, max_length=160)
+    short_title: str = Field(min_length=1, max_length=80)
+    prompt: str = Field(min_length=1, max_length=1200)
+    hints: list[str] = Field(min_length=3, max_length=3)
 
 
 class DemoContent(BaseModel):
@@ -78,6 +125,7 @@ class VerifyRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     answer: str = Field(max_length=240)
+    lang: str = Field(default="it", max_length=10)
 
 
 class VerifyResponse(BaseModel):

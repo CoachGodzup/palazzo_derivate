@@ -50,4 +50,5 @@ Il workflow di deploy Pages resta separato e non esegue i test.
 - I test `@smoke` sono i percorsi che rompono il gioco se falliscono (feedback, verifica simbolica, avanzamento, porta), non i controlli puramente visivi.
 - Quando si aggiunge una modifica critica al gameplay, si tagga un solo test rappresentativo come `@smoke`; la copertura completa resta in CI.
 - Se un test smoke diventa lento o instabile, si sposta l'ambito in CI invece di duplicarlo in locale.
+- Ogni nuova scritta passa da `content/locales/it.json`; `tests/i18n.test.ts` verifica che le chiavi usate nel client e in `index.html` esistano e che gli enigmi restino allineati a `content/demo.json`.
 - La suite completa in CI è la fonte di verità: un test verde in locale non sostituisce il risultato del workflow.

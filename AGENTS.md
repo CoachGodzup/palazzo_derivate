@@ -22,7 +22,8 @@ Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qu
 - `client/ui/`: dialoghi e componenti HTML, incluso MathLive.
 - `client/state/`: progresso e persistenza locale.
 - `client/types.ts`: contratti condivisi lato client.
-- `content/demo.json`: unica sorgente dei contenuti della demo, comprese funzioni e indizi.
+- `content/demo.json`: sorgente dei dati non testuali della demo (id, meccanismi, funzioni, derivate attese, tempi, difficoltà).
+- `content/locales/it.json`: sorgente unica di tutte le scritte del gioco (interfaccia, dialoghi, scena, feedback e testi degli enigmi). Per ora esiste solo l'italiano; le altre lingue useranno lo stesso schema con un nuovo file nella stessa cartella.
 - `server/app/`: API FastAPI, validazione dei contenuti e motore simbolico.
 - `server/tests/`: test API e matematici.
 - `tests/`: test unitari TypeScript ed end-to-end Playwright.

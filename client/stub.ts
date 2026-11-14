@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 import type { VerifyResponse } from "./types";
 
 // Fallback per la demo statica (es. GitHub Pages) dove il backend FastAPI/SymPy
@@ -20,13 +21,13 @@ export function stubVerifyAnswer(puzzleId: string, answer: string): VerifyRespon
   if (accepted.includes(normalized)) {
     return {
       status: "correct",
-      message: "Corretto: il meccanismo si riattiva!",
+      message: t("feedback.correct"),
       feedback_category: null,
     };
   }
   return {
     status: "incorrect",
-    message: "La derivata non è equivalente: rivedi la regola applicata e i calcoli.",
+    message: t("feedback.incorrect"),
     feedback_category: null,
   };
 }

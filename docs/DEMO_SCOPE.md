@@ -14,7 +14,7 @@ Flusso: benvenuto → osservazione → primo sigillo → ingranaggi → fontana 
 | Ingranaggi gemelli | `(3*x^2-2)*(x+1)`     | Regola del prodotto            | `9*x^2+6*x-2`, `6*x*(x+1)+3*x^2-2`               |
 | Fontana del tempo  | `3*sqrt(x)+2*x^(3/2)` | Radicali e potenze frazionarie | `3/(2*sqrt(x))+3*sqrt(x)`, `(3+6*x)/(2*sqrt(x))` |
 
-Le formule e gli indizi sono in `content/demo.json`; la soluzione attesa è calcolata sul server e non viene inviata al client.
+Le formule e i dati degli enigmi sono in `content/demo.json`; i testi (titoli, consegne, indizi) sono in `content/locales/it.json`. La soluzione attesa è calcolata sul server e non viene inviata al client.
 
 ## Sistema di gioco
 
