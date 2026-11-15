@@ -222,7 +222,7 @@ def expressions_equivalent(left: sp.Expr, right: sp.Expr) -> bool:
         try:
             if _is_zero(simplifier(difference)):
                 return True
-        except (ValueError, TypeError, ArithmeticError, NotImplementedError):
+        except (ValueError, TypeError, ArithmeticError, NotImplementedError, RecursionError):
             continue
     return False
 

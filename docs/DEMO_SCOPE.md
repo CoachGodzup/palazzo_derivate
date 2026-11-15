@@ -20,6 +20,7 @@ Le formule e i dati degli enigmi sono in `content/demo.json`; i testi (titoli, c
 
 - Inserimento libero tramite MathLive, con tastiera fisica e virtuale.
 - Verifica simbolica FastAPI/SymPy con stati `correct`, `incorrect`, `syntax_error`, `unsupported_expression`.
+- Una risposta corretta è accettata in qualunque forma equivalente, comprese parentesi prodotte da MathLive e coefficienti o esponenti decimali (`0.5` vale `1/2`); dettagli in `docs/design/backend.md`.
 - Suggerimenti facoltativi progressivi (massimo tre per enigma).
 - Massimo 100 punti per enigma: 50 primo tentativo, 25 senza aiuti, 15 senza errori precedenti, 10 entro il tempo indicativo.
 - L'esito non blocca mai l'avanzamento; il punteggio non è presentato come misura dell'apprendimento.

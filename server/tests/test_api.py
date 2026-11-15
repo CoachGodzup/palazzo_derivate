@@ -122,6 +122,33 @@ def test_radical_equivalences(client, answer):
 
 @pytest.mark.parametrize(
     "answer",
+    [
+        # MathLive serializza \frac{3}{2\sqrt{x}} come (3)/(2sqrt(x)): le
+        # parentesi in più non devono cambiare l'esito.
+        "(3)/(2sqrt(x))+3sqrt(x)",
+        "3sqrt(x)+(3)/(2)x^(-1/2)",
+        # La stessa derivata scritta con esponenti o coefficienti decimali.
+        "3x^0.5+3/(2sqrt(x))",
+        "3x^1.5/(x)+3/(2sqrt(x))",
+        "(6*x^1.5+3*sqrt(x))/(2*x)",
+        "1.5x^(-0.5)+3.0x^(0.5)",
+    ],
+)
+def test_radical_equivalences_with_decimals(client, answer):
+    """La derivata della fontana resta corretta in qualunque notazione."""
+    result = verify(client, "c1-fontana", answer)
+    assert result["status"] == "correct"
+    assert result["feedback_category"] is None
+
+
+def test_radical_decimal_answer_still_must_be_equivalent(client):
+    result = verify(client, "c1-fontana", "3x^0.5+3/(2sqrt(x))+0.001")
+    assert result["status"] == "incorrect"
+    assert result["feedback_category"] is None
+
+
+@pytest.mark.parametrize(
+    "answer",
     ["6*x-5^", "6*x-5^{}", "6*x-5^(())", "6*x-5^  "],
 )
 def test_empty_exponent_is_ignored(client, answer):
