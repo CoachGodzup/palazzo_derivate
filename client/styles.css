@@ -601,12 +601,26 @@ kbd {
 }
 .site-footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 16px;
   padding: 19px 0 25px;
   border-top: 1px solid var(--line);
   color: #6e8a91;
   font: 10px/1.4 var(--serif);
+}
+.demo2-link {
+  color: var(--gold);
+  font-family: Inter, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.demo2-link:hover {
+  color: var(--gold-pale);
+  text-decoration: underline;
 }
 #save-status {
   display: flex;

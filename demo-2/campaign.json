@@ -1,0 +1,887 @@
+{
+  "version": "demo-2",
+  "title": "Le Mille e Una Derivata · Campagna completa",
+  "subtitle": "Demo statica · 8 capitoli · 40 stanze · nessun backend",
+  "chapters": [
+    {
+      "id": "c0",
+      "number": "0",
+      "name": "La stanza del viaggiatore",
+      "theme": "Tutorial · significato della derivata",
+      "intro": "Ogni viaggio comincia da un segno tracciato sulla sabbia. Qui il viaggiatore impara a leggere la pendenza di una curva e a riconoscere la derivata come ritmo istantaneo del cambiamento.",
+      "outro": "La prima serratura cede. Oltre la porta, l'acqua del cortile comincia a mormorare.",
+      "rooms": [
+        {
+          "id": "c0-r1",
+          "name": "La pergamena",
+          "kind": "Tutorial",
+          "icon": "✧",
+          "functionDisplay": "x²",
+          "functionSympy": "x^2",
+          "functionLatex": "x^{2}",
+          "derivativeSympy": "2*x",
+          "prompt": "Sulla pergamena è tracciata una parabola. La sua pendenza in un punto è il valore della derivata: trova f′(x) per iniziare a leggere il movimento della curva.",
+          "rule": "Potenza",
+          "difficulty": 1,
+          "targetSeconds": 60,
+          "secret": false,
+          "hints": [
+            "La derivata misura quanto cambia f quando x cambia di poco.",
+            "Per una potenza xⁿ la regola è n·xⁿ⁻¹.",
+            "Qui n = 2: porta il 2 davanti alla x e abbassa l'esponente di uno."
+          ]
+        },
+        {
+          "id": "c0-r2",
+          "name": "La prima serratura",
+          "kind": "Serratura",
+          "icon": "◈",
+          "functionDisplay": "3x² − 5x + 4",
+          "functionSympy": "3*x^2-5*x+4",
+          "functionLatex": "3x^{2}-5x+4",
+          "derivativeSympy": "6*x-5",
+          "prompt": "La serratura del viaggiatore reca un polinomio. Ogni termine deve essere derivato: apri il passaggio verso il cortile.",
+          "rule": "Potenze e somme",
+          "difficulty": 1,
+          "targetSeconds": 90,
+          "secret": false,
+          "hints": [
+            "Deriva un termine alla volta: la derivata di una somma è la somma delle derivate.",
+            "Per 3x² moltiplica 3 per 2 e abbassa l'esponente; per −5x resta il coefficiente −5.",
+            "La derivata della costante 4 è zero."
+          ]
+        },
+        {
+          "id": "c0-s1",
+          "name": "Il margine della pergamena",
+          "kind": "Stanza segreta",
+          "icon": "❖",
+          "functionDisplay": "x³ − 3x",
+          "functionSympy": "x^3-3*x",
+          "functionLatex": "x^{3}-3x",
+          "derivativeSympy": "3*x^2-3",
+          "prompt": "Una nota a margine del viaggiatore descrive una curva che sale e scende. Trova dove il suo ritmo si annulla, cioè la derivata.",
+          "rule": "Potenze e somme",
+          "difficulty": 1,
+          "targetSeconds": 90,
+          "secret": true,
+          "hints": [
+            "Deriva separatamente x³ e −3x.",
+            "La derivata di x³ è 3x²; quella di −3x è −3.",
+            "La derivata di una costante è sempre zero."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c1",
+      "number": "1",
+      "name": "Il cortile delle fontane",
+      "theme": "Potenze, polinomi, radicali e potenze negative",
+      "intro": "Le meridiane della corte si sono fermate e le fontane non seguono più il ritmo del sole. Ripristina i cinque meccanismi del cortile calcolando le derivate che ne governano il movimento.",
+      "outro": "L'ultimo getto riprende a salire e le ombre tornano a scorrere sulle meridiane. La porta del cortile si apre verso il bazar.",
+      "rooms": [
+        {
+          "id": "c1-r1",
+          "name": "La fontana asciutta",
+          "kind": "Fontana",
+          "icon": "≈",
+          "functionDisplay": "5x⁴ − 3x² + 7x − 2",
+          "functionSympy": "5*x^4-3*x^2+7*x-2",
+          "functionLatex": "5x^{4}-3x^{2}+7x-2",
+          "derivativeSympy": "20*x^3-6*x+7",
+          "prompt": "Il primo getto è secco. Deriva il polinomio inciso sulla vasca per restituire all'acqua la sua spinta.",
+          "rule": "Potenze e somme",
+          "difficulty": 1,
+          "targetSeconds": 90,
+          "secret": false,
+          "hints": [
+            "Deriva termine per termine: 5x⁴, −3x², 7x e −2.",
+            "Per ogni potenza moltiplica per l'esponente e abbassalo di uno.",
+            "La derivata di −2 è zero; il termine 7x produce 7."
+          ]
+        },
+        {
+          "id": "c1-r2",
+          "name": "I canali ostruiti",
+          "kind": "Canali",
+          "icon": "≋",
+          "functionDisplay": "2x⁵ − 4x⁻² + 3",
+          "functionSympy": "2*x^5-4*x^(-2)+3",
+          "functionLatex": "2x^{5}-4x^{-2}+3",
+          "derivativeSympy": "10*x^4+8/x^3",
+          "prompt": "I canali sono bloccati da un'iscrizione con potenze negative. Applica la stessa regola delle potenze, anche quando l'esponente scende sotto zero.",
+          "rule": "Potenze negative",
+          "difficulty": 2,
+          "targetSeconds": 120,
+          "secret": false,
+          "hints": [
+            "x⁻² è una potenza come le altre: porta −2 davanti al coefficiente.",
+            "Derivando −4x⁻² ottieni −4·(−2)x⁻³, cioè 8x⁻³.",
+            "Puoi scrivere 8x⁻³ oppure 8/x³: sono la stessa espressione per x ≠ 0."
+          ]
+        },
+        {
+          "id": "c1-r3",
+          "name": "Il pozzo delle radici",
+          "kind": "Pozzo",
+          "icon": "√",
+          "functionDisplay": "3√x + 2x^(3/2)",
+          "functionSympy": "3*sqrt(x)+2*x^(3/2)",
+          "functionLatex": "3\\sqrt{x}+2x^{\\frac{3}{2}}",
+          "derivativeSympy": "3/(2*sqrt(x))+3*sqrt(x)",
+          "prompt": "Dal pozzo sale un ritmo fatto di radici e potenze frazionarie. Trova la derivata per sincronizzare il flusso.",
+          "rule": "Radicali",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": false,
+          "hints": [
+            "Riscrivi √x come x^(1/2), così ogni addendo è una potenza.",
+            "La derivata di x^(1/2) è (1/2)x^(−1/2), cioè 1/(2√x).",
+            "La derivata di 2x^(3/2) è 3x^(1/2), cioè 3√x."
+          ]
+        },
+        {
+          "id": "c1-r4",
+          "name": "Le tre valvole",
+          "kind": "Valvole",
+          "icon": "⌘",
+          "functionDisplay": "2/x³ + 5√x − 4x²",
+          "functionSympy": "2/x^3+5*sqrt(x)-4*x^2",
+          "functionLatex": "\\frac{2}{x^{3}}+5\\sqrt{x}-4x^{2}",
+          "derivativeSympy": "-6/x^4+5/(2*sqrt(x))-8*x",
+          "prompt": "Tre valvole regolano il flusso con un termine frazionario, una radice e una potenza. Deriva ciascuno senza perdere il segno.",
+          "rule": "Radicali e potenze negative",
+          "difficulty": 2,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "Scrivi 2/x³ come 2x⁻³ per usare la regola delle potenze.",
+            "Derivando 2x⁻³ ottieni −6x⁻⁴, cioè −6/x⁴.",
+            "La radice produce 5/(2√x); il termine −4x² produce −8x."
+          ]
+        },
+        {
+          "id": "c1-r5",
+          "name": "La grande fontana",
+          "kind": "Prova del capitolo",
+          "icon": "✺",
+          "functionDisplay": "4x³ − 6√x + 2/x",
+          "functionSympy": "4*x^3-6*sqrt(x)+2/x",
+          "functionLatex": "4x^{3}-6\\sqrt{x}+\\frac{2}{x}",
+          "derivativeSympy": "12*x^2-3/sqrt(x)-2/x^2",
+          "prompt": "La grande fontana riunisce potenze intere, radicali e un termine frazionario. Solo una derivata completa può riaprire tutti i getti.",
+          "rule": "Potenze, radicali e frazioni",
+          "difficulty": 3,
+          "targetSeconds": 210,
+          "secret": false,
+          "hints": [
+            "Trasforma 2/x in 2x⁻¹ e √x in x^(1/2).",
+            "Deriva i tre termini separatamente, poi somma i risultati.",
+            "Controlla i coefficienti: −6·(1/2) = −3 e 2·(−1) = −2."
+          ]
+        },
+        {
+          "id": "c1-s1",
+          "name": "La vasca nascosta",
+          "kind": "Stanza segreta",
+          "icon": "❖",
+          "functionDisplay": "x⁻³ + 5x^(1/3)",
+          "functionSympy": "x^(-3)+5*x^(1/3)",
+          "functionLatex": "x^{-3}+5x^{\\frac{1}{3}}",
+          "derivativeSympy": "-3/x^4+5/(3*x^(2/3))",
+          "prompt": "Dietro la cascata si nasconde una vasca con esponenti estremi. La sua iscrizione mette alla prova la regola delle potenze oltre i polinomi.",
+          "rule": "Potenze negative e frazionarie",
+          "difficulty": 3,
+          "targetSeconds": 180,
+          "secret": true,
+          "hints": [
+            "Applica n·xⁿ⁻¹ anche a n = −3 e n = 1/3.",
+            "Per x⁻³ ottieni −3x⁻⁴.",
+            "Per 5x^(1/3) moltiplica 5 per 1/3 e abbassa l'esponente a −2/3."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "number": "2",
+      "name": "Il bazar degli alchimisti",
+      "theme": "Somme, differenze, coefficienti e parentesi",
+      "intro": "Tra le bancarelle del bazar, gli alchimisti conservano formule avvolte in parentesi e coefficienti. Il loro ordine è la chiave per non alterare le miscele.",
+      "outro": "Le ampolle tornano a brillare e la bilancia si equilibra. Un passaggio segreto conduce alla torre.",
+      "rooms": [
+        {
+          "id": "c2-r1",
+          "name": "Il laboratorio",
+          "kind": "Alambicco",
+          "icon": "⚗",
+          "functionDisplay": "4(3x³ − 2x + 1)",
+          "functionSympy": "4*(3*x^3-2*x+1)",
+          "functionLatex": "4(3x^{3}-2x+1)",
+          "derivativeSympy": "36*x^2-8",
+          "prompt": "Un fattore esterno moltiplica tutto il composto. Deriva il polinomio senza perdere il coefficiente che lo avvolge.",
+          "rule": "Coefficienti",
+          "difficulty": 1,
+          "targetSeconds": 90,
+          "secret": false,
+          "hints": [
+            "Il fattore 4 resta moltiplicato per la derivata di ciò che contiene.",
+            "La derivata di 3x³ − 2x + 1 è 9x² − 2.",
+            "Moltiplica il risultato per 4: 4·9x² e 4·(−2)."
+          ]
+        },
+        {
+          "id": "c2-r2",
+          "name": "Le ampolle",
+          "kind": "Ampolle",
+          "icon": "⚱",
+          "functionDisplay": "(x² + 1) + (3x⁴ − 5x)",
+          "functionSympy": "(x^2+1)+(3*x^4-5*x)",
+          "functionLatex": "(x^{2}+1)+(3x^{4}-5x)",
+          "derivativeSympy": "2*x+12*x^3-5",
+          "prompt": "Due ampolle versano il loro contenuto nello stesso calderone. Le parentesi non cambiano la somma: deriva ogni parte.",
+          "rule": "Somme",
+          "difficulty": 1,
+          "targetSeconds": 90,
+          "secret": false,
+          "hints": [
+            "Le parentesi qui racchiudono addendi: puoi derivare ciascun termine.",
+            "Deriva x² + 1 e poi 3x⁴ − 5x.",
+            "Il risultato può essere scritto in qualunque ordine."
+          ]
+        },
+        {
+          "id": "c2-r3",
+          "name": "La bilancia",
+          "kind": "Bilancia",
+          "icon": "⚖",
+          "functionDisplay": "2(x³ − 1) − 3(2x² + 4x)",
+          "functionSympy": "2*(x^3-1)-3*(2*x^2+4*x)",
+          "functionLatex": "2(x^{3}-1)-3(2x^{2}+4x)",
+          "derivativeSympy": "6*x^2-12*x-12",
+          "prompt": "La bilancia pende da un lato: un coefficiente positivo e uno negativo regolano i due piatti. Trova la derivata complessiva.",
+          "rule": "Differenze e coefficienti",
+          "difficulty": 2,
+          "targetSeconds": 120,
+          "secret": false,
+          "hints": [
+            "Distribuisci i coefficienti oppure derivale separatamente mantenendo i segni.",
+            "La derivata di 2(x³ − 1) è 6x².",
+            "La derivata di −3(2x² + 4x) è −12x − 12."
+          ]
+        },
+        {
+          "id": "c2-r4",
+          "name": "Il composto proibito",
+          "kind": "Prova del capitolo",
+          "icon": "☿",
+          "functionDisplay": "½x⁴ − ¾x² + ⅔x",
+          "functionSympy": "(1/2)*x^4-(3/4)*x^2+(2/3)*x",
+          "functionLatex": "\\frac{1}{2}x^{4}-\\frac{3}{4}x^{2}+\\frac{2}{3}x",
+          "derivativeSympy": "2*x^3-3*x/2+2/3",
+          "prompt": "Il composto proibito usa coefficienti frazionari. La regola delle potenze non cambia, ma i conti richiedono attenzione.",
+          "rule": "Coefficienti frazionari",
+          "difficulty": 3,
+          "targetSeconds": 150,
+          "secret": false,
+          "hints": [
+            "Moltiplica il coefficiente per l'esponente e poi abbassa l'esponente.",
+            "Per ½x⁴: ½·4 = 2, quindi 2x³.",
+            "Per −¾x²: −¾·2 = −3/2, quindi −3x/2."
+          ]
+        },
+        {
+          "id": "c2-s1",
+          "name": "La ricetta perduta",
+          "kind": "Stanza segreta",
+          "icon": "❖",
+          "functionDisplay": "−2(x³ − 4x) + ⅓(6x² + 9)",
+          "functionSympy": "-2*(x^3-4*x)+(1/3)*(6*x^2+9)",
+          "functionLatex": "-2(x^{3}-4x)+\\frac{1}{3}(6x^{2}+9)",
+          "derivativeSympy": "-6*x^2+4*x+8",
+          "prompt": "Una ricetta dimenticata mescola coefficienti negativi e frazionari. Deriva il composto per rivelare il passaggio nascosto del bazar.",
+          "rule": "Coefficienti e parentesi",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": true,
+          "hints": [
+            "Deriva separatamente i due blocchi, poi somma.",
+            "La derivata di −2(x³ − 4x) è −6x² + 8.",
+            "La derivata di ⅓(6x² + 9) è 4x."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "number": "3",
+      "name": "La torre degli ingranaggi",
+      "theme": "Regola del prodotto",
+      "intro": "Nella torre, due ruote dentate si muovono insieme: il moto dell'una dipende dal moto dell'altra. La derivata di un prodotto non è il prodotto delle derivate.",
+      "outro": "Gli ingranaggi si incastrano con un clic profondo. La torre trema e apre la via verso la biblioteca.",
+      "rooms": [
+        {
+          "id": "c3-r1",
+          "name": "La prima coppia",
+          "kind": "Ingranaggi",
+          "icon": "⚙",
+          "functionDisplay": "(x² + 3)(x³ − 1)",
+          "functionSympy": "(x^2+3)*(x^3-1)",
+          "functionLatex": "(x^{2}+3)(x^{3}-1)",
+          "derivativeSympy": "2*x*(x^3-1)+3*x^2*(x^2+3)",
+          "prompt": "Due ingranaggi sono descritti da due fattori. Applica la regola del prodotto per metterli in movimento.",
+          "rule": "Regola del prodotto",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": false,
+          "hints": [
+            "Riconosci due funzioni moltiplicate: f = x² + 3 e g = x³ − 1.",
+            "La regola è f′g + fg′: deriva un fattore alla volta.",
+            "f′ = 2x e g′ = 3x². Non moltiplicare f′ per g′."
+          ]
+        },
+        {
+          "id": "c3-r2",
+          "name": "La ruota eccentrica",
+          "kind": "Ingranaggi",
+          "icon": "⚙",
+          "functionDisplay": "(2x³ − x)(x² + 4)",
+          "functionSympy": "(2*x^3-x)*(x^2+4)",
+          "functionLatex": "(2x^{3}-x)(x^{2}+4)",
+          "derivativeSympy": "10*x^4+21*x^2-4",
+          "prompt": "Una ruota eccentrica accelera e rallenta. La sua funzione è un prodotto: derivala mantenendo entrambi i contributi.",
+          "rule": "Regola del prodotto",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": false,
+          "hints": [
+            "Poni f = 2x³ − x e g = x² + 4.",
+            "Calcola f′ = 6x² − 1 e g′ = 2x.",
+            "Somma f′g e fg′, poi puoi semplificare i termini simili."
+          ]
+        },
+        {
+          "id": "c3-r3",
+          "name": "La ruota e la radice",
+          "kind": "Ingranaggi",
+          "icon": "⚙",
+          "functionDisplay": "(x² + 1)√x",
+          "functionSympy": "(x^2+1)*sqrt(x)",
+          "functionLatex": "(x^{2}+1)\\sqrt{x}",
+          "derivativeSympy": "2*x*sqrt(x)+(x^2+1)/(2*sqrt(x))",
+          "prompt": "Un ingranaggio è un polinomio, l'altro una radice. Il prodotto richiede entrambe le derivate.",
+          "rule": "Prodotto e radicali",
+          "difficulty": 3,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "Tratta √x come x^(1/2) se ti aiuta a derivare il secondo fattore.",
+            "f′ = 2x e g′ = 1/(2√x).",
+            "La risposta è f′g + fg′: entrambi i termini servono."
+          ]
+        },
+        {
+          "id": "c3-r4",
+          "name": "Il grande meccanismo",
+          "kind": "Prova del capitolo",
+          "icon": "⚙",
+          "functionDisplay": "(3x² − 2x + 1)(2x³ + 5x)",
+          "functionSympy": "(3*x^2-2*x+1)*(2*x^3+5*x)",
+          "functionLatex": "(3x^{2}-2x+1)(2x^{3}+5x)",
+          "derivativeSympy": "30*x^4-16*x^3+51*x^2-20*x+5",
+          "prompt": "Il grande meccanismo combina due polinomi. Applica la regola del prodotto senza perdere nessuno dei due contributi.",
+          "rule": "Regola del prodotto",
+          "difficulty": 3,
+          "targetSeconds": 210,
+          "secret": false,
+          "hints": [
+            "Scegli f = 3x² − 2x + 1 e g = 2x³ + 5x.",
+            "f′ = 6x − 2 e g′ = 6x² + 5.",
+            "Sviluppa f′g + fg′ e raccogli i termini dello stesso grado."
+          ]
+        },
+        {
+          "id": "c3-s1",
+          "name": "L'ingranaggio nascosto",
+          "kind": "Stanza segreta",
+          "icon": "❖",
+          "functionDisplay": "(x² + 2x)(3x − 1)",
+          "functionSympy": "(x^2+2*x)*(3*x-1)",
+          "functionLatex": "(x^{2}+2x)(3x-1)",
+          "derivativeSympy": "9*x^2+10*x-2",
+          "prompt": "Dietro il quadro dei meccanismi gira una ruota dimenticata. Il suo prodotto nasconde un passaggio della torre.",
+          "rule": "Regola del prodotto",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": true,
+          "hints": [
+            "Poni f = x² + 2x e g = 3x − 1.",
+            "f′ = 2x + 2 e g′ = 3.",
+            "Somma (2x + 2)(3x − 1) e 3(x² + 2x)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "number": "4",
+      "name": "La biblioteca proibita",
+      "theme": "Regola del quoziente",
+      "intro": "Nella biblioteca, i volumi sono incatenati e le formule si dividono come ombre sugli scaffali. Per aprire i sigilli serve la regola del quoziente.",
+      "outro": "Le catene cadono e i libri si aprono da soli. Una scala a chiocciola sale verso l'osservatorio.",
+      "rooms": [
+        {
+          "id": "c4-r1",
+          "name": "Il primo volume",
+          "kind": "Libro",
+          "icon": "▤",
+          "functionDisplay": "(x² + 3)/(x + 1)",
+          "functionSympy": "(x^2+3)/(x+1)",
+          "functionLatex": "\\frac{x^{2}+3}{x+1}",
+          "derivativeSympy": "(x^2+2*x-3)/(x+1)^2",
+          "prompt": "Il primo volume mostra un quoziente. La derivata non è il quoziente delle derivate: usa la regola corretta.",
+          "rule": "Regola del quoziente",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": false,
+          "hints": [
+            "Poni f = x² + 3 e g = x + 1.",
+            "La regola è (f′g − fg′)/g².",
+            "f′ = 2x e g′ = 1: il numeratore diventa 2x(x + 1) − (x² + 3)."
+          ]
+        },
+        {
+          "id": "c4-r2",
+          "name": "Il catalogo dei polinomi",
+          "kind": "Libro",
+          "icon": "▤",
+          "functionDisplay": "(2x³ − 1)/(3x² + 2)",
+          "functionSympy": "(2*x^3-1)/(3*x^2+2)",
+          "functionLatex": "\\frac{2x^{3}-1}{3x^{2}+2}",
+          "derivativeSympy": "(6*x^4+12*x^2+6*x)/(3*x^2+2)^2",
+          "prompt": "Un catalogo antico elenca quozienti di polinomi. Deriva il volume per sciogliere il sigillo.",
+          "rule": "Regola del quoziente",
+          "difficulty": 2,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "Numeratore f = 2x³ − 1, denominatore g = 3x² + 2.",
+            "f′ = 6x² e g′ = 6x.",
+            "Il denominatore della derivata è g² = (3x² + 2)²."
+          ]
+        },
+        {
+          "id": "c4-r3",
+          "name": "Il libro delle radici",
+          "kind": "Libro",
+          "icon": "▤",
+          "functionDisplay": "√x/(x² + 1)",
+          "functionSympy": "sqrt(x)/(x^2+1)",
+          "functionLatex": "\\frac{\\sqrt{x}}{x^{2}+1}",
+          "derivativeSympy": "(1-3*x^2)/(2*sqrt(x)*(x^2+1)^2)",
+          "prompt": "Un volume espone una radice sopra un polinomio. La regola del quoziente incontra quella delle potenze frazionarie.",
+          "rule": "Quoziente e radicali",
+          "difficulty": 3,
+          "targetSeconds": 210,
+          "secret": false,
+          "hints": [
+            "Deriva √x come x^(1/2): ottieni 1/(2√x).",
+            "Il denominatore è x² + 1, con derivata 2x.",
+            "Ricorda il quadrato del denominatore e semplifica il numeratore."
+          ]
+        },
+        {
+          "id": "c4-r4",
+          "name": "Il tomo sigillato",
+          "kind": "Prova del capitolo",
+          "icon": "▤",
+          "functionDisplay": "(x³ − 2x + 1)/(x² + 3x + 2)",
+          "functionSympy": "(x^3-2*x+1)/(x^2+3*x+2)",
+          "functionLatex": "\\frac{x^{3}-2x+1}{x^{2}+3x+2}",
+          "derivativeSympy": "(x^4+6*x^3+8*x^2-2*x-7)/(x^2+3*x+2)^2",
+          "prompt": "Il tomo sigillato racchiude un quoziente completo. Derivalo con calma e controlla i segni del numeratore.",
+          "rule": "Regola del quoziente",
+          "difficulty": 3,
+          "targetSeconds": 240,
+          "secret": false,
+          "hints": [
+            "f = x³ − 2x + 1, quindi f′ = 3x² − 2.",
+            "g = x² + 3x + 2, quindi g′ = 2x + 3.",
+            "Sviluppa f′g − fg′ con attenzione ai segni e lascia g² al denominatore."
+          ]
+        },
+        {
+          "id": "c4-s1",
+          "name": "Il libro senza titolo",
+          "kind": "Stanza segreta",
+          "icon": "❖",
+          "functionDisplay": "(x + 1)/(x² + 1)",
+          "functionSympy": "(x+1)/(x^2+1)",
+          "functionLatex": "\\frac{x+1}{x^{2}+1}",
+          "derivativeSympy": "(-x^2-2*x+1)/(x^2+1)^2",
+          "prompt": "Un volume senza titolo è nascosto dietro la scaffalatura. Il suo quoziente custodisce una nota del bibliotecario.",
+          "rule": "Regola del quoziente",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": true,
+          "hints": [
+            "f = x + 1 e g = x² + 1.",
+            "f′ = 1 e g′ = 2x.",
+            "Il numeratore è 1·(x² + 1) − (x + 1)·2x."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "number": "5",
+      "name": "L'osservatorio celeste",
+      "theme": "Esponenziali, logaritmi e trigonometria",
+      "intro": "L'osservatorio ruota su se stesso, ma le stelle non seguono più il loro corso. Le funzioni celesti obbediscono a nuove regole: esponenziali, logaritmi e trigonometria.",
+      "outro": "La volta stellata si riallinea. Un raggio di luna attraversa la sala e indica la via verso gli specchi.",
+      "rooms": [
+        {
+          "id": "c5-r1",
+          "name": "La sfera solare",
+          "kind": "Sfera",
+          "icon": "☀",
+          "functionDisplay": "3e^(2x) − 4 sin x",
+          "functionSympy": "3*exp(2*x)-4*sin(x)",
+          "functionLatex": "3e^{2x}-4\\sin x",
+          "derivativeSympy": "6*exp(2*x)-4*cos(x)",
+          "prompt": "La sfera solare pulsa con un esponenziale e oscilla con un seno. Trova la derivata per regolarne la luce.",
+          "rule": "Esponenziali e trigonometria",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": false,
+          "hints": [
+            "La derivata di e^(2x) è 2e^(2x): non dimenticare la costante interna.",
+            "La derivata di sin x è cos x.",
+            "Somma i due contributi con i rispettivi coefficienti."
+          ]
+        },
+        {
+          "id": "c5-r2",
+          "name": "La volta stellata",
+          "kind": "Volta",
+          "icon": "✶",
+          "functionDisplay": "2 cos x + 5 ln x",
+          "functionSympy": "2*cos(x)+5*ln(x)",
+          "functionLatex": "2\\cos x+5\\ln x",
+          "derivativeSympy": "-2*sin(x)+5/x",
+          "prompt": "Sulla volta, il coseno disegna le costellazioni e il logaritmo misura la loro distanza. Deriva la funzione celeste.",
+          "rule": "Logaritmi e trigonometria",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": false,
+          "hints": [
+            "La derivata di cos x è −sin x.",
+            "La derivata di ln x è 1/x, definita per x > 0.",
+            "Conserva i coefficienti 2 e 5 nei due termini."
+          ]
+        },
+        {
+          "id": "c5-r3",
+          "name": "Il planetario",
+          "kind": "Planetario",
+          "icon": "◉",
+          "functionDisplay": "x² sin x",
+          "functionSympy": "x^2*sin(x)",
+          "functionLatex": "x^{2}\\sin x",
+          "derivativeSympy": "2*x*sin(x)+x^2*cos(x)",
+          "prompt": "Il planetario combina una potenza e un'oscillazione. È un prodotto: derivalo con la regola corretta.",
+          "rule": "Prodotto e trigonometria",
+          "difficulty": 2,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "Poni f = x² e g = sin x.",
+            "f′ = 2x e g′ = cos x.",
+            "La derivata è f′g + fg′, non il prodotto delle derivate."
+          ]
+        },
+        {
+          "id": "c5-r4",
+          "name": "Il moto degli astri",
+          "kind": "Prova del capitolo",
+          "icon": "✵",
+          "functionDisplay": "eˣ cos x",
+          "functionSympy": "exp(x)*cos(x)",
+          "functionLatex": "e^{x}\\cos x",
+          "derivativeSympy": "exp(x)*(cos(x)-sin(x))",
+          "prompt": "Il moto degli astri è un prodotto di esponenziale e coseno. Derivalo per rimettere in moto l'intero osservatorio.",
+          "rule": "Prodotto e trigonometria",
+          "difficulty": 3,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "Poni f = eˣ e g = cos x.",
+            "La derivata di eˣ è eˣ; quella di cos x è −sin x.",
+            "Raccogli eˣ: la risposta si scrive eˣ(cos x − sin x)."
+          ]
+        },
+        {
+          "id": "c5-s1",
+          "name": "La stella dimenticata",
+          "kind": "Stanza segreta",
+          "icon": "❖",
+          "functionDisplay": "sin x · ln x",
+          "functionSympy": "sin(x)*ln(x)",
+          "functionLatex": "\\sin x\\cdot\\ln x",
+          "derivativeSympy": "cos(x)*ln(x)+sin(x)/x",
+          "prompt": "Una stella senza nome unisce un seno e un logaritmo. La sua derivata è incisa sul bordo dell'astrolabio nascosto.",
+          "rule": "Prodotto, logaritmi e trigonometria",
+          "difficulty": 3,
+          "targetSeconds": 180,
+          "secret": true,
+          "hints": [
+            "È un prodotto: f = sin x e g = ln x.",
+            "f′ = cos x e g′ = 1/x.",
+            "La risposta è cos x · ln x + sin x / x."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "number": "6",
+      "name": "Il palazzo degli specchi",
+      "theme": "Regola della catena e composizioni",
+      "intro": "Gli specchi moltiplicano le immagini e le funzioni si annidano una dentro l'altra. Per attraversare la sala bisogna derivare anche ciò che sta all'interno.",
+      "outro": "Gli specchi si allineano e il riflesso mostra una stanza che non c'era. La via per la Camera del Tempo è aperta.",
+      "rooms": [
+        {
+          "id": "c6-r1",
+          "name": "Lo specchio a cinque facce",
+          "kind": "Specchio",
+          "icon": "◫",
+          "functionDisplay": "(3x² + 1)⁵",
+          "functionSympy": "(3*x^2+1)^5",
+          "functionLatex": "(3x^{2}+1)^{5}",
+          "derivativeSympy": "30*x*(3*x^2+1)^4",
+          "prompt": "Una potenza racchiude una funzione interna. Lo specchio ripete l'immagine cinque volte: deriva anche ciò che contiene.",
+          "rule": "Regola della catena",
+          "difficulty": 2,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "Pensa alla funzione come [g(x)]⁵ con g(x) = 3x² + 1.",
+            "La derivata è 5[g(x)]⁴ · g′(x).",
+            "g′(x) = 6x, quindi il fattore esterno diventa 30x."
+          ]
+        },
+        {
+          "id": "c6-r2",
+          "name": "Lo specchio infranto",
+          "kind": "Specchio",
+          "icon": "◫",
+          "functionDisplay": "√(4x³ − 2x + 1)",
+          "functionSympy": "sqrt(4*x^3-2*x+1)",
+          "functionLatex": "\\sqrt{4x^{3}-2x+1}",
+          "derivativeSympy": "(6*x^2-1)/sqrt(4*x^3-2*x+1)",
+          "prompt": "Una radice avvolge un polinomio. Lo specchio infranto mostra solo la metà dell'immagine: completa la derivata con il fattore interno.",
+          "rule": "Catena e radicali",
+          "difficulty": 2,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "Scrivi la radice come potenza 1/2.",
+            "La derivata esterna porta un fattore 1/(2√g).",
+            "Moltiplica per g′ = 12x² − 2 e semplifica il 2 con il denominatore."
+          ]
+        },
+        {
+          "id": "c6-r3",
+          "name": "La galleria dei suoni",
+          "kind": "Specchio",
+          "icon": "◫",
+          "functionDisplay": "sin(2x² + 3x)",
+          "functionSympy": "sin(2*x^2+3*x)",
+          "functionLatex": "\\sin(2x^{2}+3x)",
+          "derivativeSympy": "(4*x+3)*cos(2*x^2+3*x)",
+          "prompt": "Il suono attraversa la galleria e si deforma. La funzione esterna è un seno, quella interna un polinomio: applica la catena.",
+          "rule": "Catena e trigonometria",
+          "difficulty": 2,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "La derivata di sin u è cos u · u′.",
+            "Qui u = 2x² + 3x, quindi u′ = 4x + 3.",
+            "Mantieni l'argomento del coseno invariato."
+          ]
+        },
+        {
+          "id": "c6-r4",
+          "name": "La sala degli echi",
+          "kind": "Prova del capitolo",
+          "icon": "◫",
+          "functionDisplay": "e^(x² + 1) cos(3x)",
+          "functionSympy": "exp(x^2+1)*cos(3*x)",
+          "functionLatex": "e^{x^{2}+1}\\cos(3x)",
+          "derivativeSympy": "exp(x^2+1)*(2*x*cos(3*x)-3*sin(3*x))",
+          "prompt": "La sala degli echi combina due composizioni in un prodotto. Ogni fattore richiede la sua catena.",
+          "rule": "Prodotto e catena",
+          "difficulty": 3,
+          "targetSeconds": 240,
+          "secret": false,
+          "hints": [
+            "Poni f = e^(x² + 1) e g = cos(3x).",
+            "f′ = e^(x² + 1) · 2x e g′ = −3 sin(3x).",
+            "Raccogli e^(x² + 1) nella somma f′g + fg′."
+          ]
+        },
+        {
+          "id": "c6-s1",
+          "name": "Lo specchio senza riflesso",
+          "kind": "Stanza segreta",
+          "icon": "❖",
+          "functionDisplay": "ln(x² + 1)",
+          "functionSympy": "ln(x^2+1)",
+          "functionLatex": "\\ln(x^{2}+1)",
+          "derivativeSympy": "2*x/(x^2+1)",
+          "prompt": "Uno specchio non riflette nulla, ma incide un logaritmo composto. La sua derivata apre una camera cieca del palazzo.",
+          "rule": "Catena e logaritmi",
+          "difficulty": 2,
+          "targetSeconds": 150,
+          "secret": true,
+          "hints": [
+            "La derivata di ln u è u′/u.",
+            "Qui u = x² + 1, sempre positivo.",
+            "u′ = 2x, quindi la derivata è 2x/(x² + 1)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "number": "7",
+      "name": "La Camera del Tempo",
+      "theme": "Combinazioni di regole e prova finale",
+      "intro": "La Camera del Tempo è il cuore del palazzo: qui tutte le regole si intrecciano. Il Visir ha spezzato l'ultimo sigillo e il tempo scorre all'indietro.",
+      "outro": "Il meccanismo centrale si ferma, poi riparte nel verso giusto. Le Mille e Una Derivata hanno ritrovato il loro ritmo.",
+      "rooms": [
+        {
+          "id": "c7-r1",
+          "name": "Il primo ingranaggio del tempo",
+          "kind": "Meccanismo",
+          "icon": "⏳",
+          "functionDisplay": "3x⁴ − 2√x + 5/x²",
+          "functionSympy": "3*x^4-2*sqrt(x)+5/x^2",
+          "functionLatex": "3x^{4}-2\\sqrt{x}+\\frac{5}{x^{2}}",
+          "derivativeSympy": "12*x^3-1/sqrt(x)-10/x^3",
+          "prompt": "Il primo ingranaggio mescola potenze intere, radicali e potenze negative. Nessuna regola nuova: solo tutte insieme.",
+          "rule": "Regole combinate",
+          "difficulty": 3,
+          "targetSeconds": 210,
+          "secret": false,
+          "hints": [
+            "Riscrivi √x come x^(1/2) e 5/x² come 5x⁻².",
+            "Deriva 3x⁴, −2x^(1/2) e 5x⁻² separatamente.",
+            "I coefficienti finali sono 12, −1 e −10."
+          ]
+        },
+        {
+          "id": "c7-r2",
+          "name": "La ruota composta",
+          "kind": "Meccanismo",
+          "icon": "⏳",
+          "functionDisplay": "(x² + 1)³√x",
+          "functionSympy": "(x^2+1)^3*sqrt(x)",
+          "functionLatex": "(x^{2}+1)^{3}\\sqrt{x}",
+          "derivativeSympy": "6*x*(x^2+1)^2*sqrt(x)+(x^2+1)^3/(2*sqrt(x))",
+          "prompt": "Una potenza composta e una radice sono moltiplicate. Servono sia la catena sia la regola del prodotto.",
+          "rule": "Prodotto e catena",
+          "difficulty": 3,
+          "targetSeconds": 240,
+          "secret": false,
+          "hints": [
+            "Poni f = (x² + 1)³ e g = √x.",
+            "f′ = 3(x² + 1)² · 2x = 6x(x² + 1)².",
+            "g′ = 1/(2√x); somma f′g + fg′."
+          ]
+        },
+        {
+          "id": "c7-r3",
+          "name": "La clessidra esponenziale",
+          "kind": "Meccanismo",
+          "icon": "⏳",
+          "functionDisplay": "(eˣ + 1)/(eˣ − 1)",
+          "functionSympy": "(exp(x)+1)/(exp(x)-1)",
+          "functionLatex": "\\frac{e^{x}+1}{e^{x}-1}",
+          "derivativeSympy": "-2*exp(x)/(exp(x)-1)^2",
+          "prompt": "La clessidra divide due funzioni esponenziali. Applica il quoziente e semplifica con cura.",
+          "rule": "Quoziente ed esponenziali",
+          "difficulty": 3,
+          "targetSeconds": 240,
+          "secret": false,
+          "hints": [
+            "f = eˣ + 1 e g = eˣ − 1 hanno entrambi derivata eˣ.",
+            "Il numeratore è eˣ(eˣ − 1) − eˣ(eˣ + 1).",
+            "Semplifica: resta −2eˣ al numeratore, con (eˣ − 1)² al denominatore."
+          ]
+        },
+        {
+          "id": "c7-r4",
+          "name": "L'orbita spezzata",
+          "kind": "Meccanismo",
+          "icon": "⏳",
+          "functionDisplay": "cos(x³ − 2x)",
+          "functionSympy": "cos(x^3-2*x)",
+          "functionLatex": "\\cos(x^{3}-2x)",
+          "derivativeSympy": "-(3*x^2-2)*sin(x^3-2*x)",
+          "prompt": "Un'orbita trigonometrica avvolge un polinomio. La catena deve portare anche il segno meno del coseno.",
+          "rule": "Catena e trigonometria",
+          "difficulty": 3,
+          "targetSeconds": 180,
+          "secret": false,
+          "hints": [
+            "La derivata di cos u è −sin u · u′.",
+            "u = x³ − 2x, quindi u′ = 3x² − 2.",
+            "Il segno meno resta davanti a tutta l'espressione."
+          ]
+        },
+        {
+          "id": "c7-r5",
+          "name": "L'enigma finale",
+          "kind": "Prova finale",
+          "icon": "✦",
+          "functionDisplay": "[(x² + 1)³ · sin(2x)] / eˣ",
+          "functionSympy": "((x^2+1)^3*sin(2*x))/exp(x)",
+          "functionLatex": "\\frac{(x^{2}+1)^{3}\\sin(2x)}{e^{x}}",
+          "derivativeSympy": "exp(-x)*(6*x*(x^2+1)^2*sin(2*x)+2*(x^2+1)^3*cos(2*x)-(x^2+1)^3*sin(2*x))",
+          "prompt": "L'ultimo sigillo del Visir combina prodotto, quoziente e catena. Solo una derivata completa può restituire al palazzo il suo tempo.",
+          "rule": "Tutte le regole",
+          "difficulty": 3,
+          "targetSeconds": 300,
+          "secret": false,
+          "hints": [
+            "Considera il quoziente tra (x² + 1)³ sin(2x) e eˣ.",
+            "Deriva prima il prodotto al numeratore: servono catena e regola del prodotto.",
+            "Il numeratore della derivata è f′eˣ − feˣ; raccogli e⁻ˣ e semplifica."
+          ]
+        },
+        {
+          "id": "c7-s1",
+          "name": "La camera oltre il tempo",
+          "kind": "Stanza segreta",
+          "icon": "❖",
+          "functionDisplay": "x² e^(−x)",
+          "functionSympy": "x^2*exp(-x)",
+          "functionLatex": "x^{2}e^{-x}",
+          "derivativeSympy": "exp(-x)*(2*x-x^2)",
+          "prompt": "Oltre la Camera del Tempo esiste una stanza che non compare sulle mappe. La sua funzione unisce potenza ed esponenziale negativo.",
+          "rule": "Prodotto ed esponenziali",
+          "difficulty": 3,
+          "targetSeconds": 180,
+          "secret": true,
+          "hints": [
+            "Poni f = x² e g = e⁻ˣ.",
+            "f′ = 2x e g′ = −e⁻ˣ.",
+            "La derivata è 2x e⁻ˣ − x² e⁻ˣ, cioè e⁻ˣ(2x − x²)."
+          ]
+        }
+      ]
+    }
+  ]
+}

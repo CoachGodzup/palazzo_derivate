@@ -47,3 +47,7 @@ Controllare l'intero flusso a `http://localhost:5173` su desktop e a 390×844 px
 9. non vi siano overflow orizzontali o elementi essenziali coperti sul portrait.
 
 Per valutare la demo: chiarezza del ciclo osserva–calcola–attiva, qualità del feedback, leggibilità delle formule, piacevolezza delle reazioni ambientali, fluidità touch e adeguatezza della difficoltà.
+
+## Demo 02 — campagna completa mock
+
+La seconda demo statica è documentata in [`DEMO_2_SCOPE.md`](./DEMO_2_SCOPE.md). Copre 8 capitoli, 32 stanze principali e 8 stanze segrete in `demo-2/`, con verifica locale nel browser e pubblicazione su `/demo-2/` di GitHub Pages. Resta fuori dal perimetro della vertical slice demo-1: non usa FastAPI/SymPy e non introduce account, classi o dashboard.

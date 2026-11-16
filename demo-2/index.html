@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#071923" />
+    <meta
+      name="description"
+      content="Demo statica della campagna completa di Le Mille e Una Derivata: otto capitoli, quaranta stanze e verifica locale delle derivate."
+    />
+    <title>Le Mille e Una Derivata · Demo campagna completa</title>
+  </head>
+  <body>
+    <div id="app" class="campaign-app">
+      <header class="topbar campaign-topbar">
+        <a class="brand" href="../" aria-label="Le Mille e Una Derivata, torna alla demo 01">
+          <span class="brand-mark" aria-hidden="true"><span>∂</span></span>
+          <span class="brand-copy">
+            <span class="eyebrow">Un'avventura nel calcolo</span>
+            <strong>Le Mille <i>e Una Derivata</i></strong>
+          </span>
+        </a>
+        <div class="topbar-actions">
+          <span class="demo-badge">DEMO 02 · CAMPAGNA COMPLETA</span>
+          <div class="score-chip" aria-label="Punteggio attuale">
+            <span id="hud-score">0</span><small id="hud-max">/ 4000</small>
+          </div>
+          <button
+            class="icon-button"
+            id="help-button"
+            type="button"
+            aria-label="Consulta le regole"
+            title="Consulta le regole"
+          >
+            ?
+          </button>
+          <button
+            class="icon-button"
+            id="reset-button"
+            type="button"
+            aria-label="Ricomincia la campagna"
+            title="Ricomincia la campagna"
+          >
+            ↻
+          </button>
+        </div>
+      </header>
+
+      <main class="campaign-layout">
+        <nav class="chapter-rail" aria-label="Capitoli della campagna">
+          <div class="rail-heading">
+            <span class="eyebrow">Il palazzo</span>
+            <strong id="campaign-fraction">0 / 40</strong>
+          </div>
+          <div id="chapter-list" class="chapter-list"></div>
+          <div class="rail-note">
+            <span aria-hidden="true">✦</span>
+            <p>Le stanze segrete si aprono completando le stanze principali del capitolo.</p>
+          </div>
+          <a class="rail-link" href="../">← Torna alla demo 01</a>
+        </nav>
+
+        <section class="chapter-stage" aria-labelledby="chapter-title">
+          <header class="chapter-hero">
+            <div class="chapter-number" id="chapter-number" aria-hidden="true">0</div>
+            <div class="chapter-heading">
+              <span class="eyebrow" id="chapter-theme">Tutorial</span>
+              <h1 id="chapter-title">La stanza del viaggiatore</h1>
+              <p id="chapter-intro"></p>
+            </div>
+            <div class="chapter-meter">
+              <span id="chapter-fraction">0 / 3</span>
+              <div class="progress-track" aria-hidden="true">
+                <span id="chapter-progress-bar"></span>
+              </div>
+            </div>
+          </header>
+
+          <div id="campaign-complete" class="campaign-complete" hidden>
+            <span class="completion-rune" aria-hidden="true">✦</span>
+            <div>
+              <span class="eyebrow">Il palazzo ha ritrovato il suo tempo</span>
+              <h2>Hai attraversato Le Mille e Una Derivata.</h2>
+              <p>
+                Le 32 stanze principali sono completate. Le stanze segrete restano disponibili per
+                chi vuole continuare a esplorare.
+              </p>
+            </div>
+            <strong id="complete-score">0 punti</strong>
+          </div>
+
+          <div class="stage-section-heading">
+            <div>
+              <span class="eyebrow">Stanze principali</span>
+              <h2>Meccanismi da riattivare</h2>
+            </div>
+            <span id="stage-progress" class="stage-progress">0 / 40</span>
+          </div>
+          <div id="room-grid" class="room-grid" aria-live="polite"></div>
+
+          <section id="secret-section" class="secret-section" aria-labelledby="secret-title">
+            <div class="stage-section-heading">
+              <div>
+                <span class="eyebrow">Facoltative</span>
+                <h2 id="secret-title">Stanze segrete</h2>
+              </div>
+              <span id="secret-progress" class="stage-progress">0 / 1</span>
+            </div>
+            <p class="secret-note">
+              Una stanza segreta per capitolo. Non servono per proseguire: sono una deviazione per
+              chi vuole mettersi alla prova con forme inattese.
+            </p>
+            <div id="secret-grid" class="room-grid"></div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="campaign-footer">
+        <span>Una demo statica: la verifica avviene nel browser, senza backend.</span>
+        <span id="save-status"
+          ><span class="save-dot" aria-hidden="true"></span> Progresso salvato su questo
+          dispositivo</span
+        >
+      </footer>
+    </div>
+
+    <dialog id="welcome-dialog" class="modal welcome-modal" aria-labelledby="welcome-title">
+      <div class="modal-ornament" aria-hidden="true">✦</div>
+      <span class="eyebrow">Demo 02 · Campagna completa</span>
+      <h2 id="welcome-title">Tutto il palazzo,<br />in una sola demo.</h2>
+      <p>
+        Otto capitoli, trentadue stanze principali e otto stanze segrete. Esplora il palazzo, scegli
+        una stanza, scrivi la derivata e osserva il meccanismo reagire.
+      </p>
+      <div class="tutorial-steps">
+        <div>
+          <span>01</span>
+          <p><strong>Scegli</strong><span>Un capitolo e una stanza dal palazzo.</span></p>
+        </div>
+        <div>
+          <span>02</span>
+          <p><strong>Deriva</strong><span>Scrivi liberamente f′(x).</span></p>
+        </div>
+        <div>
+          <span>03</span>
+          <p><strong>Attiva</strong><span>Sblocca il capitolo successivo.</span></p>
+        </div>
+      </div>
+      <p class="mock-note">
+        Questa è una demo mock: la verifica è locale e accetta forme equivalenti, ma non sostituisce
+        il motore simbolico SymPy della versione completa.
+      </p>
+      <button id="enter-button" class="primary-button" type="button">
+        <span>Entra nel palazzo</span><span aria-hidden="true">→</span>
+      </button>
+      <p class="modal-footnote">Nessun game over · Indizi disponibili · Progresso locale</p>
+    </dialog>
+
+    <dialog id="puzzle-dialog" class="modal puzzle-modal" aria-labelledby="puzzle-title">
+      <button class="modal-close" id="close-puzzle" type="button" aria-label="Chiudi l'enigma">
+        ×
+      </button>
+      <div class="puzzle-topline">
+        <span id="puzzle-step" class="eyebrow"></span>
+        <span id="puzzle-difficulty" class="difficulty-label"></span>
+      </div>
+      <h2 id="puzzle-title"></h2>
+      <p id="puzzle-prompt" class="puzzle-prompt"></p>
+      <div class="formula-board">
+        <span class="formula-label">FUNZIONE DEL MECCANISMO</span>
+        <div class="formula-row formula-display">
+          <span class="formula-prefix">f(x) =</span>
+          <strong id="function-display"></strong>
+        </div>
+      </div>
+      <form id="answer-form" novalidate>
+        <div class="answer-heading">
+          <label id="answer-label">La tua derivata</label><span>Inserimento libero</span>
+        </div>
+        <div id="answer-row" class="answer-row">
+          <span class="answer-prefix">f′(x) =</span>
+          <math-field
+            id="answer-field"
+            aria-labelledby="answer-label"
+            placeholder="?"
+            virtual-keyboard-policy="auto"
+          ></math-field>
+        </div>
+        <div class="editor-tools">
+          <button id="keyboard-button" class="text-button compact" type="button">
+            ⌨ Tastiera matematica
+          </button>
+          <span>Potenza: <kbd>x^</kbd> · Radice: <kbd>sqrt</kbd></span>
+        </div>
+        <div
+          id="verification-feedback"
+          class="feedback"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+        <button id="submit-answer" class="primary-button" type="submit">
+          <span>Verifica e attiva</span><span aria-hidden="true">✦</span>
+        </button>
+      </form>
+      <section class="hints-section" aria-labelledby="hints-title">
+        <div class="hints-heading">
+          <h3 id="hints-title">Hai bisogno di un aiuto?</h3>
+          <span id="hint-count">0 / 3</span>
+        </div>
+        <button id="hint-button" class="hint-button" type="button">
+          <span aria-hidden="true">✧</span>
+          <span id="hint-button-label">Rivela il primo indizio</span>
+          <span aria-hidden="true">+</span>
+        </button>
+        <ol id="hint-list" class="hint-list"></ol>
+      </section>
+      <p class="score-note">
+        Puoi ottenere fino a 100 punti. Indizi ed errori riducono il punteggio, mai le possibilità
+        di proseguire.
+      </p>
+    </dialog>
+
+    <dialog id="rules-dialog" class="modal journal-modal" aria-labelledby="rules-title">
+      <button class="modal-close" id="close-rules" type="button" aria-label="Chiudi le regole">
+        ×
+      </button>
+      <span class="eyebrow">Il taccuino del viaggiatore</span>
+      <h2 id="rules-title">Tutte le regole del palazzo</h2>
+      <p>Un breve richiamo, quando serve.</p>
+      <div class="rule-card">
+        <span>Potenza</span>
+        <math-field read-only class="rule-formula">\frac{d}{dx}x^n=n\cdot x^{n-1}</math-field>
+        <p>
+          Moltiplica per l'esponente e riducilo di uno. Vale anche per esponenti negativi e
+          frazionari.
+        </p>
+      </div>
+      <div class="rule-card">
+        <span>Somma</span>
+        <math-field read-only class="rule-formula">(f+g)'=f'+g'</math-field>
+        <p>Deriva ciascun termine separatamente.</p>
+      </div>
+      <div class="rule-card">
+        <span>Prodotto</span>
+        <math-field read-only class="rule-formula">(f\cdot g)'=f'g+fg'</math-field>
+        <p>Un fattore alla volta, poi somma. Non moltiplicare le due derivate.</p>
+      </div>
+      <div class="rule-card">
+        <span>Quoziente</span>
+        <math-field read-only class="rule-formula"
+          >\left(\frac{f}{g}\right)'=\frac{f'g-fg'}{g^2}</math-field
+        >
+        <p>Attenzione all'ordine e al segno del numeratore.</p>
+      </div>
+      <div class="rule-card">
+        <span>Catena</span>
+        <math-field read-only class="rule-formula">[f(g(x))]'=f'(g(x))\cdot g'(x)</math-field>
+        <p>Deriva la funzione esterna e moltiplica per la derivata di quella interna.</p>
+      </div>
+      <div class="rule-card">
+        <span>Funzioni celesti</span>
+        <math-field read-only class="rule-formula"
+          >(e^x)'=e^x\quad(\ln x)'=\frac{1}{x}\quad(\sin x)'=\cos x\quad(\cos x)'=-\sin
+          x</math-field
+        >
+        <p>Logaritmi e radici richiedono attenzione al dominio.</p>
+      </div>
+      <p class="journal-note">
+        In questa demo la verifica confronta la tua risposta con la derivata attesa in diversi
+        punti: puoi usare forme equivalenti, anche non semplificate.
+      </p>
+    </dialog>
+
+    <dialog id="confirm-dialog" class="modal confirm-modal" aria-labelledby="confirm-title">
+      <span class="eyebrow">Ricominciare</span>
+      <h2 id="confirm-title">Cancellare il progresso?</h2>
+      <p>Stanze, punteggio e indizi torneranno allo stato iniziale.</p>
+      <div class="confirm-actions">
+        <button id="cancel-reset" class="secondary-button" type="button">Continua a giocare</button>
+        <button id="confirm-reset" class="danger-button" type="button">Sì, ricomincia</button>
+      </div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden>
+      <span id="toast-icon" aria-hidden="true">✦</span><span id="toast-message"></span>
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

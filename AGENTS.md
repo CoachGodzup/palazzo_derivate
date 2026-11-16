@@ -8,16 +8,18 @@ La milestone corrente è la **vertical slice demo-1**: ingresso, una stanza, tre
 
 ## Fonti e precedenza
 
-1. `docs/DEMO_SCOPE.md`: perimetro operativo e criteri di accettazione correnti.
-2. `transcript_architecture_requirements.md`: vincoli tecnici decisi (Phaser 3, MathLive sopra il canvas, FastAPI, SymPy, mobile portrait, contenuti configurabili).
-3. `Il_Palazzo_delle_Derivate_GDD_v1.1.md`: design aggiornato.
-4. `Il_Palazzo_delle_Derivate_GDD_v1-1.pdf`: GDD v1.0, riferimento storico in caso di divergenze.
+1. `docs/DEMO_SCOPE.md`: perimetro operativo e criteri di accettazione correnti della demo 1.
+2. `docs/DEMO_2_SCOPE.md`: perimetro della demo 2 statica (campagna completa mock, verifica locale, pubblicazione su `/demo-2/`).
+3. `transcript_architecture_requirements.md`: vincoli tecnici decisi (Phaser 3, MathLive sopra il canvas, FastAPI, SymPy, mobile portrait, contenuti configurabili).
+4. `Il_Palazzo_delle_Derivate_GDD_v1.1.md`: design aggiornato.
+5. `Il_Palazzo_delle_Derivate_GDD_v1-1.pdf`: GDD v1.0, riferimento storico in caso di divergenze.
 
 Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qui o in `docs/DEMO_SCOPE.md`, aggiorna contestualmente la documentazione.
 
 ## Struttura
 
 - `client/main.ts`: composizione dell'applicazione e coordinamento UI/API/stato/scena.
+- `demo-2/`: demo statica della campagna completa (8 capitoli, 32 stanze principali e 8 segrete), con input MathLive e verifica mock locale; build separata in `dist/demo-2/` tramite `vite.demo2.config.ts`.
 - `client/game/`: scena Phaser, animazioni e interazioni del mondo.
 - `client/ui/`: dialoghi e componenti HTML, incluso MathLive.
 - `client/state/`: progresso e persistenza locale.
@@ -52,7 +54,7 @@ UV_PROJECT_ENVIRONMENT=.venv uv sync --project server
 npm run dev
 ```
 
-Aprire `http://localhost:5173`; API su `http://localhost:8000`, documentazione OpenAPI su `/docs`.
+Aprire `http://localhost:5173`; API su `http://localhost:8000`, documentazione OpenAPI su `/docs`. Per la sola demo 2 statica: `npm run dev:demo2`, pagina su `http://localhost:5174`.
 
 ```bash
 npm run build

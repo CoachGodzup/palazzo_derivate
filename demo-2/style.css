@@ -1,0 +1,671 @@
+@import "../client/styles.css";
+
+:root {
+  --campaign-line: rgba(205, 177, 119, 0.16);
+  --campaign-panel: rgba(9, 30, 39, 0.82);
+}
+
+.campaign-app {
+  max-width: 1600px;
+}
+
+.campaign-topbar {
+  min-height: 96px;
+}
+
+/* La demo 2 mantiene accessibili le regole anche su mobile. */
+.campaign-topbar #help-button {
+  display: grid;
+}
+
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 11px;
+  border: 1px solid rgba(216, 182, 111, 0.42);
+  color: var(--gold-pale);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  background: rgba(216, 182, 111, 0.07);
+}
+
+.campaign-layout {
+  display: grid;
+  grid-template-columns: 274px minmax(0, 1fr);
+  gap: 34px;
+  padding: 30px 0 44px;
+  align-items: start;
+}
+
+.chapter-rail {
+  position: sticky;
+  top: 18px;
+  min-width: 0;
+  padding: 20px 18px 18px;
+  border: 1px solid var(--campaign-line);
+  background:
+    linear-gradient(160deg, rgba(17, 44, 54, 0.78), rgba(7, 24, 32, 0.92)),
+    radial-gradient(circle at 50% 0, rgba(102, 216, 197, 0.08), transparent 60%);
+}
+
+.rail-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--campaign-line);
+}
+
+.rail-heading strong {
+  color: var(--muted);
+  font: 12px/1 var(--serif);
+  letter-spacing: 0.5px;
+}
+
+.chapter-list {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.chapter-button {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 7px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.chapter-button:hover:not(:disabled) {
+  border-color: rgba(216, 182, 111, 0.26);
+  background: rgba(216, 182, 111, 0.05);
+  color: var(--gold-pale);
+}
+
+.chapter-button.is-active {
+  border-color: rgba(216, 182, 111, 0.52);
+  background:
+    linear-gradient(90deg, rgba(216, 182, 111, 0.14), transparent 75%), rgba(216, 182, 111, 0.04);
+  color: #f4e8cf;
+}
+
+.chapter-button.is-complete .chapter-button-number {
+  color: var(--teal);
+  border-color: rgba(102, 216, 197, 0.45);
+}
+
+.chapter-button.is-locked {
+  opacity: 0.46;
+}
+
+.chapter-button-number {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(216, 182, 111, 0.3);
+  color: var(--gold);
+  font: 16px/1 var(--serif);
+}
+
+.chapter-button-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.chapter-button-copy strong {
+  font: 14px/1.2 var(--serif);
+  font-weight: 500;
+}
+
+.chapter-button-copy small {
+  font-size: 9px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: rgba(154, 176, 181, 0.76);
+}
+
+.chapter-button-mark {
+  font-size: 15px;
+  color: var(--gold);
+  text-align: right;
+}
+
+.chapter-divider {
+  display: block;
+  width: 1px;
+  height: 7px;
+  margin-left: 24px;
+  background: rgba(216, 182, 111, 0.18);
+}
+
+.rail-note {
+  display: flex;
+  gap: 9px;
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--campaign-line);
+  color: rgba(154, 176, 181, 0.78);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.rail-note span {
+  color: var(--gold);
+}
+
+.rail-note p {
+  margin: 0;
+}
+
+.rail-link {
+  display: inline-block;
+  margin-top: 14px;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+}
+
+.rail-link:hover {
+  color: var(--gold-pale);
+  text-decoration: underline;
+}
+
+.chapter-stage {
+  min-width: 0;
+}
+
+.chapter-hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 148px;
+  gap: 24px;
+  align-items: center;
+  padding: 6px 0 28px;
+  border-bottom: 1px solid var(--campaign-line);
+}
+
+.chapter-number {
+  color: transparent;
+  font: 104px/0.8 var(--serif);
+  -webkit-text-stroke: 1px rgba(216, 182, 111, 0.52);
+  letter-spacing: -5px;
+  user-select: none;
+}
+
+.chapter-heading {
+  min-width: 0;
+}
+
+.chapter-heading h1 {
+  margin: 6px 0 10px;
+  font: 400 clamp(32px, 4.2vw, 52px) / 1.02 var(--serif);
+  letter-spacing: -1.1px;
+}
+
+.chapter-heading p {
+  max-width: 720px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.chapter-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  color: var(--gold-pale);
+  font: 15px/1 var(--serif);
+}
+
+.chapter-meter .progress-track {
+  width: 100%;
+}
+
+.campaign-complete {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  margin: 24px 0 8px;
+  padding: 20px 22px;
+  border: 1px solid rgba(102, 216, 197, 0.38);
+  background:
+    radial-gradient(circle at 0 50%, rgba(102, 216, 197, 0.16), transparent 60%),
+    rgba(8, 32, 38, 0.72);
+}
+
+.completion-rune {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(102, 216, 197, 0.44);
+  border-radius: 50%;
+  color: var(--teal);
+  font-size: 22px;
+}
+
+.campaign-complete h2 {
+  margin: 5px 0 6px;
+  font: 400 24px/1.2 var(--serif);
+}
+
+.campaign-complete p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.campaign-complete > strong {
+  color: var(--teal);
+  font: 20px/1 var(--serif);
+  white-space: nowrap;
+}
+
+.stage-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 30px 0 15px;
+}
+
+.stage-section-heading h2 {
+  margin: 5px 0 0;
+  font: 400 22px/1.2 var(--serif);
+}
+
+.stage-progress {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  gap: 13px;
+}
+
+.room-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  min-height: 188px;
+  padding: 15px 15px 13px;
+  border: 1px solid rgba(205, 177, 119, 0.22);
+  background: linear-gradient(165deg, rgba(17, 44, 54, 0.86), rgba(8, 26, 34, 0.92));
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.room-card::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: -24px;
+  width: 82px;
+  height: 82px;
+  border: 1px solid rgba(216, 182, 111, 0.12);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.room-card:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(216, 182, 111, 0.62);
+  background: linear-gradient(165deg, rgba(23, 56, 66, 0.92), rgba(9, 30, 39, 0.95));
+}
+
+.room-card.is-solved {
+  border-color: rgba(102, 216, 197, 0.38);
+  background: linear-gradient(165deg, rgba(14, 48, 52, 0.86), rgba(7, 27, 33, 0.94));
+}
+
+.room-card.is-secret {
+  border-style: dashed;
+}
+
+.room-card.is-locked {
+  cursor: not-allowed;
+  opacity: 0.5;
+  filter: saturate(0.55);
+}
+
+.room-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.room-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(216, 182, 111, 0.36);
+  border-radius: 50%;
+  color: var(--gold-pale);
+  font-size: 16px;
+}
+
+.room-card.is-solved .room-icon {
+  border-color: rgba(102, 216, 197, 0.54);
+  color: var(--teal);
+}
+
+.room-status {
+  color: rgba(216, 182, 111, 0.88);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-align: right;
+}
+
+.room-card.is-solved .room-status {
+  color: var(--teal);
+}
+
+.room-label {
+  color: rgba(154, 176, 181, 0.72);
+  font-size: 9px;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.room-title {
+  font: 400 20px/1.18 var(--serif);
+  letter-spacing: -0.2px;
+}
+
+.room-formula {
+  display: block;
+  margin-top: auto;
+  padding: 7px 9px;
+  border-left: 2px solid rgba(216, 182, 111, 0.38);
+  background: rgba(3, 16, 22, 0.46);
+  color: #f2dfb7;
+  font: 16px/1.35 var(--serif);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.room-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: rgba(154, 176, 181, 0.72);
+  font-size: 9px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.difficulty-dots {
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+.secret-section {
+  margin-top: 18px;
+  padding-top: 2px;
+  border-top: 1px solid var(--campaign-line);
+}
+
+.secret-note {
+  max-width: 700px;
+  margin: 0 0 14px;
+  color: rgba(154, 176, 181, 0.78);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.secret-section .room-grid:empty::before {
+  content: "Nessuna stanza segreta in questo capitolo.";
+  color: rgba(154, 176, 181, 0.6);
+  font-size: 12px;
+}
+
+.campaign-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 0 32px;
+  border-top: 1px solid var(--campaign-line);
+  color: rgba(154, 176, 181, 0.62);
+  font-size: 10px;
+  letter-spacing: 0.35px;
+}
+
+.campaign-footer #save-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.formula-display strong {
+  color: #f5e6c8;
+  font: 400 clamp(22px, 3vw, 30px) / 1.25 var(--serif);
+}
+
+.mock-note {
+  margin: 14px 0 4px;
+  padding: 10px 12px;
+  border-left: 2px solid rgba(102, 216, 197, 0.4);
+  background: rgba(102, 216, 197, 0.05);
+  color: rgba(154, 176, 181, 0.86);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.modal .mock-note + .primary-button {
+  margin-top: 16px;
+}
+
+@media (max-width: 1060px) {
+  .campaign-layout {
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .chapter-hero {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .chapter-meter {
+    grid-column: 2;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .chapter-meter .progress-track {
+    width: 120px;
+  }
+}
+
+@media (max-width: 820px) {
+  .campaign-layout {
+    display: block;
+    padding-top: 18px;
+  }
+
+  .chapter-rail {
+    position: static;
+    margin-bottom: 22px;
+    padding: 14px 14px 12px;
+  }
+
+  .chapter-list {
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px 0 4px;
+    scrollbar-width: thin;
+  }
+
+  .chapter-button {
+    flex: 0 0 212px;
+    grid-template-columns: 34px minmax(0, 1fr) 14px;
+    border-color: rgba(205, 177, 119, 0.15);
+  }
+
+  .chapter-divider,
+  .rail-note {
+    display: none;
+  }
+
+  .rail-link {
+    margin-top: 8px;
+  }
+
+  .chapter-hero {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .chapter-number {
+    font-size: 76px;
+  }
+
+  .chapter-heading h1 {
+    font-size: clamp(28px, 6vw, 40px);
+  }
+
+  .campaign-complete {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .campaign-complete > strong {
+    grid-column: 2;
+  }
+
+  .campaign-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 620px) {
+  .campaign-topbar {
+    min-height: 82px;
+    gap: 12px;
+  }
+
+  .campaign-topbar .brand-mark {
+    width: 46px;
+    height: 46px;
+    font-size: 25px;
+  }
+
+  .campaign-topbar .brand-copy strong {
+    font-size: 19px;
+  }
+
+  .campaign-topbar .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.4px;
+  }
+
+  .campaign-topbar .topbar-actions {
+    flex-shrink: 0;
+    gap: 7px;
+  }
+
+  .campaign-topbar .score-chip {
+    flex-shrink: 0;
+  }
+
+  .campaign-topbar .icon-button {
+    flex: 0 0 38px;
+  }
+
+  .demo-badge {
+    display: none;
+  }
+
+  .campaign-topbar .score-chip {
+    padding: 8px 9px;
+  }
+
+  .campaign-topbar .icon-button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .chapter-hero {
+    grid-template-columns: 1fr;
+    padding-bottom: 22px;
+  }
+
+  .chapter-number {
+    display: none;
+  }
+
+  .chapter-meter {
+    grid-column: 1;
+    justify-content: flex-start;
+  }
+
+  .chapter-heading p {
+    font-size: 12px;
+  }
+
+  .stage-section-heading {
+    padding-top: 24px;
+  }
+
+  .room-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .room-card {
+    min-height: 172px;
+  }
+
+  .campaign-complete {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-complete > strong {
+    grid-column: 1;
+  }
+
+  .completion-rune {
+    width: 40px;
+    height: 40px;
+  }
+}

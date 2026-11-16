@@ -16,5 +16,13 @@
     "skipLibCheck": true,
     "types": ["vite/client", "node"]
   },
-  "include": ["client", "tests", "vite.config.ts", "vitest.config.ts", "playwright.config.ts"]
+  "include": [
+    "client",
+    "tests",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "demo-2",
+    "vite.demo2.config.ts"
+  ]
 }
