@@ -25,6 +25,22 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - name: Setup Godot
+        run: |
+          wget -q "https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip"
+          unzip -q Godot_v4.7.2-stable_linux.x86_64.zip
+          sudo mv Godot_v4.7.2-stable_linux.x86_64 /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+      - name: Setup Godot export templates
+        run: |
+          wget -q "https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz"
+          mkdir -p "$HOME/.local/share/godot/export_templates/4.7.2.stable"
+          unzip -q -j Godot_v4.7.2-stable_export_templates.tpz "templates/web_*.zip" -d "$HOME/.local/share/godot/export_templates/4.7.2.stable"
+      - name: Export demo-4 (Web)
+        run: |
+          mkdir -p dist/demo-4
+          cd demo-4
+          godot --headless --export-release "Web" ../dist/demo-4/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

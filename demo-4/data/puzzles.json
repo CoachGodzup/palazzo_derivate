@@ -1,0 +1,70 @@
+{
+  "version": "demo-4",
+  "room": "La Corte delle Meridiane",
+  "puzzles": [
+    {
+      "id": "sigillo",
+      "name": "Sigillo Solare",
+      "kind": "sigil",
+      "function_display": "f(x) = 3x² − 5x + 4",
+      "function_latex": "3x^2-5x+4",
+      "derivative_eval": "6*x - 5",
+      "rule": "Regola della potenza",
+      "prompt": "Calcola la derivata f'(x).",
+      "hints": [
+        "La derivata di x^n e' n*x^(n-1).",
+        "Deriva termine per termine: 3x^2, -5x e +4.",
+        "3x^2 -> 6x,  -5x -> -5,  +4 -> 0."
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "ingranaggi",
+      "name": "Ingranaggi Gemelli",
+      "kind": "gears",
+      "function_display": "f(x) = (3x² − 2)(x + 1)",
+      "function_latex": "(3x^2-2)(x+1)",
+      "derivative_eval": "9*x^2 + 6*x - 2",
+      "rule": "Regola del prodotto",
+      "prompt": "Calcola la derivata f'(x).",
+      "hints": [
+        "Usa la regola del prodotto: (u*v)' = u'*v + u*v'.",
+        "Poni u = 3x^2 - 2 e v = x + 1: allora u' = 6x e v' = 1.",
+        "Somma: (6x)(x+1) + (3x^2-2)(1), poi semplifica."
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "clessidra",
+      "name": "Clessidra del Tempo",
+      "kind": "hourglass",
+      "function_display": "f(x) = 3√x + 2x^(3/2)",
+      "function_latex": "3\\sqrt{x}+2x^{\\frac{3}{2}}",
+      "derivative_eval": "3/(2*sqrt(x)) + 3*sqrt(x)",
+      "rule": "Radici ed esponenti frazionari",
+      "prompt": "Calcola la derivata f'(x).",
+      "hints": [
+        "sqrt(x) = x^(1/2): derivata = (1/2)*x^(-1/2).",
+        "Deriva 3*sqrt(x) e poi 2*x^(3/2) con la regola della potenza.",
+        "3*sqrt(x) -> 3/(2*sqrt(x)),  2*x^(3/2) -> 3*sqrt(x)."
+      ],
+      "difficulty": 3
+    },
+    {
+      "id": "porta",
+      "name": "Porta delle Meridiane",
+      "kind": "gate",
+      "function_display": "f(x) = 2x⁵ − 4x⁻² + 3",
+      "function_latex": "2x^5-4x^{-2}+3",
+      "derivative_eval": "10*x^4 + 8*x^(-3)",
+      "rule": "Potenze ed esponenti negativi",
+      "prompt": "Calcola la derivata f'(x).",
+      "hints": [
+        "La regola della potenza vale anche per esponenti negativi.",
+        "2x^5 -> 10x^4,  -4x^(-2) -> 8x^(-3),  +3 -> 0.",
+        "Attenzione al segno: la derivata di x^(-2) e' -2*x^(-3)."
+      ],
+      "difficulty": 2
+    }
+  ]
+}
