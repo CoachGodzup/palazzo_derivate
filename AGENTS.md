@@ -27,7 +27,7 @@ Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qu
 - `server/app/`: API FastAPI, validazione dei contenuti e motore simbolico.
 - `server/tests/`: test API e matematici.
 - `tests/`: test unitari TypeScript ed end-to-end Playwright.
-- `docs/`: scope e guida di revisione; `docs/design/` raccoglie le decisioni di design (`frontend.md` per input e tastiera, `gameplay.md` per il feedback, `backend.md` per parser, verifica simbolica ed equivalenza delle risposte, `audio.md` per la musica procedurale, `testing.md` per la strategia locale/CI).
+- `docs/`: scope e guida di revisione; `docs/design/` raccoglie le decisioni di design (`frontend.md` per input e tastiera, `gameplay.md` per il feedback, `backend.md` per parser, verifica simbolica ed equivalenza delle risposte, `audio.md` per la musica procedurale, `testing.md` per la strategia locale/CI, `teacher-sessions.md` per accesso docente e sessioni di gioco — requisiti futuri post demo-1).
 - `.github/workflows/ci.yml`: suite completa (lint, build, API, unit, E2E desktop + portrait) su push e pull request; `deploy-pages.yml` resta dedicato al deploy.
 - `.opencode/skills/`: workflow specialistici OpenCode.
 - `.opencode/agent/`: subagenti specialistici:
