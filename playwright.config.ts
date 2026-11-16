@@ -7,7 +7,9 @@ export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: false,
   workers: 1,
-  timeout: 45_000,
+  // Il flusso completo su portrait carica MathLive tre volte e supera i 45 s
+  // su runner CI più lenti.
+  timeout: 90_000,
   expect: { timeout: 8_000 },
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
