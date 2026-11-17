@@ -21,6 +21,9 @@ teal e arancio). Nessuna risorsa grafica copiata.
   Usato come font di default per rendere correttamente i simboli matematici
   (apici `² ³ ⁴ ⁵ ⁻`, radicale `√`, `− · × ÷`).
   Fonte: <https://dejavu-fonts.github.io/>.
+- `assets/fonts/DejaVuSerif.ttf` — **DejaVu Serif**, stessa licenza, usato per
+  titoli e testi dei pannelli Godot (il popup iniziale) per richiamare il
+  serif "Georgia" del tema Retro 82.
 
 ## Input matematico (solo Web)
 

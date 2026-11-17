@@ -254,7 +254,7 @@ func _build_intro() -> void:
 	add_child(_intro)
 
 	var dim := ColorRect.new()
-	dim.color = Color(0.02, 0.05, 0.1, 0.82)
+	dim.color = Color(2.0 / 255.0, 12.0 / 255.0, 23.0 / 255.0, 0.82)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_intro.add_child(dim)
 
@@ -262,19 +262,19 @@ func _build_intro() -> void:
 	center.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_intro.add_child(center)
 
+	var serif := _load_serif_font()
+
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("0e2a47")
-	style.corner_radius_top_left = 16
-	style.corner_radius_top_right = 16
-	style.corner_radius_bottom_left = 16
-	style.corner_radius_bottom_right = 16
-	style.content_margin_left = 40
-	style.content_margin_right = 40
-	style.content_margin_top = 32
-	style.content_margin_bottom = 32
+	style.bg_color = Color("05182e")
+	style.border_color = Color("faa968")
+	style.set_border_width_all(1)
+	style.content_margin_left = 32
+	style.content_margin_right = 32
+	style.content_margin_top = 28
+	style.content_margin_bottom = 28
 	panel.add_theme_stylebox_override("panel", style)
-	panel.custom_minimum_size = Vector2(640, 0)
+	panel.custom_minimum_size = Vector2(620, 0)
 	center.add_child(panel)
 
 	var vbox := VBoxContainer.new()
@@ -284,23 +284,48 @@ func _build_intro() -> void:
 	var title := Label.new()
 	title.text = "La Corte delle Meridiane"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 32)
+	title.add_theme_font_size_override("font_size", 28)
 	title.add_theme_color_override("font_color", Color("ffffff"))
+	if serif:
+		title.add_theme_font_override("font", serif)
 	vbox.add_child(title)
 
 	var body := Label.new()
 	body.text = "Esplora la stanza e interagisci con i quattro meccanismi (tasto E o clic).\nCalcola la derivata richiesta: risolvili tutti per risvegliare la fontana al centro.\n\nWASD / frecce per muoverti · mouse per guardare · Esc per il mouse."
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	body.add_theme_font_size_override("font_size", 17)
-	body.add_theme_color_override("font_color", Color("f6dcac"))
+	body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	body.add_theme_font_size_override("font_size", 15)
+	body.add_theme_color_override("font_color", Color("8cbfb8"))
+	if serif:
+		body.add_theme_font_override("font", serif)
 	vbox.add_child(body)
 
 	var start := Button.new()
 	start.text = "Inizia"
 	start.custom_minimum_size = Vector2(0, 50)
-	start.add_theme_font_size_override("font_size", 20)
+	start.add_theme_font_size_override("font_size", 18)
+	start.add_theme_color_override("font_color", Color("020c17"))
+	start.add_theme_color_override("font_hover_color", Color("020c17"))
+	start.add_theme_color_override("font_pressed_color", Color("020c17"))
+	if serif:
+		start.add_theme_font_override("font", serif)
+	start.add_theme_stylebox_override("normal", _intro_button_style(Color("faa968")))
+	start.add_theme_stylebox_override("hover", _intro_button_style(Color("e97b3c")))
+	start.add_theme_stylebox_override("pressed", _intro_button_style(Color("e97b3c")))
 	vbox.add_child(start)
 	start.pressed.connect(_on_start)
+
+
+func _load_serif_font() -> Font:
+	return load("res://assets/fonts/DejaVuSerif.ttf") as Font
+
+
+func _intro_button_style(bg: Color) -> StyleBoxFlat:
+	var s := StyleBoxFlat.new()
+	s.bg_color = bg
+	s.border_color = Color("faa968")
+	s.set_border_width_all(1)
+	return s
 
 
 func _on_start() -> void:
