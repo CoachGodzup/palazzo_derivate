@@ -16,11 +16,15 @@ var _fountain: Fountain
 var _panel: PuzzlePanel
 var _overlay: MathOverlay
 var _active_mechanism: Mechanism = null
+var _controls: MobileControls
+var _touch_mode := false
+var _hud_visible := false
 
 var _hud: CanvasLayer
 var _prompt_label: Label
 var _counter_label: Label
 var _banner_label: Label
+var _crosshair: Label
 var _intro: CanvasLayer
 
 var _center := Vector3.ZERO
@@ -46,9 +50,11 @@ func _ready() -> void:
 		_panel.solved.connect(_on_panel_solved)
 		_panel.closed.connect(_on_panel_closed)
 	_build_hud()
+	_build_touch_controls()
 	_build_intro()
 	_load_save()
 	_update_counter()
+	_set_gameplay_hud(false)
 	_player.set_can_move(false)
 	_intro.visible = true
 	_setup_web_pointer_lock()
@@ -59,28 +65,42 @@ func _setup_web_pointer_lock() -> void:
 		return
 	# Request pointer lock directly inside the browser's click event (a real user
 	# gesture), which strict browsers (Safari) require. Godot's deferred request
-	# can fall outside the gesture window and be silently rejected.
+	# can fall outside the gesture window and be silently rejected. Touch devices
+	# don't need it and locking would break the on-screen controls.
 	JavaScriptBridge.eval("""
-	window.__lockRequested = true;
+	window.__lockRequested = %s;
 	document.addEventListener('click', function(){
 		if (!window.__lockRequested) return;
+		try {
+			if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+			if (new URLSearchParams(location.search).has('touch')) return;
+		} catch (e) {}
 		var c = document.querySelector('canvas');
 		if (c && document.pointerLockElement !== c) {
 			try { c.requestPointerLock(); } catch (e) {}
 		}
 	});
-	""")
+	""" % ("false" if _touch_mode else "true"))
 
 
 func _process(_delta: float) -> void:
+	if not _hud_visible:
+		return
 	var target := _player.get_interact_target()
 	if target is Mechanism and not target.is_solved:
-		_prompt_label.text = "E · " + str(target.puzzle.get("name", "Meccanismo"))
+		if _controls:
+			_controls.set_interact_ready(true)
+		var label := "Tocca Interagisci · " if _touch_mode else "E · "
+		_prompt_label.text = label + str(target.puzzle.get("name", "Meccanismo"))
 		_prompt_label.visible = true
 	elif target is Fountain and not _fountain.is_active:
+		if _controls:
+			_controls.set_interact_ready(false)
 		_prompt_label.text = "La fontana attende che i quattro meccanismi si risveglino..."
 		_prompt_label.visible = true
 	else:
+		if _controls:
+			_controls.set_interact_ready(false)
 		_prompt_label.visible = false
 
 
@@ -307,6 +327,7 @@ func _build_hud() -> void:
 	cross.add_theme_font_size_override("font_size", 26)
 	cross.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
 	cross_center.add_child(cross)
+	_crosshair = cross
 
 	_prompt_label = Label.new()
 	_prompt_label.anchor_left = 0.5
@@ -348,6 +369,40 @@ func _build_hud() -> void:
 	_banner_label.modulate = Color(1, 1, 1, 0)
 	_banner_label.visible = false
 	_hud.add_child(_banner_label)
+
+
+func _build_touch_controls() -> void:
+	_controls = MobileControls.new()
+	_controls.name = "MobileControls"
+	add_child(_controls)
+	_touch_mode = _controls.is_touch
+	_player.touch_mode = _touch_mode
+	_controls.move_by.connect(_on_touch_move)
+	_controls.look_by.connect(_on_touch_look)
+	_controls.interact_pressed.connect(_on_touch_interact)
+	_controls.set_gameplay_visible(false)
+
+
+func _on_touch_move(axis: Vector2) -> void:
+	_player.set_touch_move(axis)
+
+
+func _on_touch_look(relative: Vector2) -> void:
+	_player.apply_look(relative)
+
+
+func _on_touch_interact() -> void:
+	_player.try_interact()
+
+
+func _set_gameplay_hud(value: bool) -> void:
+	_hud_visible = value
+	if _crosshair:
+		_crosshair.visible = value
+	if _counter_label:
+		_counter_label.visible = value
+	if _prompt_label and not value:
+		_prompt_label.visible = false
 
 
 func _build_intro() -> void:
@@ -393,7 +448,10 @@ func _build_intro() -> void:
 	vbox.add_child(title)
 
 	var body := Label.new()
-	body.text = "Esplora la stanza e interagisci con i quattro meccanismi (tasto E o clic).\nCalcola la derivata richiesta: risolvili tutti per risvegliare la fontana al centro.\n\nWASD / frecce per muoverti · mouse per guardare · Esc per il mouse."
+	if _touch_mode:
+		body.text = "Joystick a sinistra per muoverti, trascina il dito per guardare.\nAvvicinati a un meccanismo e tocca «Interagisci»: calcola la derivata per risvegliarlo.\nRisolvili tutti e la fontana centrale si accenderà."
+	else:
+		body.text = "Esplora la stanza e interagisci con i quattro meccanismi (tasto E o clic).\nCalcola la derivata richiesta: risolvili tutti per risvegliare la fontana al centro.\n\nWASD / frecce per muoverti · mouse per guardare · Esc per il mouse."
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	body.add_theme_font_size_override("font_size", 15)
@@ -404,7 +462,7 @@ func _build_intro() -> void:
 
 	var start := Button.new()
 	start.text = "Inizia"
-	start.custom_minimum_size = Vector2(0, 50)
+	start.custom_minimum_size = Vector2(0, 58)
 	start.add_theme_font_size_override("font_size", 18)
 	start.add_theme_color_override("font_color", Color("020c17"))
 	start.add_theme_color_override("font_hover_color", Color("020c17"))
@@ -432,6 +490,9 @@ func _intro_button_style(bg: Color) -> StyleBoxFlat:
 
 func _on_start() -> void:
 	_intro.visible = false
+	_set_gameplay_hud(true)
+	if _controls:
+		_controls.set_gameplay_visible(true)
 	_player.set_can_move(true)
 
 
@@ -440,6 +501,10 @@ func _on_start() -> void:
 func _on_puzzle_requested(puzzle: Dictionary, mech: Mechanism) -> void:
 	_active_mechanism = mech
 	_player.set_can_move(false)
+	# The whole gameplay UI disappears: the exercise popup owns the screen.
+	_set_gameplay_hud(false)
+	if _controls:
+		_controls.set_gameplay_visible(false)
 	if _overlay:
 		_overlay.open(puzzle)
 	else:
@@ -451,11 +516,17 @@ func _on_panel_solved(puzzle: Dictionary) -> void:
 		_active_mechanism.mark_solved()
 	_active_mechanism = null
 	_player.set_can_move(true)
+	_set_gameplay_hud(true)
+	if _controls:
+		_controls.set_gameplay_visible(true)
 
 
 func _on_panel_closed() -> void:
 	_active_mechanism = null
 	_player.set_can_move(true)
+	_set_gameplay_hud(true)
+	if _controls:
+		_controls.set_gameplay_visible(true)
 
 
 func _on_mechanism_solved(mech: Mechanism) -> void:

@@ -100,11 +100,13 @@ func _build_ui() -> void:
 	_prompt = Label.new()
 	_prompt.add_theme_font_size_override("font_size", 17)
 	_prompt.add_theme_color_override("font_color", C_TEXT)
+	_prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(_prompt)
 
 	_function = Label.new()
 	_function.add_theme_font_size_override("font_size", 30)
 	_function.add_theme_color_override("font_color", C_HINT)
+	_function.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(_function)
 
 	_input = LineEdit.new()

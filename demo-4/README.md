@@ -39,16 +39,40 @@ python3 -m http.server 8080 -d dist/demo-4
 
 ## Controlli
 
+Desktop:
+
 - **WASD / frecce** — muoversi
 - **Mouse** — guardare
 - **E** o **clic sinistro** — interagire con un meccanismo
 - **Esc** — rilasciare/riprendere il mouse
+
+Mobile / touch:
+
+- **Joystick in basso a sinistra** — muoversi (analogico, con zona morta)
+- **Trascina il dito sul resto dello schermo** — guardare
+- **Pulsante «Interagisci»** — aprire l'esercizio del meccanismo più vicino
+  davanti a te (non serve mirare con precisione)
+- L'interfaccia di gioco (joystick, pulsante, HUD) **sparisce** quando si apre
+  il popup della derivata e ricompare alla chiusura.
+- In verticale compare l'invito a ruotare il telefono: il gioco è pensato per
+  l'orizzontale.
+
+I controlli touch compaiono automaticamente sui dispositivi touch
+(`DisplayServer.is_touchscreen_available()`, oppure `pointer: coarse` /
+`navigator.maxTouchPoints` sul Web). Per provarli da desktop:
+
+```bash
+godot --path demo-4 -- --touch          # editor/native
+# Web: aggiungi ?touch=1 all'URL (es. http://localhost:8080/?touch=1)
+```
 
 ## Struttura
 
 - `scenes/main.tscn` — scena principale (solo root + script).
 - `scripts/main.gd` — composizione della stanza, stato, HUD, persistenza.
 - `scripts/player.gd` — controller in prima persona + raggio di interazione.
+- `scripts/mobile_controls.gd` — interfaccia touch (stick virtuale, drag per
+  guardare, pulsante Interagisci, avviso di rotazione).
 - `scripts/mechanism.gd` — un meccanismo: visual low-poly procedurale + animazione.
 - `scripts/fountain.gd` — la fontana centrale (idle → finale).
 - `scripts/puzzle_panel.gd` — UI dell'esercizio (input, indizi, feedback).

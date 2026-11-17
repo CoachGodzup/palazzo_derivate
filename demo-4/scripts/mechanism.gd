@@ -23,6 +23,10 @@ var _glow_mat: StandardMaterial3D
 var _solved_lamp: MeshInstance3D
 
 
+func _ready() -> void:
+	add_to_group("interactables")
+
+
 func setup(data: Dictionary) -> void:
 	puzzle = data
 	_kind = str(data.get("kind", "sigil"))
