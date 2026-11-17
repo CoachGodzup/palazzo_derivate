@@ -6,7 +6,7 @@ import type { GameProgress, Puzzle } from "../types";
 const GOLD = 0xd5ae62;
 const PALE_GOLD = 0xf2d495;
 const TURQUOISE = 0x55dbc7;
-const NIGHT = 0x071923;
+const ARABESQUE_BG = 0x1a1a2e;
 
 function points(raw: number[][]): Phaser.Geom.Point[] {
   return raw.map(([x, y]) => new Phaser.Geom.Point(x, y));
@@ -98,7 +98,26 @@ export class CourtyardScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.cameras.main.setBackgroundColor(NIGHT);
+    // Arabesque flat background
+    const bg = this.add.graphics();
+    bg.fillStyle(ARABESQUE_BG, 1);
+    bg.fillRect(0, 0, this.cameras.main.width, this.cameras.main.height);
+
+    // Decorative arabesque motifs (flat geometric)
+    bg.fillStyle(0x52b788, 0.18);
+    for (let i = 0; i < 100; i++) {
+      const x = ((i * 131 + 33) % 1200) + 40;
+      const y = ((i * 83 + 17) % 400) + 50;
+      const r = i % 5 === 0 ? 3 : i % 3 === 0 ? 2 : 1;
+      bg.fillCircle(x, y, r);
+    }
+    bg.fillStyle(0x52b788, 0.1);
+    for (let i = 0; i < 60; i++) {
+      const x = ((i * 157 + 41) % 1100) + 40;
+      const y = ((i * 97 + 23) % 350) + 60;
+      bg.fillEllipse(x, y, 1.5 + (i % 4) * 1.5, 1 + (i % 3) * 0.5);
+    }
+
     this.drawArchitecture();
     this.drawDoor();
     this.drawSeal();
@@ -134,27 +153,6 @@ export class CourtyardScene extends Phaser.Scene {
   }
 
   private drawArchitecture(): void {
-    const background = this.add.graphics();
-    background.fillGradientStyle(0x071621, 0x071621, 0x103747, 0x103747, 1);
-    background.fillRect(0, 0, 1280, 510);
-    background.fillGradientStyle(0x142b34, 0x142b34, 0x071319, 0x071319, 1);
-    background.fillRect(0, 510, 1280, 210);
-
-    for (let index = 0; index < 85; index += 1) {
-      const x = ((index * 149 + 47) % 1240) + 20;
-      const y = ((index * 71 + 23) % 300) + 20;
-      background.fillStyle(index % 7 === 0 ? PALE_GOLD : 0x8fc2c8, 0.18 + (index % 4) * 0.08);
-      background.fillCircle(x, y, index % 9 === 0 ? 1.8 : 1);
-    }
-
-    background.fillStyle(0x061219, 0.8);
-    for (const x of [80, 180, 1060, 1160]) {
-      background.fillRect(x - 45, 215, 90, 265);
-      background.fillCircle(x, 210, 45);
-      background.fillTriangle(x - 60, 205, x, 120, x + 60, 205);
-      background.fillRect(x - 3, 100, 6, 40);
-    }
-
     const walls = this.add.graphics();
     walls.fillStyle(0x102832);
     walls.fillRect(0, 145, 1280, 385);

@@ -10,19 +10,26 @@ Principio guida: **il feedback positivo deve essere più ricco di quello negativ
 
 ### 1. Risposta corretta — momento di soddisfazione
 
-La modale non si chiude immediatamente. Per circa **1800–2000 ms** il dialogo mostra un breve stato di successo, più ampio e leggibile di quello di errore.
+Stato: **implementato nella demo 2**.
 
-Contenuto del feedback:
+La modale non si chiude immediatamente. Dopo la verifica corretta il form mostra lo stato di successo e si apre un dialogo dedicato **«Meccanismo riattivato»** con:
 
-- messaggio contestuale: «Ben fatto!» / «Esatto, la derivata è corretta.» / «Il meccanismo si sta riattivando...»;
-- input che diventa brevemente verde;
-- effetto di particelle più ricco, con scintille di colori alternati;
-- pulse del riquadro di feedback e dell'icona di conferma;
-- toast di successo dedicato con testo «Ben fatto!» e maggiore durata (circa 5 s);
-- suono breve e gradevole, se l'audio è disponibile e non disattivato;
-- chiusura automatica della modale al termine dell'animazione.
+- il nome della stanza;
+- i punti ottenuti (`+N punti`);
+- il progresso del capitolo oppure l'annuncio del capitolo appena sbloccato;
+- il messaggio di fine campagna quando si completa l'ultima stanza.
 
-Vincoli: durata contenuta, nessuna attesa aggiuntiva oltre l'animazione, rispetto di `prefers-reduced-motion` (in quel caso l'animazione si riduce a un cambio di stato e al messaggio testuale) e del muto di sistema. Il successo resta comunicato anche senza audio e senza colore.
+Il dialogo resta aperto circa **3,2 s** (1,8 s con `prefers-reduced-motion`) e si può chiudere subito con «Torna al palazzo». Al ritorno la card della stanza risolta pulsa con un alone arancione e riceve il focus.
+
+Altri dettagli del feedback:
+
+- il riquadro di successo nel form è più ampio e marcato di quello di errore;
+- la runa e il punteggio compaiono con una breve animazione di espansione;
+- niente toast duplicato: la celebrazione è il messaggio principale;
+- suono breve e gradevole, se l'audio è disponibile e non disattivato (non ancora in demo-2);
+- chiusura automatica del dialogo al termine dell'animazione.
+
+Vincoli: durata contenuta, uscita immediata disponibile, rispetto di `prefers-reduced-motion` (in quel caso le animazioni si riducono a cambi di stato e resta il messaggio testuale) e del muto di sistema. Il successo resta comunicato anche senza audio e senza colore.
 
 ### 2. Risposta errata — tremolio dell'input
 
@@ -61,6 +68,22 @@ Se il parser riconosce il tipo di errore con sufficiente affidabilità, il feedb
 | Risposta non interpretabile | Sintassi incompleta o non valida                 | Controlla la scrittura dell'espressione.                                            |
 
 Regola invariante: il feedback specifico è ammesso **solo** per errori riconosciuti in modo affidabile. In caso contrario si usa il messaggio generico, senza inventare diagnosi didattiche. Il riconoscimento resta lato server (SymPy/parser con whitelist); il client non confronta stringhe né deduce la soluzione.
+
+## Completamento della stanza — feedback di successo
+
+Stato: **implementato** nella demo 3 (`demo-3/`), come evoluzione del feedback v0.2.
+
+Il completamento di una stanza non può passare inosservato. Dopo l'ultima risposta corretta, il gioco conferma il traguardo con un segnale inequivocabile e articolato:
+
+- **Lampo di luce**: la scena emette un lampo radiale (arancio/verde) nel momento in cui l'ultimo meccanismo si attiva e lo sfondo torna a colori. È solo un rinforzo visivo, non l'unico canale: rispetta `prefers-reduced-motion` e si riduce a un cambio di stato.
+- **Riepilogo di completamento**: una modale mostra «La via è aperta.», il punteggio totale (massimo `100 × numero di meccanismi`), i tentativi totali, gli indizi usati e il tempo attivo. Appare **dopo** che la scena ha iniziato ad animarsi e la modale dell'enigma si è chiusa: il giocatore prima _vede_ la reazione, poi _legge_ l'esito.
+- **Statistiche aggregate**: tentativi, indizi e tempo sono sommati sui meccanismi della stanza. Il punteggio resta una misura della partita, non dell'apprendimento (nota di padronanza già presente).
+
+Vincoli invariati:
+
+- Il successo resta comunicato anche senza colore: il testo è sempre presente.
+- Il focus si sposta sul pulsante principale del riepilogo quando questo si apre.
+- Il riepilogo compare **solo al momento del completamento**, non a ogni reload di una stanza già conclusa (al rientro la scena è già animata, ma non si ripresenta la modale).
 
 ## Note di implementazione
 

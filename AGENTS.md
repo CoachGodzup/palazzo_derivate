@@ -9,17 +9,19 @@ La milestone corrente è la **vertical slice demo-1**: ingresso, una stanza, tre
 ## Fonti e precedenza
 
 1. `docs/DEMO_SCOPE.md`: perimetro operativo e criteri di accettazione correnti della demo 1.
-2. `docs/DEMO_2_SCOPE.md`: perimetro della demo 2 statica (campagna completa mock, verifica locale, pubblicazione su `/demo-2/`).
-3. `transcript_architecture_requirements.md`: vincoli tecnici decisi (Phaser 3, MathLive sopra il canvas, FastAPI, SymPy, mobile portrait, contenuti configurabili).
-4. `Il_Palazzo_delle_Derivate_GDD_v1.1.md`: design aggiornato.
-5. `Il_Palazzo_delle_Derivate_GDD_v1-1.pdf`: GDD v1.0, riferimento storico in caso di divergenze.
+2. `docs/DEMO_2_SCOPE.md`: perimetro della demo 2 statica (campagna ridotta mock, verifica locale, pubblicazione su `/demo-2/`).
+3. `docs/DEMO_3_SCOPE.md`: perimetro della demo 3 statica (una stanza, quattro meccanismi, stile grafico Retro 82 e sfondo che si anima; pubblicazione su `/demo-3/`).
+4. `transcript_architecture_requirements.md`: vincoli tecnici decisi (Phaser 3, MathLive sopra il canvas, FastAPI, SymPy, mobile portrait, contenuti configurabili).
+5. `Il_Palazzo_delle_Derivate_GDD_v1.1.md`: design aggiornato.
+6. `Il_Palazzo_delle_Derivate_GDD_v1-1.pdf`: GDD v1.0, riferimento storico in caso di divergenze.
 
 Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qui o in `docs/DEMO_SCOPE.md`, aggiorna contestualmente la documentazione.
 
 ## Struttura
 
 - `client/main.ts`: composizione dell'applicazione e coordinamento UI/API/stato/scena.
-- `demo-2/`: demo statica della campagna completa (8 capitoli, 32 stanze principali e 8 segrete), con input MathLive e verifica mock locale; build separata in `dist/demo-2/` tramite `vite.demo2.config.ts`.
+- `demo-2/`: demo statica della campagna ridotta (6 capitoli, 24 stanze principali; 6 stanze segrete presenti nei contenuti ma disattivate dal docente), con input MathLive, verifica mock locale e tema Retro 82 in `demo-2/theme.css`; build separata in `dist/demo-2/` tramite `vite.demo2.config.ts`.
+- `demo-3/`: demo statica di una singola stanza (La Corte delle Meridiane) con sfondo desaturato che si anima e quattro meccanismi in overlay, tema Retro 82 in `demo-3/theme.css` e scena SVG procedurale; build separata in `dist/demo-3/` tramite `vite.demo3.config.ts`.
 - `client/game/`: scena Phaser, animazioni e interazioni del mondo.
 - `client/ui/`: dialoghi e componenti HTML, incluso MathLive.
 - `client/state/`: progresso e persistenza locale.
@@ -29,7 +31,7 @@ Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qu
 - `server/app/`: API FastAPI, validazione dei contenuti e motore simbolico.
 - `server/tests/`: test API e matematici.
 - `tests/`: test unitari TypeScript ed end-to-end Playwright.
-- `docs/`: scope e guida di revisione; `docs/design/` raccoglie le decisioni di design (`frontend.md` per input e tastiera, `gameplay.md` per il feedback, `backend.md` per parser, verifica simbolica ed equivalenza delle risposte, `audio.md` per la musica procedurale, `testing.md` per la strategia locale/CI, `teacher-sessions.md` per accesso docente e sessioni di gioco — requisiti futuri post demo-1).
+- `docs/`: scope e guida di revisione; `docs/design/` raccoglie le decisioni di design (`frontend.md` per input e tastiera, `gameplay.md` per il feedback, `style.md` per la palette Retro 82, gli sfondi e gli overlay, `backend.md` per parser, verifica simbolica ed equivalenza delle risposte, `audio.md` per la musica procedurale, `testing.md` per la strategia locale/CI, `teacher-sessions.md` per accesso docente e sessioni di gioco — requisiti futuri post demo-1, `level-design.md` per il linguaggio visivo arabo-moresco × steampunk e il workflow asset/skybox/pavimenti della demo-4 Godot).
 - `.github/workflows/ci.yml`: suite completa (lint, build, API, unit, E2E desktop + portrait) su push e pull request; `deploy-pages.yml` resta dedicato al deploy.
 - `.opencode/skills/`: workflow specialistici OpenCode.
 - `.opencode/agent/`: subagenti specialistici:
@@ -38,9 +40,10 @@ Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qu
   - `css.md`: stile e responsive di `client/styles.css`;
   - `frontend.md`: TypeScript/Phaser/MathLive e test client;
   - `backend.md`: FastAPI/SymPy, parser con whitelist e test pytest;
-  - `database.md`: guardiano del perimetro senza DB; supporto a un futuro Supabase di test.
+  - `database.md`: guardiano del perimetro senza DB; supporto a un futuro Supabase di test;
+  - `level-designer.md`: level design della demo-4 Godot 3D — commistione arabo-moresco × steampunk, import/abbinamento asset, skybox, pavimenti e gradini.
 
-MCP in `opencode.json`: `playwright` e `chrome-devtools` per il browser, `context7` per le documentazioni, `github` per repository e avvisi di sicurezza. Il server `supabase` è predisposto in sola lettura ma disabilitato finché non esiste un progetto di test (`project_ref`).
+MCP in `opencode.json`: `playwright` e `chrome-devtools` per il browser, `context7` per le documentazioni, `github` per repository e avvisi di sicurezza, `godot` per avviare/eseguire il progetto demo-4 e leggerne l'output, `release` per creare release GitHub (usa il token di `gh`). Il server `supabase` è predisposto in sola lettura ma disabilitato finché non esiste un progetto di test (`project_ref`).
 
 MathLive rimane un elemento HTML nel `dialog`, mai disegnato dentro il canvas Phaser. La UI HTML replica le azioni essenziali del canvas per consentire uso da tastiera e touch.
 

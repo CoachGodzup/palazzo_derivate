@@ -18,8 +18,22 @@
     "github": {
       "type": "remote",
       "url": "https://api.githubcopilot.com/mcp/",
-      "headers": {
-        "Authorization": "Bearer {env:GITHUB_TOKEN}"
+      "enabled": true
+    },
+    "release": {
+      "type": "local",
+      "command": [
+        "sh",
+        "-c",
+        "GITHUB_PERSONAL_ACCESS_TOKEN=\"$(gh auth token)\" exec node \"$HOME/.local/share/opencode/mcp/github-mcp-lite/index.js\""
+      ],
+      "enabled": true
+    },
+    "godot": {
+      "type": "local",
+      "command": ["npx", "-y", "@coding-solo/godot-mcp"],
+      "environment": {
+        "GODOT_PATH": "/opt/homebrew/bin/godot"
       },
       "enabled": true
     },

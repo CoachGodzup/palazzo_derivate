@@ -74,3 +74,11 @@ Il GDD §11.1 non copre la sessione multigiocatore. Servono entità aggiuntive:
 - **Ciclo di vita:** comportamento alla chiusura per chi sta ancora risolvendo un
   enigma, eventuale pausa/riprendi lato docente.
 - **Formato di export:** CSV (come da GDD §12) o JSON; elenco esatto dei campi.
+
+## Stanze segrete nella demo 2
+
+La demo statica conserva una stanza segreta per capitolo ma la disattiva con
+`campaign.teacher.secretRooms: false` in `demo-2/campaign.json`. Quando il
+pannello docente esisterà, lo stesso interruttore potrà riattivarle: il client
+filtra già le stanze segrete, le esclude da punteggio e completamento e
+nasconde la sezione dedicata.
