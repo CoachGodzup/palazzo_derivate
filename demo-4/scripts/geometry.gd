@@ -92,6 +92,12 @@ static func model(parent: Node, path: String, pos: Vector3, rot_y_deg := 0.0, mo
 	return inst
 
 
+static func apply_material(inst: Node3D, material: Material) -> void:
+	# Override every mesh of an imported GLB with a shared textured material.
+	for c in inst.find_children("*", "MeshInstance3D", true, false):
+		(c as MeshInstance3D).material_override = material
+
+
 static func static_cylinder(parent: Node, top_r: float, bottom_r: float, height: float, pos: Vector3, color: Color, radial := 16) -> StaticBody3D:
 	var body := StaticBody3D.new()
 	body.position = pos
@@ -125,10 +131,10 @@ static func cylinder_mesh(top_r: float, bottom_r: float, height: float, radial :
 	return m
 
 
-static func sphere_mesh(radius: float, height := 2.0, radial := 14, rings := 7) -> SphereMesh:
+static func sphere_mesh(radius: float, height := -1.0, radial := 14, rings := 7) -> SphereMesh:
 	var m := SphereMesh.new()
 	m.radius = radius
-	m.height = height
+	m.height = radius * 2.0 if height < 0.0 else height
 	m.radial_segments = radial
 	m.rings = rings
 	return m

@@ -78,6 +78,15 @@ le fonti CC0 più adatte (importazione nativa `.glb`/`.gltf` in Godot):
 
 Godot importa `.glb`/`.gltf` nativamente: nessun passaggio di conversione.
 
+## Texture PBR — ambientCG (CC0)
+
+- **Fonte**: [ambientCG](https://ambientcg.com) — licenza CC0 1.0 (pubblico dominio).
+- `assets/textures/Tiles144_*` — arenaria dorata (pavimento): colore + normal map.
+- `assets/textures/Bricks084_*` — mattoni arenaria (muro di confine): colore + normal map.
+- Applicate via `StandardMaterial3D` (albedo + `normal_enabled`) su pavimento e muro,
+  con `SHADING_MODE_PER_VERTEX` e roughness alta. Il bump mapping è dato dalla
+  normal map (GL), senza height/displacement.
+
 ## Cielo e illuminazione
 
 Il cielo è un **shader sky procedurale** (`assets/shaders/sunset_sky.gdshader`):

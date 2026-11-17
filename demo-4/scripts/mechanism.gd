@@ -20,6 +20,7 @@ var _sigil_ring_mat: StandardMaterial3D
 var _hourglass: Node3D
 var _door_pivot: Node3D
 var _glow_mat: StandardMaterial3D
+var _solved_lamp: MeshInstance3D
 
 
 func setup(data: Dictionary) -> void:
@@ -45,6 +46,7 @@ func mark_solved() -> void:
 	_glow_mat.albedo_color = Geometry.COLORS["teal"]
 	_glow_mat.emission = Geometry.COLORS["teal"]
 	_glow_mat.emission_energy_multiplier = 2.0
+	_solved_lamp.visible = true
 	_start_animation()
 	solved.emit()
 
@@ -183,13 +185,16 @@ func _build_gate() -> void:
 
 
 func _add_solved_lamp() -> void:
+	# Small teal orb that appears only once the mechanism is solved (hidden
+	# until then, so no stray glowing dots float over the unsolved mechanisms).
 	var lamp_y := _collision_size().y * 0.5 + 0.25
-	var sphere := MeshInstance3D.new()
-	sphere.mesh = Geometry.sphere_mesh(0.16, 2.0, 12, 6)
-	_glow_mat = Geometry.mat(Geometry.COLORS["gold"], true, 0.35)
-	sphere.material_override = _glow_mat
-	sphere.position = Vector3(0, lamp_y, 0.1)
-	_visual.add_child(sphere)
+	_solved_lamp = MeshInstance3D.new()
+	_solved_lamp.mesh = Geometry.sphere_mesh(0.14)
+	_glow_mat = Geometry.mat(Geometry.COLORS["teal"], true, 1.2)
+	_solved_lamp.material_override = _glow_mat
+	_solved_lamp.position = Vector3(0, lamp_y, 0.1)
+	_solved_lamp.visible = false
+	_visual.add_child(_solved_lamp)
 
 
 func _start_animation() -> void:

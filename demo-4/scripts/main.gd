@@ -31,7 +31,7 @@ func _ready() -> void:
 	_build_environment()
 	_build_room()
 	_fountain = Fountain.new()
-	_fountain.position = _center
+	_fountain.position = Vector3(0, -0.25, 0)  # sunken courtyard level
 	add_child(_fountain)
 	_build_player()
 	_build_mechanisms()
@@ -125,13 +125,13 @@ func _build_environment() -> void:
 	var fill := DirectionalLight3D.new()
 	fill.rotation_degrees = Vector3(-80, -120, 0)
 	fill.light_color = Color("9db8e8")
-	fill.light_energy = 0.15
+	fill.light_energy = 0.25
 	fill.shadow_enabled = false
 	add_child(fill)
 
 
 func _build_room() -> void:
-	var r := 6.0
+	var r := 7.5
 	var wall_h := 3.2
 	var t := 0.3
 	# Invisible collision shell: physics stays on plain boxes while the visible
@@ -148,48 +148,81 @@ func _build_room() -> void:
 	_build_floor()
 	_build_walls()
 	_build_lights()
-	_build_props()
 
 
 func _model_path(model_name: String) -> String:
 	return "res://assets/models/" + model_name + ".glb"
 
 
+func _textured_material(albedo: String, normal: String, uv_scale: float) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.albedo_texture = load(albedo)
+	m.roughness = 0.95
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_PER_VERTEX
+	m.normal_enabled = true
+	m.normal_texture = load(normal)
+	m.uv1_scale = Vector3(uv_scale, uv_scale, 1.0)
+	return m
+
+
 func _build_floor() -> void:
-	# Zellige-style paving: a 4x4 grid of 3 m tiles over the flat collision box.
-	for gx in range(4):
-		for gz in range(4):
-			var x := -4.5 + gx * 3.0
-			var z := -4.5 + gz * 3.0
-			Geometry.model(self, _model_path("courtyard-paving-m-d4922e1f"), Vector3(x, 0.0, z))
+	# Zellige-style paving: a 5x5 grid of 3 m tiles. The central 3x3 block is
+	# sunken one step below the walkway, sloping toward the central fountain.
+	const step := 0.25
+	var floor_mat := _textured_material("res://assets/textures/Tiles144_Color.jpg", "res://assets/textures/Tiles144_NormalGL.jpg", 2.0)
+	for gx in range(5):
+		for gz in range(5):
+			var x := -6.0 + gx * 3.0
+			var z := -6.0 + gz * 3.0
+			var sunken := absf(x) < 4.6 and absf(z) < 4.6
+			var tile := Geometry.model(self, _model_path("courtyard-paving-m-d4922e1f"), Vector3(x, -step if sunken else 0.0, z))
+			Geometry.apply_material(tile, floor_mat)
+	# Step edge around the sunken courtyard (visual; collision stays flat).
+	var e := 4.5
+	for s in [-1.0, 1.0]:
+		Geometry.add(self, Geometry.box_mesh(Vector3(e * 2.0, step, 0.3)), Geometry.COLORS["column"], Vector3(0, -step * 0.5, s * e))
+		Geometry.add(self, Geometry.box_mesh(Vector3(0.3, step, e * 2.0)), Geometry.COLORS["column"], Vector3(s * e, -step * 0.5, 0))
 
 
 func _build_walls() -> void:
-	# A colonnade rings the room: pointed-arch arcade bays face the courtyard,
-	# a low boundary wall closes the outer side behind them. Physics stays on the
-	# invisible collision boxes built in _build_room().
-	var span := [-4.5, -1.5, 1.5, 4.5]
-	var arcade_z := 4.49   # walkway centre; arch opens inward at ~2.92
-	var wall_z := 6.0
+	# A colonnade rings the room: five pointed-arch arcade bays per side face the
+	# courtyard, a low boundary wall closes the outer side behind them. The piers
+	# are solid (collision) so the player can't walk through them.
+	var span := [-6.0, -3.0, 0.0, 3.0, 6.0]
+	var arcade_z := 5.99   # walkway centre; arch opens inward at ~4.42
+	var wall_z := 7.5
+	var wall_mat := _textured_material("res://assets/textures/Bricks084_Color.jpg", "res://assets/textures/Bricks084_NormalGL.jpg", 2.0)
 	for x in span:
 		Geometry.model(self, _model_path("courtyard-arcade-b-5ae70c52"), Vector3(x, 0.0, -arcade_z), 0.0)
 		Geometry.model(self, _model_path("courtyard-arcade-b-5ae70c52"), Vector3(x, 0.0, arcade_z), 180.0)
-		Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(x, 0.0, -wall_z), 0.0)
-		Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(x, 0.0, wall_z), 180.0)
+		Geometry.apply_material(Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(x, 0.0, -wall_z), 0.0), wall_mat)
+		Geometry.apply_material(Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(x, 0.0, wall_z), 180.0), wall_mat)
 	for z in span:
 		Geometry.model(self, _model_path("courtyard-arcade-b-5ae70c52"), Vector3(arcade_z, 0.0, z), -90.0)
 		Geometry.model(self, _model_path("courtyard-arcade-b-5ae70c52"), Vector3(-arcade_z, 0.0, z), 90.0)
-		Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(wall_z, 0.0, z), -90.0)
-		Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(-wall_z, 0.0, z), 90.0)
+		Geometry.apply_material(Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(wall_z, 0.0, z), -90.0), wall_mat)
+		Geometry.apply_material(Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(-wall_z, 0.0, z), 90.0), wall_mat)
+	_build_piers()
+
+
+func _build_piers() -> void:
+	# Solid collision for the colonnade piers (square piers between the arches).
+	var piers := [-7.5, -4.5, -1.5, 1.5, 4.5, 7.5]
+	var arch_line := 4.42
+	for p in piers:
+		Geometry.collision_box(self, Vector3(0.55, 2.6, 0.55), Vector3(p, 1.3, -arch_line))
+		Geometry.collision_box(self, Vector3(0.55, 2.6, 0.55), Vector3(p, 1.3, arch_line))
+		Geometry.collision_box(self, Vector3(0.55, 2.6, 0.55), Vector3(arch_line, 1.3, p))
+		Geometry.collision_box(self, Vector3(0.55, 2.6, 0.55), Vector3(-arch_line, 1.3, p))
 
 
 func _build_lights() -> void:
 	# Wall lanterns (one per wall) with warm point lights.
 	var lanterns := [
-		{"pos": Vector3(0.0, 2.6, -5.62), "yaw": 0.0},
-		{"pos": Vector3(0.0, 2.6, 5.62), "yaw": 180.0},
-		{"pos": Vector3(5.62, 2.6, 0.0), "yaw": -90.0},
-		{"pos": Vector3(-5.62, 2.6, 0.0), "yaw": 90.0},
+		{"pos": Vector3(0.0, 2.6, -7.12), "yaw": 0.0},
+		{"pos": Vector3(0.0, 2.6, 7.12), "yaw": 180.0},
+		{"pos": Vector3(7.12, 2.6, 0.0), "yaw": -90.0},
+		{"pos": Vector3(-7.12, 2.6, 0.0), "yaw": 90.0},
 	]
 	for lantern in lanterns:
 		var pos: Vector3 = lantern["pos"]
@@ -198,11 +231,6 @@ func _build_lights() -> void:
 		var glow := pos.move_toward(Vector3.ZERO, 0.6)
 		glow.y = pos.y
 		_add_warm_light(glow, 1.5, 7.0)
-
-	# Standing lamps in the rear corners.
-	for x in [-4.0, 4.0]:
-		Geometry.model(self, _model_path("standing-lamp-628d08e8"), Vector3(x, 0.0, -4.0))
-		_add_warm_light(Vector3(x, 1.8, -4.0), 1.4, 6.0)
 
 
 func _add_warm_light(pos: Vector3, energy: float, range_m: float) -> void:
@@ -215,24 +243,9 @@ func _add_warm_light(pos: Vector3, energy: float, range_m: float) -> void:
 	add_child(light)
 
 
-func _build_props() -> void:
-	# Sundial in the courtyard (thematic: La Corte delle Meridiane).
-	Geometry.model(self, _model_path("courtyard-sundial-2988e4e8"), Vector3(-2.2, 0.0, -1.6), 30.0)
-	# Seating nook against the south wall (clear of the hourglass mechanism).
-	Geometry.model(self, _model_path("floor-cushion-set-25ee916f"), Vector3(-2.3, 0.0, 3.7), -20.0)
-	Geometry.model(self, _model_path("floor-cushion-set-25ee916f"), Vector3(2.0, 0.0, 4.0), 25.0)
-	Geometry.model(self, _model_path("folding-screen-sta-bfa8905d"), Vector3(-4.3, 0.0, 2.4), 60.0)
-	# Study corner near the north-west.
-	Geometry.model(self, _model_path("book-chest-c1c6462c"), Vector3(-3.6, 0.0, -2.9), -30.0)
-	Geometry.model(self, _model_path("low-study-desk-68f899d4"), Vector3(-2.4, 0.0, -3.5), 15.0)
-	# Water runnels feeding the central fountain.
-	Geometry.model(self, _model_path("water-channel-runn-2ea19fd7"), Vector3(3.0, 0.0, 0.0), 90.0)
-	Geometry.model(self, _model_path("water-channel-runn-2ea19fd7"), Vector3(-3.0, 0.0, 0.0), 90.0)
-
-
 func _build_player() -> void:
 	_player = Player.new()
-	_player.position = Vector3(0, 0.05, 2.4)
+	_player.position = Vector3(0, 0.05, 3.2)
 
 	var col := CollisionShape3D.new()
 	var cap := CapsuleShape3D.new()
@@ -262,10 +275,10 @@ func _build_player() -> void:
 
 func _build_mechanisms() -> void:
 	var positions := [
-		Vector3(0, 1.4, -5.3),    # nord: sigillo
-		Vector3(5.3, 1.4, 0),     # est: ingranaggi
-		Vector3(0, 1.4, 5.3),     # sud: clessidra
-		Vector3(-5.3, 1.4, 0),    # ovest: porta
+		Vector3(0, 1.4, -6.8),    # nord: sigillo
+		Vector3(6.8, 1.4, 0),     # est: ingranaggi
+		Vector3(0, 1.4, 6.8),     # sud: clessidra
+		Vector3(-6.8, 1.4, 0),    # ovest: porta
 	]
 	for i in range(_puzzles.size()):
 		var mech := Mechanism.new()
