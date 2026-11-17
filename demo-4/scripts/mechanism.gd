@@ -74,7 +74,7 @@ func _add_collision() -> void:
 func _collision_size() -> Vector3:
 	match _kind:
 		"sigil":
-			return Vector3(1.7, 1.7, 0.5)
+			return Vector3(0.9, 1.9, 0.9)
 		"gears":
 			return Vector3(2.4, 2.2, 0.7)
 		"hourglass":
@@ -97,30 +97,25 @@ func _build_visual() -> void:
 
 
 func _build_sigil() -> void:
-	# Backing plate (stone).
-	Geometry.add(_visual, Geometry.cylinder_mesh(0.72, 0.72, 0.08, 18), Geometry.COLORS["stone"], Vector3(0, 0, 0), Vector3(90, 0, 0))
-	# Golden disc (the seal), facing +Z.
-	var disc := Geometry.cylinder_mesh(0.52, 0.52, 0.1, 20)
+	# CC0 sundial stands in for the "Sigillo Solare" (La Corte delle Meridiane):
+	# its base sits on the floor, a glowing solar disc + ring mark the dial.
+	Geometry.model(_visual, "res://assets/models/courtyard-sundial-2988e4e8.glb", Vector3(0, -1.4, 0), 0.0, Vector3.ONE)
+
 	_sigil_mat = Geometry.mat(Geometry.COLORS["gold"], true, 1.2)
-	var mi := MeshInstance3D.new()
-	mi.mesh = disc
-	mi.material_override = _sigil_mat
-	mi.position = Vector3(0, 0, 0.1)
-	mi.rotation_degrees = Vector3(90, 0, 0)
-	_visual.add_child(mi)
-	# Ring (torus).
+	var disc := MeshInstance3D.new()
+	disc.mesh = Geometry.cylinder_mesh(0.3, 0.3, 0.05, 20)
+	disc.material_override = _sigil_mat
+	disc.position = Vector3(0, 0.22, 0)
+	disc.rotation_degrees = Vector3(90, 0, 0)
+	_visual.add_child(disc)
+
 	_sigil_ring_mat = Geometry.mat(Geometry.COLORS["gold"], true, 1.0)
 	var ring := MeshInstance3D.new()
-	ring.mesh = Geometry.torus_mesh(0.56, 0.7, 24, 8)
+	ring.mesh = Geometry.torus_mesh(0.3, 0.4, 24, 8)
 	ring.material_override = _sigil_ring_mat
-	ring.position = Vector3(0, 0, 0.13)
+	ring.position = Vector3(0, 0.22, 0)
 	ring.rotation_degrees = Vector3(90, 0, 0)
 	_visual.add_child(ring)
-	# Sun rays.
-	for k in range(8):
-		var ang := TAU * k / 8.0
-		var pos := Vector3(cos(ang) * 0.5, sin(ang) * 0.5, 0.1)
-		Geometry.add(_visual, Geometry.box_mesh(Vector3(0.16, 0.12, 0.08)), Geometry.COLORS["gold"], pos, Vector3(0, 0, rad_to_deg(ang)))
 
 
 func _build_gears() -> void:

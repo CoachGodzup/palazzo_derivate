@@ -62,6 +62,36 @@ static func static_box(parent: Node, size: Vector3, pos: Vector3, color: Color, 
 	return body
 
 
+static func collision_box(parent: Node, size: Vector3, pos: Vector3, rot_deg := Vector3.ZERO) -> StaticBody3D:
+	# Invisible collision-only box, used to keep the physics layout while the
+	# visible geometry is provided by imported GLB models.
+	var body := StaticBody3D.new()
+	body.position = pos
+	body.rotation_degrees = rot_deg
+	parent.add_child(body)
+	var col := CollisionShape3D.new()
+	var shape := BoxShape3D.new()
+	shape.size = size
+	col.shape = shape
+	body.add_child(col)
+	return body
+
+
+static func model(parent: Node, path: String, pos: Vector3, rot_y_deg := 0.0, model_scale := Vector3.ONE, shadow := true) -> Node3D:
+	# Instantiate an imported GLB/GLTF scene (metre scale, +Y up) as a visual.
+	# The pack has no collision: physics stays on the collision-only boxes.
+	var packed: PackedScene = load(path) as PackedScene
+	var inst: Node3D = packed.instantiate()
+	inst.position = pos
+	inst.rotation_degrees.y = rot_y_deg
+	inst.scale = model_scale
+	parent.add_child(inst)
+	if not shadow:
+		for m in inst.find_children("*", "GeometryInstance3D", true, false):
+			(m as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return inst
+
+
 static func static_cylinder(parent: Node, top_r: float, bottom_r: float, height: float, pos: Vector3, color: Color, radial := 16) -> StaticBody3D:
 	var body := StaticBody3D.new()
 	body.position = pos

@@ -156,7 +156,7 @@ func _on_submit(_text: String = "") -> void:
 	var answer := _input.text
 	var res := MathParser.verify(answer, str(_puzzle.get("derivative_eval", "")))
 	if res["ok"]:
-		_feedback.text = "Esatto! Il meccanismo si e' risvegliato."
+		_feedback.text = "Esatto, il meccanismo si e' risvegliato."
 		_feedback.modulate = C_SUCCESS
 		_input.editable = false
 		_submit_button.disabled = true

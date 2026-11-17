@@ -55,6 +55,10 @@ python3 -m http.server 8080 -d dist/demo-4
 - `scripts/math_parser.gd` — parser + verifica **mock** su punti campione.
 - `scripts/geometry.gd` — helper per primitive e materiali flat-shaded.
 - `data/puzzles.json` — i quattro enigmi (unica fonte dei contenuti).
+- `assets/models/*.glb` — modelli CC0 del pack "Desert Mosque and Madrasa
+  Courtyard" (pavimento, pareti, lanterne, arredi); vedi `CREDITS.md`.
+- `assets/shaders/sunset_sky.gdshader` — cielo procedurale al tramonto (nuvole
+  incluse), usato in `main.gd` `_build_environment()`.
 
 ## Verifica delle derivate
 

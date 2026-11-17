@@ -102,48 +102,137 @@ func _build_environment() -> void:
 	var env_node := WorldEnvironment.new()
 	var env := Environment.new()
 	var sky := Sky.new()
-	var sky_mat := ProceduralSkyMaterial.new()
-	sky_mat.sky_top_color = Color("274a6b")
-	sky_mat.sky_horizon_color = Color("9cb8c9")
-	sky_mat.ground_bottom_color = Color("3a3226")
-	sky_mat.ground_horizon_color = Color("9cb8c9")
+	var sky_mat := ShaderMaterial.new()
+	sky_mat.shader = load("res://assets/shaders/sunset_sky.gdshader")
 	sky.sky_material = sky_mat
 	env.background_mode = Environment.BG_SKY
 	env.sky = sky
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_energy = 0.55
+	env.ambient_light_energy = 0.5
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	env_node.environment = env
 	add_child(env_node)
 
+	# Low, warm sunset sun casting long shadows across the court.
 	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-52, -38, 0)
-	sun.light_energy = 1.15
+	sun.rotation_degrees = Vector3(-14, 45, 0)
+	sun.light_color = Color("ff9d5c")
+	sun.light_energy = 1.05
 	sun.shadow_enabled = true
 	add_child(sun)
+
+	# Cool fill from the zenith keeps the shaded side readable.
+	var fill := DirectionalLight3D.new()
+	fill.rotation_degrees = Vector3(-80, -120, 0)
+	fill.light_color = Color("9db8e8")
+	fill.light_energy = 0.15
+	fill.shadow_enabled = false
+	add_child(fill)
 
 
 func _build_room() -> void:
 	var r := 6.0
 	var wall_h := 3.2
 	var t := 0.3
-	Geometry.static_box(self, Vector3(r * 2.0, 0.2, r * 2.0), Vector3(0, -0.1, 0), Geometry.COLORS["floor"])
-	Geometry.static_box(self, Vector3(r * 2.0, wall_h, t), Vector3(0, wall_h / 2.0, -r), Geometry.COLORS["wall"])
-	Geometry.static_box(self, Vector3(r * 2.0, wall_h, t), Vector3(0, wall_h / 2.0, r), Geometry.COLORS["wall"])
-	Geometry.static_box(self, Vector3(t, wall_h, r * 2.0), Vector3(-r, wall_h / 2.0, 0), Geometry.COLORS["wall"])
-	Geometry.static_box(self, Vector3(t, wall_h, r * 2.0), Vector3(r, wall_h / 2.0, 0), Geometry.COLORS["wall"])
-	# Corner columns.
+	# Invisible collision shell: physics stays on plain boxes while the visible
+	# palace geometry comes from the imported CC0 models.
+	Geometry.collision_box(self, Vector3(r * 2.0, 0.2, r * 2.0), Vector3(0, -0.1, 0))
+	Geometry.collision_box(self, Vector3(r * 2.0, wall_h, t), Vector3(0, wall_h / 2.0, -r))
+	Geometry.collision_box(self, Vector3(r * 2.0, wall_h, t), Vector3(0, wall_h / 2.0, r))
+	Geometry.collision_box(self, Vector3(t, wall_h, r * 2.0), Vector3(-r, wall_h / 2.0, 0))
+	Geometry.collision_box(self, Vector3(t, wall_h, r * 2.0), Vector3(r, wall_h / 2.0, 0))
 	for sx in [-1, 1]:
 		for sz in [-1, 1]:
-			Geometry.static_box(self, Vector3(0.5, wall_h, 0.5), Vector3(sx * (r - 0.28), wall_h / 2.0, sz * (r - 0.28)), Geometry.COLORS["column"])
-	# Wall sconces (emissive accents).
-	for p in [Vector3(0, 2.4, -5.72), Vector3(0, 2.4, 5.72), Vector3(-5.72, 2.4, 0), Vector3(5.72, 2.4, 0)]:
-		Geometry.add(self, Geometry.sphere_mesh(0.15), Geometry.COLORS["gold"], p, Vector3.ZERO, true, 1.6)
+			Geometry.collision_box(self, Vector3(0.5, wall_h, 0.5), Vector3(sx * (r - 0.28), wall_h / 2.0, sz * (r - 0.28)))
+
+	_build_floor()
+	_build_walls()
+	_build_lights()
+	_build_props()
+
+
+func _model_path(model_name: String) -> String:
+	return "res://assets/models/" + model_name + ".glb"
+
+
+func _build_floor() -> void:
+	# Zellige-style paving: a 4x4 grid of 3 m tiles over the flat collision box.
+	for gx in range(4):
+		for gz in range(4):
+			var x := -4.5 + gx * 3.0
+			var z := -4.5 + gz * 3.0
+			Geometry.model(self, _model_path("courtyard-paving-m-d4922e1f"), Vector3(x, 0.0, z))
+
+
+func _build_walls() -> void:
+	# A colonnade rings the room: pointed-arch arcade bays face the courtyard,
+	# a low boundary wall closes the outer side behind them. Physics stays on the
+	# invisible collision boxes built in _build_room().
+	var span := [-4.5, -1.5, 1.5, 4.5]
+	var arcade_z := 4.49   # walkway centre; arch opens inward at ~2.92
+	var wall_z := 6.0
+	for x in span:
+		Geometry.model(self, _model_path("courtyard-arcade-b-5ae70c52"), Vector3(x, 0.0, -arcade_z), 0.0)
+		Geometry.model(self, _model_path("courtyard-arcade-b-5ae70c52"), Vector3(x, 0.0, arcade_z), 180.0)
+		Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(x, 0.0, -wall_z), 0.0)
+		Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(x, 0.0, wall_z), 180.0)
+	for z in span:
+		Geometry.model(self, _model_path("courtyard-arcade-b-5ae70c52"), Vector3(arcade_z, 0.0, z), -90.0)
+		Geometry.model(self, _model_path("courtyard-arcade-b-5ae70c52"), Vector3(-arcade_z, 0.0, z), 90.0)
+		Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(wall_z, 0.0, z), -90.0)
+		Geometry.model(self, _model_path("boundary-wall-run-08203b0a"), Vector3(-wall_z, 0.0, z), 90.0)
+
+
+func _build_lights() -> void:
+	# Wall lanterns (one per wall) with warm point lights.
+	var lanterns := [
+		{"pos": Vector3(0.0, 2.6, -5.62), "yaw": 0.0},
+		{"pos": Vector3(0.0, 2.6, 5.62), "yaw": 180.0},
+		{"pos": Vector3(5.62, 2.6, 0.0), "yaw": -90.0},
+		{"pos": Vector3(-5.62, 2.6, 0.0), "yaw": 90.0},
+	]
+	for lantern in lanterns:
+		var pos: Vector3 = lantern["pos"]
+		var yaw: float = lantern["yaw"]
+		Geometry.model(self, _model_path("wall-lantern-brack-efd95d2d"), pos, yaw)
+		var glow := pos.move_toward(Vector3.ZERO, 0.6)
+		glow.y = pos.y
+		_add_warm_light(glow, 1.5, 7.0)
+
+	# Standing lamps in the rear corners.
+	for x in [-4.0, 4.0]:
+		Geometry.model(self, _model_path("standing-lamp-628d08e8"), Vector3(x, 0.0, -4.0))
+		_add_warm_light(Vector3(x, 1.8, -4.0), 1.4, 6.0)
+
+
+func _add_warm_light(pos: Vector3, energy: float, range_m: float) -> void:
+	var light := OmniLight3D.new()
+	light.light_color = Color("ffb36b")
+	light.light_energy = energy
+	light.omni_range = range_m
+	light.shadow_enabled = false
+	light.position = pos
+	add_child(light)
+
+
+func _build_props() -> void:
+	# Sundial in the courtyard (thematic: La Corte delle Meridiane).
+	Geometry.model(self, _model_path("courtyard-sundial-2988e4e8"), Vector3(-2.2, 0.0, -1.6), 30.0)
+	# Seating nook against the south wall (clear of the hourglass mechanism).
+	Geometry.model(self, _model_path("floor-cushion-set-25ee916f"), Vector3(-2.3, 0.0, 3.7), -20.0)
+	Geometry.model(self, _model_path("floor-cushion-set-25ee916f"), Vector3(2.0, 0.0, 4.0), 25.0)
+	Geometry.model(self, _model_path("folding-screen-sta-bfa8905d"), Vector3(-4.3, 0.0, 2.4), 60.0)
+	# Study corner near the north-west.
+	Geometry.model(self, _model_path("book-chest-c1c6462c"), Vector3(-3.6, 0.0, -2.9), -30.0)
+	Geometry.model(self, _model_path("low-study-desk-68f899d4"), Vector3(-2.4, 0.0, -3.5), 15.0)
+	# Water runnels feeding the central fountain.
+	Geometry.model(self, _model_path("water-channel-runn-2ea19fd7"), Vector3(3.0, 0.0, 0.0), 90.0)
+	Geometry.model(self, _model_path("water-channel-runn-2ea19fd7"), Vector3(-3.0, 0.0, 0.0), 90.0)
 
 
 func _build_player() -> void:
 	_player = Player.new()
-	_player.position = Vector3(0, 0.05, 4.8)
+	_player.position = Vector3(0, 0.05, 2.4)
 
 	var col := CollisionShape3D.new()
 	var cap := CapsuleShape3D.new()
@@ -242,7 +331,7 @@ func _build_hud() -> void:
 	_banner_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_banner_label.add_theme_font_size_override("font_size", 40)
 	_banner_label.add_theme_color_override("font_color", Color("5fd4a5"))
-	_banner_label.text = "La fontana si e' risvegliata!"
+	_banner_label.text = "La fontana si e' risvegliata"
 	_banner_label.modulate = Color(1, 1, 1, 0)
 	_banner_label.visible = false
 	_hud.add_child(_banner_label)

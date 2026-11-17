@@ -2,11 +2,34 @@
 
 ## Geometria e codice
 
-Tutta la geometria della scena (stanza, meccanismi, fontana) è generata
-**proceduralmente** con primitive di Godot (box, cilindri, sfere, toroidi) e
-materiali flat-shaded. Il codice è originale e rilasciato con la licenza del
-repository. Non ci sono binari esterni inclusi: il progetto è interamente
-testuale e quindi **CC0-compatibile per costruzione**.
+I **meccanismi** e la **fontana** sono generati in parte proceduralmente
+(ingranaggi, clessidra, porta: box, cilindri, sfere, toroidi flat-shaded) e in
+parte con modelli del pack CC0 sotto (il sigillo usa la meridiana, la fontana
+usa la fontana ottagonale). Il codice è originale e rilasciato con la licenza
+del repository.
+
+La **stanza** (pavimento, colonnato, pareti, lanterne, arredi) usa modelli
+`.glb` importati da un pack CC0 (vedi sotto): la fisica resta su box di
+collisione invisibili procedurali, la geometria visibile è dei modelli. Questa
+scelta mantiene intatti camminamento, raggio di interazione e meccanismi.
+
+## Modelli 3D — "Desert Mosque and Madrasa Courtyard" (CC0)
+
+- **Fonte**: [3dassets.dev — Desert Mosque and Madrasa Courtyard](https://3dassets.dev/packs/desert-mosque-and-madrasa-courtyard)
+- **Licenza**: CC0 1.0 Universal (nessuna attribuzione richiesta). Geometria
+  AI-assisted dichiarata dal fornitore; nessun testo/calligrafia né figurazione
+  di persone o animali nel pack.
+- **File**: `assets/models/*.glb` (60 modelli, ~12 MB). Ne vengono usati 12:
+  pavimentazione, arcata del colonnato, muro di confine, applique, lampada a
+  stelo, meridiana (sigillo + prop), fontana ottagonale, cuscini, paravento,
+  cassapanca, scrivania bassa e canaletta d'acqua.
+- **Conversione**: i modelli originali usano l'estensione `KHR_mesh_quantization`
+  che l'importatore glTF di Godot 4.7 non legge. Sono stati dequantizzati con
+  `gltf-transform dequantize` prima dell'import, senza alterare geometria o
+  materiali.
+
+Il resto del pack (cupole, minareto, mihrab, ipostilo, ecc.) è incluso in
+`assets/models/` per usi futuri ma non è istanziato nella scena corrente.
 
 ## Palette
 
@@ -55,7 +78,10 @@ le fonti CC0 più adatte (importazione nativa `.glb`/`.gltf` in Godot):
 
 Godot importa `.glb`/`.gltf` nativamente: nessun passaggio di conversione.
 
-## HDRI del cielo
+## Cielo e illuminazione
 
-Il cielo usa `ProceduralSkyMaterial` (nessun download). Volendo, puoi sostituirlo
-con un HDRI CC0 di Poly Haven tramite `PanoramaSkyMaterial`.
+Il cielo è un **shader sky procedurale** (`assets/shaders/sunset_sky.gdshader`):
+tramonto con gradiente caldo (zenit viola → orizzonte ambra) e nuvole fbm
+animate, senza texture esterne. È collegato come `ShaderMaterial` al `Sky`
+(`BG_SKY`, ambient light da cielo). Il sole è un `DirectionalLight3D` caldo e
+basso; nessun HDRI binario incluso.

@@ -67,7 +67,7 @@ func _poll() -> void:
 func _on_submit(answer: String) -> void:
 	var res := MathParser.verify(answer, str(_puzzle.get("derivative_eval", "")))
 	if res["ok"]:
-		JavaScriptBridge.eval("window.MathUI.setFeedback({ok:true, text:'Esatto! Il meccanismo si risveglia...'})")
+		JavaScriptBridge.eval("window.MathUI.setFeedback({ok:true, text:'Esatto, il meccanismo si risveglia...'})")
 		JavaScriptBridge.eval("window.MathUI.setSolved()")
 		var puzzle := _puzzle
 		_active = false
