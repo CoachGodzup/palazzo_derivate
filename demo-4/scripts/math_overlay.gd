@@ -219,9 +219,12 @@ const JS_OVERLAY := """
       [
         { latex: '\\sin', insert: '\\sin(#?)', label: 'sin' },
         { latex: '\\cos', insert: '\\cos(#?)', label: 'cos' },
+        { latex: '\\tan', insert: '\\tan(#?)', label: 'tan' },
         { latex: '\\ln', insert: '\\ln(#?)', label: 'ln' },
+        { latex: '\\log', insert: '\\log(#?)', label: 'log' },
         { latex: '\\exp', insert: '\\exp(#?)', label: 'exp' },
-        { latex: 'e', label: 'e' }
+        { latex: 'e', label: 'e' },
+        { latex: '\\pi', label: 'π' }
       ],
       [
         { latex: 'x' },

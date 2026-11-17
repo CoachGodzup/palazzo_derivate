@@ -5,10 +5,15 @@ import { equivalentExpressions, verifyDerivative } from "../demo-2/verify";
 const rooms = campaign.chapters.flatMap((chapter) => chapter.rooms);
 
 describe("demo 2 · contenuti", () => {
-  it("contiene tutti i capitoli, le stanze principali e le stanze segrete", () => {
-    expect(campaign.chapters).toHaveLength(8);
-    expect(rooms.filter((room) => !room.secret)).toHaveLength(32);
-    expect(rooms.filter((room) => room.secret)).toHaveLength(8);
+  it("contiene sei capitoli, ventiquattro stanze principali e sei stanze segrete", () => {
+    expect(campaign.chapters).toHaveLength(6);
+    expect(rooms.filter((room) => !room.secret)).toHaveLength(24);
+    expect(rooms.filter((room) => room.secret)).toHaveLength(6);
+  });
+
+  it("tiene le stanze segrete nei contenuti ma disattivate dal docente", () => {
+    expect(campaign.teacher.secretRooms).toBe(false);
+    expect(new Set(rooms.map((room) => room.id)).size).toBe(rooms.length);
   });
 
   it("accetta la derivata attesa di ogni stanza", () => {

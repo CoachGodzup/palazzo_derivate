@@ -23,6 +23,8 @@
     "vitest.config.ts",
     "playwright.config.ts",
     "demo-2",
-    "vite.demo2.config.ts"
+    "vite.demo2.config.ts",
+    "demo-3",
+    "vite.demo3.config.ts"
   ]
 }

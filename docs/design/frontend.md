@@ -17,6 +17,17 @@ Il menu contestuale del campo MathLive è nascosto (`::part(menu-toggle)`): voci
 
 Vincoli invariati: MathLive resta un elemento HTML dentro il `dialog`, il focus resta nativo, i target touch non scendono sotto 44 px e il layout non introduce overflow sul portrait.
 
+## Modello HTML degli input nelle demo statiche
+
+Stato: **implementato** in demo-2 e demo-3, allineato alla demo 1.
+
+- Il dialogo enigma mostra la funzione da derivare in un `<math-field id="function-field" read-only>`, alimentato con `functionLatex` dei contenuti: stessa resa tipografica della demo 1, nessun testo semplice.
+- La risposta resta un secondo `<math-field id="answer-field">` con `virtual-keyboard-policy="auto"`; il valore inviato alla verifica locale è sempre `getValue("ascii-math")`.
+- La tastiera delle derivate è una sola per le demo statiche (`demo-2/keyboard.ts`, importata da `demo-3/keyboard.ts`) e replica tasti e disposizione di `client/ui/keyboard.ts`: stesse funzioni (`sin`, `cos`, `tan`, `ln`, `log`, `exp`), costanti (`e`, `π`), potenza rapida e tastierino numerico. `tests/static-keyboard.test.ts` impedisce nuove divergenze.
+- La tastiera è agganciata al `dialog` e il pulsante «Tastiera matematica» la mostra/nasconde riportando il focus sulla risposta.
+- I campi secondari restano disattivati: la funzione è in sola lettura e, quando la stanza o il meccanismo è risolto, risposta e pulsante di verifica sono disabilitati.
+- Lo stile Retro 82 copre anche gli input: bordo arancione sul focus, fondo `--r82-bg-darker`, selezione leggibile e tasti MathLive con la palette del tema (`demo-2/theme.css`, `demo-3/theme.css`).
+
 ## Internazionalizzazione
 
 Stato: **implementato** per l'italiano, con altre lingue previste.
@@ -28,3 +39,12 @@ Stato: **implementato** per l'italiano, con altre lingue previste.
 - Per aggiungere una lingua basta copiare `it.json`, tradurre i valori e salvarlo come `content/locales/<codice>.json`: client, server e build statica la riconoscono senza modifiche al codice. Finché una traduzione non esiste, resta attivo l'italiano.
 - La build statica (`vite.config.ts`) compone `demo.json` pubblico unendo la struttura di `content/demo.json` e i testi del catalogo predefinito, senza esporre `function_sympy` o `derivative_sympy`.
 - I testi italiani presenti in `index.html` sono solo un fallback di primo paint e senza JavaScript: a runtime il catalogo è la sorgente effettiva.
+
+## Tema colori e leggibilità della selezione
+
+Stato: **implementato** per la demo 2 in `demo-2/theme.css`.
+
+- La demo 2 usa la palette **Retro 82** descritta in `docs/design/style.md`: sfondo `#05182e`, testo `#f6dcac`, accento arancione `#faa968`. Il file è autosufficiente e importabile da altre pagine: definisce i token `--r82-*`, rimappa le variabili storiche del progetto (`--gold`, `--teal`, `--muted`, `--line`) e configura MathLive.
+- MathLive non distribuisce temi pronti: l'aspetto si controlla con le sue variabili CSS (`--keyboard-*`, `--keycap-*`, `--selection-*`, `--caret-color`). Il tema assegna alla tastiera virtuale fondo `mantle`, tasti `surface0`, tasto premuto blu con testo `crust`, così nessun tasto resta bianco su bianco.
+- La selezione nel campo matematico usa il blu profondo Retro 82 (`#134e5a`) con testo crema; la selezione HTML condivisa segue la stessa regola. In precedenza il fondo di selezione predefinito era quasi bianco e il testo del campo chiaro, rendendo il testo evidenziato illeggibile.
+- Le regole di contrasto valgono anche per hint, feedback, pulsanti e toast: verde/ciano Retro 82 per il successo, rosso per l'errore, arancio per i richiami.

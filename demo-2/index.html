@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#071923" />
+    <meta name="theme-color" content="#05182e" />
     <meta
       name="description"
-      content="Demo statica della campagna completa di Le Mille e Una Derivata: otto capitoli, quaranta stanze e verifica locale delle derivate."
+      content="Demo statica della campagna di Le Mille e Una Derivata: sei capitoli, ventiquattro stanze e verifica locale delle derivate."
     />
-    <title>Le Mille e Una Derivata · Demo campagna completa</title>
+    <title>Le Mille e Una Derivata · Demo sei capitoli</title>
   </head>
   <body>
     <div id="app" class="campaign-app">
@@ -21,9 +21,9 @@
           </span>
         </a>
         <div class="topbar-actions">
-          <span class="demo-badge">DEMO 02 · CAMPAGNA COMPLETA</span>
+          <span class="demo-badge">DEMO 02 · SEI CAPITOLI</span>
           <div class="score-chip" aria-label="Punteggio attuale">
-            <span id="hud-score">0</span><small id="hud-max">/ 4000</small>
+            <span id="hud-score">0</span><small id="hud-max">/ 2400</small>
           </div>
           <button
             class="icon-button"
@@ -50,10 +50,10 @@
         <nav class="chapter-rail" aria-label="Capitoli della campagna">
           <div class="rail-heading">
             <span class="eyebrow">Il palazzo</span>
-            <strong id="campaign-fraction">0 / 40</strong>
+            <strong id="campaign-fraction">0 / 24</strong>
           </div>
           <div id="chapter-list" class="chapter-list"></div>
-          <div class="rail-note">
+          <div id="rail-note" class="rail-note">
             <span aria-hidden="true">✦</span>
             <p>Le stanze segrete si aprono completando le stanze principali del capitolo.</p>
           </div>
@@ -69,7 +69,7 @@
               <p id="chapter-intro"></p>
             </div>
             <div class="chapter-meter">
-              <span id="chapter-fraction">0 / 3</span>
+              <span id="chapter-fraction">0 / 4</span>
               <div class="progress-track" aria-hidden="true">
                 <span id="chapter-progress-bar"></span>
               </div>
@@ -81,10 +81,7 @@
             <div>
               <span class="eyebrow">Il palazzo ha ritrovato il suo tempo</span>
               <h2>Hai attraversato Le Mille e Una Derivata.</h2>
-              <p>
-                Le 32 stanze principali sono completate. Le stanze segrete restano disponibili per
-                chi vuole continuare a esplorare.
-              </p>
+              <p>Le 24 stanze principali sono completate. Il percorso è concluso.</p>
             </div>
             <strong id="complete-score">0 punti</strong>
           </div>
@@ -94,7 +91,7 @@
               <span class="eyebrow">Stanze principali</span>
               <h2>Meccanismi da riattivare</h2>
             </div>
-            <span id="stage-progress" class="stage-progress">0 / 40</span>
+            <span id="stage-progress" class="stage-progress">0 / 24</span>
           </div>
           <div id="room-grid" class="room-grid" aria-live="polite"></div>
 
@@ -126,11 +123,11 @@
 
     <dialog id="welcome-dialog" class="modal welcome-modal" aria-labelledby="welcome-title">
       <div class="modal-ornament" aria-hidden="true">✦</div>
-      <span class="eyebrow">Demo 02 · Campagna completa</span>
-      <h2 id="welcome-title">Tutto il palazzo,<br />in una sola demo.</h2>
+      <span class="eyebrow">Demo 02 · Sei capitoli</span>
+      <h2 id="welcome-title">Sei capitoli,<br />una sola demo.</h2>
       <p>
-        Otto capitoli, trentadue stanze principali e otto stanze segrete. Esplora il palazzo, scegli
-        una stanza, scrivi la derivata e osserva il meccanismo reagire.
+        Sei capitoli e ventiquattro stanze principali. Esplora il palazzo, scegli una stanza, scrivi
+        la derivata e osserva il meccanismo reagire.
       </p>
       <div class="tutorial-steps">
         <div>
@@ -170,7 +167,7 @@
         <span class="formula-label">FUNZIONE DEL MECCANISMO</span>
         <div class="formula-row formula-display">
           <span class="formula-prefix">f(x) =</span>
-          <strong id="function-display"></strong>
+          <math-field id="function-field" read-only aria-label="Funzione da derivare"></math-field>
         </div>
       </div>
       <form id="answer-form" novalidate>
@@ -221,6 +218,22 @@
       </p>
     </dialog>
 
+    <dialog
+      id="room-complete-dialog"
+      class="modal room-complete-modal"
+      aria-labelledby="room-complete-name"
+      aria-describedby="room-complete-note"
+    >
+      <span class="room-complete-burst" aria-hidden="true">✦</span>
+      <span class="eyebrow">Meccanismo riattivato</span>
+      <h2 id="room-complete-name"></h2>
+      <strong id="room-complete-score" class="room-complete-score"></strong>
+      <p id="room-complete-note" class="room-complete-note"></p>
+      <button id="room-complete-continue" class="primary-button" type="button">
+        <span>Torna al palazzo</span><span aria-hidden="true">→</span>
+      </button>
+    </dialog>
+
     <dialog id="rules-dialog" class="modal journal-modal" aria-labelledby="rules-title">
       <button class="modal-close" id="close-rules" type="button" aria-label="Chiudi le regole">
         ×
@@ -260,10 +273,14 @@
       </div>
       <div class="rule-card">
         <span>Funzioni celesti</span>
-        <math-field read-only class="rule-formula"
-          >(e^x)'=e^x\quad(\ln x)'=\frac{1}{x}\quad(\sin x)'=\cos x\quad(\cos x)'=-\sin
-          x</math-field
-        >
+        <div class="rule-formulas">
+          <math-field read-only class="rule-formula"
+            >(e^x)'=e^x\quad(\ln x)'=\frac{1}{x}</math-field
+          >
+          <math-field read-only class="rule-formula"
+            >(\sin x)'=\cos x\quad(\cos x)'=-\sin x</math-field
+          >
+        </div>
         <p>Logaritmi e radici richiedono attenzione al dominio.</p>
       </div>
       <p class="journal-note">

@@ -1,0 +1,105 @@
+/*
+ * Tema Retro 82 per la demo 3.
+ *
+ * Palette ispirata al tema "Retro 82" di Omarchy:
+ * https://omarchy.gallery/themes/retro-82
+ *
+ * Il file è autosufficiente: definisce la palette, rimappa le variabili
+ * storiche del progetto (`--gold`, `--teal`, `--muted`, `--line`) e configura
+ * i colori di MathLive, comprese selezione e tastiera virtuale. Può essere
+ * importato da qualsiasi pagina che usi MathLive o i componenti condivisi di
+ * `client/styles.css`.
+ */
+:root {
+  color-scheme: dark;
+
+  /* Palette Retro 82 (colori.toml). */
+  --r82-bg: #05182e;
+  --r82-bg-darker: #020c17;
+  --r82-bg-dark: #031222;
+  --r82-bg-light: #0a2540;
+  --r82-fg: #f6dcac;
+  --r82-accent: #faa968;
+  --r82-muted: #2a6b78;
+  --r82-red: #f85525;
+  --r82-orange: #faa968;
+  --r82-yellow: #e97b3c;
+  --r82-green: #028391;
+  --r82-cyan: #8cbfb8;
+  --r82-blue: #3f8f8a;
+  --r82-brown: #743d1e;
+  --r82-selection: #134e5a;
+
+  /* Alias del tema storico: i componenti condivisi restano invariati. */
+  --night: var(--r82-bg);
+  --panel: var(--r82-bg-dark);
+  --panel-light: var(--r82-bg-light);
+  --gold: var(--r82-accent);
+  --gold-pale: var(--r82-fg);
+  --muted: var(--r82-muted);
+  --teal: var(--r82-cyan);
+  --line: rgba(250, 169, 104, 0.22);
+  --serif: Georgia, "Times New Roman", serif;
+
+  /* Testo e superfici */
+  --text-strong: var(--r82-fg);
+  --text-body: var(--r82-fg);
+  --text-muted: var(--r82-muted);
+  --surface-raised: var(--r82-bg-light);
+  --surface-input: var(--r82-bg-darker);
+
+  /* Colori semantici per il feedback e gli stati. */
+  --success: var(--r82-green);
+  --danger: var(--r82-red);
+  --warning: var(--r82-yellow);
+
+  /* MathLive: selezione, cursore, evidenziazioni */
+  --caret-color: var(--r82-accent);
+  --selection-background-color: var(--r82-selection);
+  --selection-color: var(--r82-fg);
+  --text-highlight-background-color: rgba(246, 220, 172, 0.24);
+  --highlight-text: rgba(246, 220, 172, 0.24);
+  --contains-highlight-background-color: rgba(250, 169, 104, 0.22);
+  --contains-highlight-color: var(--r82-fg);
+
+  /* MathLive: tastiera virtuale */
+  --keyboard-accent-color: var(--r82-accent);
+  --keyboard-background: var(--r82-bg-dark);
+  --keyboard-border: var(--r82-bg-light);
+  --keyboard-horizontal-rule: 1px solid var(--r82-bg-light);
+  --keyboard-toolbar-text: var(--r82-muted);
+  --keyboard-toolbar-text-active: var(--r82-fg);
+  --keyboard-toolbar-background-hover: var(--r82-bg-light);
+  --keycap-background: var(--r82-bg-light);
+  --keycap-background-hover: var(--r82-muted);
+  --keycap-background-active: var(--r82-accent);
+  --keycap-background-pressed: var(--r82-accent);
+  --keycap-border: var(--r82-muted);
+  --keycap-border-bottom: var(--r82-bg-darker);
+  --keycap-text: var(--r82-fg);
+  --keycap-text-hover: var(--r82-fg);
+  --keycap-text-active: var(--r82-bg-darker);
+  --keycap-text-pressed: var(--r82-bg-darker);
+  --keycap-shift-text: var(--r82-fg);
+  --keycap-primary-background: var(--r82-accent);
+  --keycap-primary-text: var(--r82-bg-darker);
+  --keycap-primary-background-hover: var(--r82-orange);
+  --keycap-secondary-background: var(--r82-muted);
+  --keycap-secondary-background-hover: var(--r82-blue);
+  --keycap-secondary-text: var(--r82-fg);
+  --keycap-secondary-border: var(--r82-blue);
+  --keycap-secondary-border-bottom: var(--r82-bg-darker);
+  --variant-panel-background: var(--r82-bg-dark);
+}
+
+/* La selezione nativa HTML resta leggibile anche fuori da MathLive. */
+::selection {
+  background: var(--r82-selection);
+  color: var(--r82-fg);
+}
+
+math-field::selection,
+math-field *::selection {
+  background: var(--r82-selection);
+  color: var(--r82-fg);
+}

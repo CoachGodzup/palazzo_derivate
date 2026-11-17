@@ -1,0 +1,89 @@
+{
+  "version": "demo-3.0",
+  "title": "Le Mille e Una Derivata · La Corte delle Meridiane",
+  "subtitle": "Demo 03 · una stanza, quattro meccanismi · nessun backend",
+  "room": {
+    "id": "corte-meridiane",
+    "name": "La Corte delle Meridiane",
+    "intro": "Il Visir ha fermato il tempo della corte: quattro meccanismi giacciono spenti sotto un cielo di notte. Riporta in vita il sigillo, gli ingranaggi, la fontana e la porta delle meridiane per restituire alla corte il suo ritmo.",
+    "outro": "I quattro meccanismi scivolano via e la corte riprende a vivere: l'acqua scorre, gli ingranaggi girano e la porta si apre sul palazzo.",
+    "mechanisms": [
+      {
+        "id": "sigillo",
+        "name": "Il sigillo solare",
+        "kind": "sigil",
+        "icon": "✦",
+        "functionDisplay": "3x² − 5x + 4",
+        "functionSympy": "3*x^2-5*x+4",
+        "functionLatex": "3x^{2}-5x+4",
+        "derivativeSympy": "6*x-5",
+        "prompt": "Il sigillo inciso nella pietra reca un polinomio. Ogni termine va derivato per riallineare i raggi del sole.",
+        "rule": "Potenze e somme",
+        "difficulty": 1,
+        "targetSeconds": 90,
+        "hints": [
+          "Deriva un termine alla volta: la derivata di una somma è la somma delle derivate.",
+          "Per 3x² moltiplica 3 per 2 e abbassa l'esponente; per −5x resta il coefficiente −5.",
+          "La derivata della costante 4 è zero."
+        ]
+      },
+      {
+        "id": "ingranaggi",
+        "name": "Gli ingranaggi gemelli",
+        "kind": "gear",
+        "icon": "⚙",
+        "functionDisplay": "(3x² − 2)(x + 1)",
+        "functionSympy": "(3*x^2-2)*(x+1)",
+        "functionLatex": "(3x^{2}-2)(x+1)",
+        "derivativeSympy": "9*x^2+6*x-2",
+        "prompt": "Due ruote dentate girano insieme: il moto dell'una dipende da quello dell'altra. Applica la regola del prodotto per rimetterle in marcia.",
+        "rule": "Regola del prodotto",
+        "difficulty": 2,
+        "targetSeconds": 150,
+        "hints": [
+          "Riconosci due funzioni moltiplicate: f = 3x² − 2 e g = x + 1.",
+          "La regola è f′g + fg′: deriva un fattore alla volta.",
+          "f′ = 6x e g′ = 1. Sviluppa e raccogli i termini simili."
+        ]
+      },
+      {
+        "id": "fontana",
+        "name": "La fontana del tempo",
+        "kind": "fountain",
+        "icon": "≈",
+        "functionDisplay": "3√x + 2x^(3/2)",
+        "functionSympy": "3*sqrt(x)+2*x^(3/2)",
+        "functionLatex": "3\\sqrt{x}+2x^{\\frac{3}{2}}",
+        "derivativeSympy": "3/(2*sqrt(x))+3*sqrt(x)",
+        "prompt": "Dal bacino sale un ritmo fatto di radici e potenze frazionarie. Trova la derivata per far scorrere di nuovo l'acqua.",
+        "rule": "Radicali",
+        "difficulty": 2,
+        "targetSeconds": 150,
+        "hints": [
+          "Riscrivi √x come x^(1/2), così ogni addendo è una potenza.",
+          "La derivata di x^(1/2) è (1/2)x^(−1/2), cioè 1/(2√x).",
+          "La derivata di 2x^(3/2) è 3x^(1/2), cioè 3√x."
+        ]
+      },
+      {
+        "id": "porta",
+        "name": "La porta delle meridiane",
+        "kind": "gate",
+        "icon": "⌘",
+        "functionDisplay": "2x⁵ − 4x⁻² + 3",
+        "functionSympy": "2*x^5-4*x^(-2)+3",
+        "functionLatex": "2x^{5}-4x^{-2}+3",
+        "derivativeSympy": "10*x^4+8/x^3",
+        "prompt": "La porta è sbarrata da un'iscrizione con potenze negative. La stessa regola delle potenze vale anche quando l'esponente scende sotto zero.",
+        "rule": "Potenze negative",
+        "difficulty": 2,
+        "targetSeconds": 150,
+        "hints": [
+          "x⁻² è una potenza come le altre: porta −2 davanti al coefficiente.",
+          "Derivando −4x⁻² ottieni −4·(−2)x⁻³, cioè 8x⁻³.",
+          "Puoi scrivere 8x⁻³ oppure 8/x³: sono la stessa espressione per x ≠ 0."
+        ]
+      }
+    ]
+  }
+}

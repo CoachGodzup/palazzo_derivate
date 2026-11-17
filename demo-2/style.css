@@ -1,8 +1,9 @@
 @import "../client/styles.css";
+@import "./theme.css";
 
 :root {
-  --campaign-line: rgba(205, 177, 119, 0.16);
-  --campaign-panel: rgba(9, 30, 39, 0.82);
+  --campaign-line: rgba(250, 169, 104, 0.16);
+  --campaign-panel: rgba(3, 18, 34, 0.82);
 }
 
 .campaign-app {
@@ -23,13 +24,13 @@
   align-items: center;
   min-height: 30px;
   padding: 6px 11px;
-  border: 1px solid rgba(216, 182, 111, 0.42);
+  border: 1px solid rgba(250, 169, 104, 0.42);
   color: var(--gold-pale);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 1.6px;
   text-transform: uppercase;
-  background: rgba(216, 182, 111, 0.07);
+  background: rgba(250, 169, 104, 0.07);
 }
 
 .campaign-layout {
@@ -47,8 +48,8 @@
   padding: 20px 18px 18px;
   border: 1px solid var(--campaign-line);
   background:
-    linear-gradient(160deg, rgba(17, 44, 54, 0.78), rgba(7, 24, 32, 0.92)),
-    radial-gradient(circle at 50% 0, rgba(102, 216, 197, 0.08), transparent 60%);
+    linear-gradient(160deg, rgba(10, 37, 64, 0.5), rgba(3, 18, 34, 0.94)),
+    radial-gradient(circle at 50% 0, rgba(250, 169, 104, 0.1), transparent 60%);
 }
 
 .rail-heading {
@@ -91,16 +92,16 @@
 }
 
 .chapter-button:hover:not(:disabled) {
-  border-color: rgba(216, 182, 111, 0.26);
-  background: rgba(216, 182, 111, 0.05);
+  border-color: rgba(250, 169, 104, 0.26);
+  background: rgba(250, 169, 104, 0.05);
   color: var(--gold-pale);
 }
 
 .chapter-button.is-active {
-  border-color: rgba(216, 182, 111, 0.52);
+  border-color: rgba(250, 169, 104, 0.52);
   background:
-    linear-gradient(90deg, rgba(216, 182, 111, 0.14), transparent 75%), rgba(216, 182, 111, 0.04);
-  color: #f4e8cf;
+    linear-gradient(90deg, rgba(250, 169, 104, 0.14), transparent 75%), rgba(250, 169, 104, 0.04);
+  color: var(--r82-fg);
 }
 
 .chapter-button.is-complete .chapter-button-number {
@@ -117,7 +118,7 @@
   place-items: center;
   width: 34px;
   height: 34px;
-  border: 1px solid rgba(216, 182, 111, 0.3);
+  border: 1px solid rgba(250, 169, 104, 0.3);
   color: var(--gold);
   font: 16px/1 var(--serif);
 }
@@ -152,7 +153,7 @@
   width: 1px;
   height: 7px;
   margin-left: 24px;
-  background: rgba(216, 182, 111, 0.18);
+  background: rgba(250, 169, 104, 0.18);
 }
 
 .rail-note {
@@ -204,7 +205,7 @@
 .chapter-number {
   color: transparent;
   font: 104px/0.8 var(--serif);
-  -webkit-text-stroke: 1px rgba(216, 182, 111, 0.52);
+  -webkit-text-stroke: 1px rgba(250, 169, 104, 0.52);
   letter-spacing: -5px;
   user-select: none;
 }
@@ -249,8 +250,8 @@
   padding: 20px 22px;
   border: 1px solid rgba(102, 216, 197, 0.38);
   background:
-    radial-gradient(circle at 0 50%, rgba(102, 216, 197, 0.16), transparent 60%),
-    rgba(8, 32, 38, 0.72);
+    radial-gradient(circle at 0 50%, rgba(2, 131, 145, 0.14), transparent 60%),
+    rgba(3, 18, 34, 0.82);
 }
 
 .completion-rune {
@@ -316,8 +317,8 @@
   min-width: 0;
   min-height: 188px;
   padding: 15px 15px 13px;
-  border: 1px solid rgba(205, 177, 119, 0.22);
-  background: linear-gradient(165deg, rgba(17, 44, 54, 0.86), rgba(8, 26, 34, 0.92));
+  border: 1px solid rgba(250, 169, 104, 0.22);
+  background: linear-gradient(165deg, rgba(10, 37, 64, 0.55), rgba(3, 18, 34, 0.94));
   color: inherit;
   text-align: left;
   cursor: pointer;
@@ -335,20 +336,20 @@
   right: -24px;
   width: 82px;
   height: 82px;
-  border: 1px solid rgba(216, 182, 111, 0.12);
+  border: 1px solid rgba(250, 169, 104, 0.12);
   transform: rotate(45deg);
   pointer-events: none;
 }
 
 .room-card:hover:not(:disabled) {
   transform: translateY(-2px);
-  border-color: rgba(216, 182, 111, 0.62);
-  background: linear-gradient(165deg, rgba(23, 56, 66, 0.92), rgba(9, 30, 39, 0.95));
+  border-color: rgba(250, 169, 104, 0.62);
+  background: linear-gradient(165deg, rgba(42, 107, 120, 0.72), rgba(5, 24, 46, 0.96));
 }
 
 .room-card.is-solved {
   border-color: rgba(102, 216, 197, 0.38);
-  background: linear-gradient(165deg, rgba(14, 48, 52, 0.86), rgba(7, 27, 33, 0.94));
+  background: linear-gradient(165deg, rgba(10, 37, 64, 0.62), rgba(3, 18, 34, 0.96));
 }
 
 .room-card.is-secret {
@@ -373,7 +374,7 @@
   place-items: center;
   width: 34px;
   height: 34px;
-  border: 1px solid rgba(216, 182, 111, 0.36);
+  border: 1px solid rgba(250, 169, 104, 0.36);
   border-radius: 50%;
   color: var(--gold-pale);
   font-size: 16px;
@@ -385,7 +386,7 @@
 }
 
 .room-status {
-  color: rgba(216, 182, 111, 0.88);
+  color: rgba(250, 169, 104, 0.88);
   font-size: 8px;
   font-weight: 700;
   letter-spacing: 1.2px;
@@ -412,9 +413,9 @@
   display: block;
   margin-top: auto;
   padding: 7px 9px;
-  border-left: 2px solid rgba(216, 182, 111, 0.38);
+  border-left: 2px solid rgba(250, 169, 104, 0.38);
   background: rgba(3, 16, 22, 0.46);
-  color: #f2dfb7;
+  color: var(--r82-fg);
   font: 16px/1.35 var(--serif);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -475,9 +476,17 @@
   gap: 7px;
 }
 
-.formula-display strong {
-  color: #f5e6c8;
-  font: 400 clamp(22px, 3vw, 30px) / 1.25 var(--serif);
+.formula-display #function-field {
+  min-width: 0;
+  max-width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--r82-fg);
+  font-size: clamp(22px, 3vw, 30px);
+}
+
+.formula-display #function-field::part(container) {
+  background: transparent;
 }
 
 .mock-note {
@@ -539,7 +548,7 @@
   .chapter-button {
     flex: 0 0 212px;
     grid-template-columns: 34px minmax(0, 1fr) 14px;
-    border-color: rgba(205, 177, 119, 0.15);
+    border-color: rgba(250, 169, 104, 0.15);
   }
 
   .chapter-divider,
@@ -667,5 +676,495 @@
   .completion-rune {
     width: 40px;
     height: 40px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Palette Retro 82 sui componenti condivisi con la demo 1.
+ * Le regole locali qui sotto evitano i colori fissi del tema oro/teal.
+ * ------------------------------------------------------------------------- */
+html,
+body {
+  background: var(--r82-bg);
+}
+
+body {
+  color: var(--r82-fg);
+  background:
+    radial-gradient(circle at 50% -18%, rgba(250, 169, 104, 0.16), transparent 46%),
+    linear-gradient(150deg, var(--r82-bg-darker), var(--r82-bg) 55%, var(--r82-bg-dark));
+}
+
+body::before {
+  opacity: 0.09;
+  background-image:
+    linear-gradient(30deg, transparent 48%, var(--r82-muted) 49%, transparent 50%),
+    linear-gradient(-30deg, transparent 48%, var(--r82-muted) 49%, transparent 50%);
+}
+
+.icon-button {
+  background: rgba(10, 37, 64, 0.6);
+  color: var(--r82-cyan);
+}
+
+.icon-button:hover {
+  border-color: var(--r82-accent);
+  background: var(--r82-bg-light);
+  color: var(--r82-fg);
+}
+
+.modal {
+  color: var(--r82-fg);
+  background:
+    radial-gradient(circle at 50% 0, rgba(250, 169, 104, 0.12), transparent 55%), var(--r82-bg);
+  border-color: var(--r82-accent);
+}
+
+.modal p {
+  color: var(--r82-cyan);
+}
+
+.modal-close {
+  color: var(--r82-cyan);
+}
+
+.modal-close:hover {
+  color: var(--r82-fg);
+}
+
+.primary-button {
+  border-color: var(--r82-accent);
+  background: linear-gradient(110deg, var(--r82-orange), var(--r82-accent) 50%, var(--r82-yellow));
+  color: var(--r82-bg-darker);
+  box-shadow:
+    inset 0 0 0 3px rgba(246, 220, 172, 0.16),
+    0 7px 20px rgba(2, 12, 23, 0.35);
+}
+
+.primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: saturate(0.55);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+#answer-field[disabled] {
+  color: var(--r82-cyan);
+  opacity: 0.75;
+}
+
+.secondary-button {
+  border-color: var(--r82-muted);
+  background: var(--r82-bg-light);
+  color: var(--r82-fg);
+}
+
+.danger-button {
+  border-color: var(--r82-red);
+  background: var(--r82-red);
+  color: var(--r82-bg-darker);
+}
+
+.text-button {
+  color: var(--r82-accent);
+}
+
+.text-button:hover {
+  color: var(--r82-fg);
+}
+
+.welcome-modal h2,
+.completion-modal h2 {
+  color: var(--r82-fg);
+}
+
+.tutorial-steps > div > span {
+  color: var(--r82-accent);
+}
+
+.tutorial-steps strong {
+  color: var(--r82-fg);
+}
+
+.welcome-modal .modal-footnote {
+  color: var(--r82-cyan);
+}
+
+.difficulty-label {
+  color: var(--r82-cyan);
+}
+
+.formula-board {
+  border-color: rgba(250, 169, 104, 0.35);
+  background: radial-gradient(ellipse at 50% 20%, var(--r82-bg-light), var(--r82-bg-dark));
+}
+
+.formula-label {
+  color: var(--r82-cyan);
+}
+
+.formula-prefix,
+.answer-prefix {
+  color: var(--r82-accent);
+}
+
+math-field {
+  color: var(--r82-fg);
+}
+
+.answer-heading label {
+  color: var(--r82-cyan);
+}
+
+.answer-heading span {
+  color: var(--r82-cyan);
+}
+
+.answer-row {
+  border-color: var(--r82-muted);
+  background: var(--r82-bg-darker);
+}
+
+.answer-row:focus-within {
+  border-color: var(--r82-accent);
+  box-shadow: 0 0 0 2px rgba(250, 169, 104, 0.22);
+}
+
+.answer-row.is-correct {
+  border-color: var(--r82-green);
+  box-shadow: 0 0 0 2px rgba(2, 131, 145, 0.25);
+}
+
+.answer-row.is-correct #answer-field {
+  color: var(--r82-cyan);
+}
+
+.answer-row.is-error {
+  border-color: var(--r82-red);
+  box-shadow: 0 0 0 2px rgba(248, 85, 37, 0.22);
+}
+
+#answer-field {
+  color: var(--r82-fg);
+  caret-color: var(--r82-accent);
+}
+
+.editor-tools > span {
+  color: var(--r82-cyan);
+}
+
+kbd {
+  border-color: var(--r82-muted);
+  background: var(--r82-bg-light);
+  color: var(--r82-fg);
+}
+
+.feedback.correct {
+  border-color: var(--r82-green);
+  background: rgba(2, 131, 145, 0.12);
+  color: var(--r82-cyan);
+}
+
+.feedback.correct.is-celebrating {
+  box-shadow:
+    0 0 0 1px rgba(2, 131, 145, 0.28),
+    0 8px 28px rgba(2, 131, 145, 0.16);
+}
+
+.feedback.correct.is-celebrating .feedback-icon {
+  background: rgba(2, 131, 145, 0.2);
+}
+
+.feedback.correct .feedback-title {
+  color: var(--r82-cyan);
+}
+
+.feedback.incorrect,
+.feedback.syntax_error,
+.feedback.unsupported_expression,
+.feedback.error {
+  border-color: var(--r82-red);
+  background: rgba(248, 85, 37, 0.1);
+  color: var(--r82-red);
+}
+
+.hints-heading h3 {
+  color: var(--r82-fg);
+}
+
+#hint-count {
+  color: var(--r82-cyan);
+}
+
+.hint-button {
+  border-color: rgba(246, 220, 172, 0.36);
+  background: rgba(246, 220, 172, 0.06);
+  color: var(--r82-fg);
+}
+
+.hint-button:hover {
+  background: rgba(246, 220, 172, 0.12);
+}
+
+.hint-list li {
+  color: var(--r82-cyan);
+}
+
+.hint-list li::marker {
+  color: var(--r82-accent);
+}
+
+.score-note {
+  color: var(--r82-cyan) !important;
+}
+
+.rule-card > span {
+  color: var(--r82-accent);
+}
+
+.journal-note {
+  border-color: rgba(250, 169, 104, 0.3);
+  background: rgba(250, 169, 104, 0.08);
+}
+
+.toast {
+  border-color: var(--r82-accent);
+  background: rgba(3, 18, 34, 0.97);
+  color: var(--r82-fg);
+}
+
+#toast-icon {
+  color: var(--r82-fg);
+}
+
+.toast.is-success {
+  border-color: var(--r82-green);
+  background: rgba(3, 18, 34, 0.98);
+  color: var(--r82-cyan);
+  box-shadow:
+    0 0 0 1px rgba(2, 131, 145, 0.28),
+    0 12px 44px rgba(2, 12, 23, 0.5),
+    0 0 36px rgba(2, 131, 145, 0.16);
+}
+
+.toast.is-success #toast-icon {
+  background: rgba(2, 131, 145, 0.22);
+  color: var(--r82-cyan);
+}
+
+.save-dot {
+  background: var(--r82-green);
+}
+
+.chapter-button-copy small,
+.room-label,
+.room-meta,
+.rail-note,
+.campaign-footer {
+  color: var(--r82-cyan);
+}
+
+/* Il campo MathLive non disegna un secondo riquadro: il focus resta visibile
+ * sul contenitore `.answer-row`, evitando bordi bianchi che stonano col tema. */
+math-field,
+#answer-field,
+#answer-field:focus,
+#answer-field:focus-visible,
+#answer-field:focus-within {
+  border: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Focus e superfici coerenti con il tema anche nei campi MathLive. */
+button:focus-visible,
+a:focus-visible {
+  outline-color: var(--r82-fg);
+}
+
+math-field {
+  --bg-color: transparent;
+  --placeholder-color: var(--r82-cyan);
+  background: transparent;
+}
+
+.rule-formulas {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rule-formulas .rule-formula {
+  font-size: 19px;
+}
+
+@media (max-width: 620px) {
+  .rule-formulas .rule-formula {
+    font-size: 16px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Celebrazione della stanza completata.
+ * Un dialogo dedicato rende inequivocabile il successo, con punteggio e
+ * sblocco del capitolo, prima di tornare al palazzo.
+ * ------------------------------------------------------------------------- */
+.room-complete-modal {
+  width: min(520px, calc(100vw - 32px));
+  padding: 40px 38px 30px;
+  border-color: var(--r82-accent);
+  background:
+    radial-gradient(circle at 50% 0, rgba(250, 169, 104, 0.24), transparent 58%),
+    radial-gradient(circle at 50% 105%, rgba(2, 131, 145, 0.22), transparent 55%), var(--r82-bg);
+  text-align: center;
+  overflow: visible;
+}
+
+.room-complete-modal::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(250, 169, 104, 0.28);
+  pointer-events: none;
+}
+
+.room-complete-modal[open] {
+  animation:
+    modal-in 0.25s ease-out,
+    room-complete-pop 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.room-complete-burst {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--r82-accent);
+  font-size: 62px;
+  line-height: 1;
+  text-shadow:
+    0 0 24px rgba(250, 169, 104, 0.65),
+    0 0 60px rgba(250, 169, 104, 0.35);
+  animation: room-complete-burst 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.room-complete-modal .eyebrow {
+  color: var(--r82-cyan);
+}
+
+.room-complete-modal h2 {
+  margin: 8px 0 12px;
+  color: var(--r82-fg);
+  font: 400 clamp(28px, 5vw, 38px) / 1.1 var(--serif);
+}
+
+.room-complete-score {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 9px 20px;
+  border: 1px solid var(--r82-green);
+  background: rgba(2, 131, 145, 0.18);
+  color: var(--r82-cyan);
+  font: 26px/1 var(--serif);
+  letter-spacing: 0.5px;
+  animation: room-complete-score 0.7s 0.15s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.room-complete-note {
+  min-height: 1.6em;
+  margin: 0 0 22px !important;
+  color: var(--r82-cyan) !important;
+  font:
+    12px/1.6 Inter,
+    sans-serif !important;
+}
+
+.room-complete-modal .primary-button {
+  width: 100%;
+  margin: 0;
+}
+
+@keyframes room-complete-pop {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.4;
+  }
+  60% {
+    transform: scale(1.015);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes room-complete-burst {
+  0% {
+    transform: scale(0.25) rotate(-30deg);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(1.2) rotate(8deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes room-complete-score {
+  0% {
+    transform: translateY(8px) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* La card appena risolta pulsa quando si torna al palazzo. */
+.room-card.just-solved {
+  animation: room-card-solved 1.5s ease-out;
+  border-color: var(--r82-accent);
+}
+
+@keyframes room-card-solved {
+  0% {
+    box-shadow: 0 0 0 0 rgba(250, 169, 104, 0.75);
+    transform: scale(1);
+  }
+  35% {
+    box-shadow: 0 0 0 7px rgba(250, 169, 104, 0.3);
+    transform: scale(1.025);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgba(250, 169, 104, 0);
+    transform: scale(1);
+  }
+}
+
+/* Il riquadro di successo nel form resta più marcato di quello di errore. */
+.feedback.correct {
+  border-left-width: 4px;
+  padding: 14px 15px;
+}
+
+.feedback.correct.is-celebrating .feedback-icon {
+  width: 34px;
+  height: 34px;
+  font-size: 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-complete-modal[open],
+  .room-complete-burst,
+  .room-complete-score,
+  .room-card.just-solved {
+    animation: none;
   }
 }

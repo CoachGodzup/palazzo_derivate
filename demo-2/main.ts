@@ -36,6 +36,9 @@ interface Campaign {
   version: string;
   title: string;
   subtitle: string;
+  teacher?: {
+    secretRooms?: boolean;
+  };
   chapters: Chapter[];
 }
 
@@ -58,7 +61,14 @@ interface DemoState {
 const campaign: Campaign = campaignData;
 const STORAGE_KEY = "palazzo-derivate:demo2";
 const ENTERED_KEY = "palazzo-derivate:demo2-entered";
-const allRooms = campaign.chapters.flatMap((chapter) => chapter.rooms);
+/**
+ * Le stanze segrete restano nei contenuti ma sono disattivate dal docente.
+ * Il pannello docente (post demo) potrà riaccenderle senza toccare il codice.
+ */
+const secretRoomsEnabled = campaign.teacher?.secretRooms === true;
+const allRooms = campaign.chapters
+  .flatMap((chapter) => chapter.rooms)
+  .filter((room) => secretRoomsEnabled || !room.secret);
 const totalRooms = allRooms.length;
 
 function element<T extends HTMLElement = HTMLElement>(id: string): T {
@@ -130,6 +140,8 @@ function timestamp(value: unknown): number | null {
 const state = loadState();
 let activeRoomId: string | null = null;
 let toastTimer = 0;
+let roomCompleteTimer = 0;
+let lastSolvedRoomId: string | null = null;
 
 function save(): void {
   try {
@@ -154,6 +166,7 @@ function mainRooms(chapter: Chapter): Room[] {
 }
 
 function secretRooms(chapter: Chapter): Room[] {
+  if (!secretRoomsEnabled) return [];
   return chapter.rooms.filter((room) => room.secret);
 }
 
@@ -285,6 +298,10 @@ function renderRooms(chapter: Chapter): void {
     grid.append(roomCard(room, chapter));
   });
 
+  const secretSection = element("secret-section");
+  secretSection.hidden = !secretRoomsEnabled;
+  element("rail-note").hidden = !secretRoomsEnabled;
+
   const secretGrid = element("secret-grid");
   secretGrid.replaceChildren();
   secretRooms(chapter).forEach((room) => {
@@ -377,6 +394,7 @@ function renderSummary(): void {
 function openPuzzle(room: Room): void {
   const chapter = campaign.chapters.find((item) => item.rooms.includes(room));
   if (!chapter || !isRoomUnlocked(room, chapter)) return;
+  hideRoomComplete();
   activeRoomId = room.id;
   const progress = state.rooms[room.id];
   if (progress.startedAt === null) {
@@ -391,7 +409,9 @@ function openPuzzle(room: Room): void {
   )} COMPLESSITÀ`;
   element("puzzle-title").textContent = room.name;
   element("puzzle-prompt").textContent = room.prompt;
-  element("function-display").textContent = room.functionDisplay;
+  const functionField = element<MathfieldElement>("function-field");
+  functionField.readOnly = true;
+  functionField.setValue(room.functionLatex);
 
   const answer = element<MathfieldElement>("answer-field");
   answer.setValue("");
@@ -539,25 +559,62 @@ function submitAnswer(): void {
     element("answer-row").classList.add("is-correct");
     const chapter = campaign.chapters.find((item) => item.rooms.includes(room));
     const score = state.rooms[room.id].score;
-    showToast(`«${room.name}» è tornata in vita. +${score} punti.`, "✓", true);
+    lastSolvedRoomId = room.id;
     render();
-    if (chapter && isChapterComplete(chapter)) {
+    if (chapter) {
       const index = chapterIndex(chapter.id);
-      const next = campaign.chapters[index + 1];
-      if (next) {
-        window.setTimeout(
-          () => showToast(`Capitolo ${next.number} sbloccato: ${next.name}.`, "✦", true),
-          2600,
-        );
-      }
+      const next = isChapterComplete(chapter) ? campaign.chapters[index + 1] : undefined;
+      showRoomComplete(room, score, chapter, next);
     }
-    window.setTimeout(() => {
-      element<HTMLDialogElement>("puzzle-dialog").close();
-      render();
-    }, 1500);
   } else {
     playError();
   }
+}
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+/** Celebrazione esplicita: la stanza riattivata resta leggibile prima di tornare al palazzo. */
+function showRoomComplete(
+  room: Room,
+  score: number,
+  chapter: Chapter,
+  next: Chapter | undefined,
+): void {
+  const main = mainRooms(chapter);
+  element("room-complete-name").textContent = room.name;
+  element("room-complete-score").textContent = `+${score} punti`;
+  const isLastChapter = chapterIndex(chapter.id) === campaign.chapters.length - 1;
+  element("room-complete-note").textContent = next
+    ? `Capitolo ${next.number} sbloccato: ${next.name}.`
+    : isChapterComplete(chapter) && isLastChapter
+      ? "Il palazzo ha ritrovato il suo tempo. Campagna completata!"
+      : `Capitolo ${chapter.number} · ${solvedIn(main)} di ${main.length} stanze riattivate.`;
+  const dialog = element<HTMLDialogElement>("room-complete-dialog");
+  if (!dialog.open) dialog.showModal();
+  element<HTMLButtonElement>("room-complete-continue").focus();
+  window.clearTimeout(roomCompleteTimer);
+  roomCompleteTimer = window.setTimeout(
+    () => {
+      if (dialog.open) dialog.close();
+    },
+    prefersReducedMotion() ? 1800 : 3200,
+  );
+}
+
+function hideRoomComplete(): void {
+  window.clearTimeout(roomCompleteTimer);
+  const dialog = element<HTMLDialogElement>("room-complete-dialog");
+  if (dialog.open) dialog.close();
+}
+
+function focusAndHighlightRoom(roomId: string): void {
+  const card = document.querySelector<HTMLButtonElement>(`[data-room-id="${roomId}"]`);
+  if (!card) return;
+  card.classList.add("just-solved");
+  card.focus();
+  window.setTimeout(() => card.classList.remove("just-solved"), 1800);
 }
 
 function showToast(message: string, icon = "✦", success = false): void {
@@ -574,6 +631,7 @@ function showToast(message: string, icon = "✦", success = false): void {
 
 function resetCampaign(): void {
   window.clearTimeout(toastTimer);
+  hideRoomComplete();
   state.version = campaign.version;
   state.activeChapter = campaign.chapters[0]?.id ?? "";
   state.rooms = Object.fromEntries(allRooms.map((room) => [room.id, emptyRoomProgress()]));
@@ -639,16 +697,32 @@ function bind(): void {
   document.addEventListener(
     "keydown",
     (event) => {
-      if (event.key !== "Escape" || !dialog.open) return;
+      if (event.key !== "Escape") return;
+      // Con la celebrazione aperta, lascia che il browser chiuda il dialogo in cima.
+      if (element<HTMLDialogElement>("room-complete-dialog").open) return;
+      if (!dialog.open) return;
       event.preventDefault();
       dialog.close();
     },
     true,
   );
+  const completeDialog = element<HTMLDialogElement>("room-complete-dialog");
+  element("room-complete-continue").addEventListener("click", () => completeDialog.close());
+  completeDialog.addEventListener("close", () => {
+    window.clearTimeout(roomCompleteTimer);
+    if (dialog.open) dialog.close();
+  });
   dialog.addEventListener("close", () => {
     window.mathVirtualKeyboard.hide();
     const roomId = activeRoomId;
     activeRoomId = null;
+    const solvedId = lastSolvedRoomId;
+    lastSolvedRoomId = null;
+    if (solvedId) {
+      render();
+      focusAndHighlightRoom(solvedId);
+      return;
+    }
     if (roomId) {
       document.querySelector<HTMLButtonElement>(`[data-room-id="${roomId}"]`)?.focus();
     }
