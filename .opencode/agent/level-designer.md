@@ -58,6 +58,7 @@ e pistoni, bronzo/ottone lucido, vetro e rame. Accenti: ambra calda e bagliori
 teal/ciano.
 
 **Regole di fusione:**
+
 - Lo steampunk è il **motore**, il moresco è l'**involucro**: ingranaggi dietro
   una mashrabiya, tubature che seguono l'arco, un manometro incorniciato da
   zellige.

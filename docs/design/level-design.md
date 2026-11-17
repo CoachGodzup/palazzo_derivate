@@ -51,12 +51,12 @@ esplicite.
 
 La demo-4 ha quattro meccanismi, ognuno un `kind` in `data/puzzles.json`:
 
-| kind       | Nome               | Visuale procedurale in `mechanism.gd`          |
-| ---------- | ------------------ | ---------------------------------------------- |
-| `sigil`    | Sigillo Solare     | disco + toro + raggi (emissivo pulsante)       |
-| `gears`    | Ingranaggi Gemelli | due rotori a denti con mozzo emissivo          |
-| `hourglass`| Clessidra del Tempo| bulbi, collo, montanti; ribalta a risolto      |
-| `gate`     | Porta delle Meridiane| cornice + pannello su pivot che ruota         |
+| kind        | Nome                  | Visuale procedurale in `mechanism.gd`     |
+| ----------- | --------------------- | ----------------------------------------- |
+| `sigil`     | Sigillo Solare        | disco + toro + raggi (emissivo pulsante)  |
+| `gears`     | Ingranaggi Gemelli    | due rotori a denti con mozzo emissivo     |
+| `hourglass` | Clessidra del Tempo   | bulbi, collo, montanti; ribalta a risolto |
+| `gate`      | Porta delle Meridiane | cornice + pannello su pivot che ruota     |
 
 Per sostituire/arricchire una visuale con un modello `.glb`:
 

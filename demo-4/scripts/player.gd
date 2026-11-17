@@ -85,7 +85,11 @@ func get_interact_target() -> Node3D:
 
 func set_touch_move(axis: Vector2) -> void:
 	# `axis.y` is +1 when the stick points up: forward is -Z in local input.
-	_touch_move = Vector2(axis.x, -axis.y)
+	_touch_move = joystick_to_move(axis)
+
+
+static func joystick_to_move(axis: Vector2) -> Vector2:
+	return Vector2(axis.x, -axis.y)
 
 
 func apply_look(relative: Vector2) -> void:

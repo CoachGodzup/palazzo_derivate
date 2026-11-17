@@ -449,7 +449,7 @@ func _build_intro() -> void:
 
 	var body := Label.new()
 	if _touch_mode:
-		body.text = "Joystick a sinistra per muoverti, trascina il dito per guardare.\nAvvicinati a un meccanismo e tocca «Interagisci»: calcola la derivata per risvegliarlo.\nRisolvili tutti e la fontana centrale si accenderà."
+		body.text = "Stick sinistro per muoverti, stick destro per guardare.\nAvvicinati a un meccanismo e tocca «Interagisci»: calcola la derivata per risvegliarlo.\nRisolvili tutti e la fontana centrale si accenderà."
 	else:
 		body.text = "Esplora la stanza e interagisci con i quattro meccanismi (tasto E o clic).\nCalcola la derivata richiesta: risolvili tutti per risvegliare la fontana al centro.\n\nWASD / frecce per muoverti · mouse per guardare · Esc per il mouse."
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

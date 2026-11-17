@@ -24,12 +24,12 @@ Flusso: benvenuto → esplorazione libera → interagisci con un meccanismo (E o
 
 ## Quattro meccanismi
 
-| Meccanismo | kind | Funzione | Derivata attesa | Animazione |
-| --- | --- | --- | --- | --- |
-| Sigillo Solare | `sigil` | `3x^2 - 5x + 4` | `6x - 5` | pulsa e brilla |
-| Ingranaggi Gemelli | `gears` | `(3x^2 - 2)(x + 1)` | `9x^2 + 6x - 2` | ruotano in senso opposto |
-| Clessidra del Tempo | `hourglass` | `3*sqrt(x) + 2*x^(3/2)` | `3/(2*sqrt(x)) + 3*sqrt(x)` | si ribalta |
-| Porta delle Meridiane | `gate` | `2x^5 - 4x^(-2) + 3` | `10x^4 + 8x^(-3)` | si apre |
+| Meccanismo            | kind        | Funzione                | Derivata attesa             | Animazione               |
+| --------------------- | ----------- | ----------------------- | --------------------------- | ------------------------ |
+| Sigillo Solare        | `sigil`     | `3x^2 - 5x + 4`         | `6x - 5`                    | pulsa e brilla           |
+| Ingranaggi Gemelli    | `gears`     | `(3x^2 - 2)(x + 1)`     | `9x^2 + 6x - 2`             | ruotano in senso opposto |
+| Clessidra del Tempo   | `hourglass` | `3*sqrt(x) + 2*x^(3/2)` | `3/(2*sqrt(x)) + 3*sqrt(x)` | si ribalta               |
+| Porta delle Meridiane | `gate`      | `2x^5 - 4x^(-2) + 3`    | `10x^4 + 8x^(-3)`           | si apre                  |
 
 La **fontana** è al centro e NON è uno dei quattro enigmi: è la ricompensa finale
 (spruzzo d'acqua + bagliore) quando tutti i meccanismi sono risolti.

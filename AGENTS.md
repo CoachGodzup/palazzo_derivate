@@ -33,7 +33,8 @@ Se modifichi architettura, struttura, comandi, workflow o perimetro descritti qu
 - `tests/`: test unitari TypeScript ed end-to-end Playwright.
 - `docs/`: scope e guida di revisione; `docs/design/` raccoglie le decisioni di design (`frontend.md` per input e tastiera, `gameplay.md` per il feedback, `style.md` per la palette Retro 82, gli sfondi e gli overlay, `backend.md` per parser, verifica simbolica ed equivalenza delle risposte, `audio.md` per la musica procedurale, `testing.md` per la strategia locale/CI, `teacher-sessions.md` per accesso docente e sessioni di gioco — requisiti futuri post demo-1, `level-design.md` per il linguaggio visivo arabo-moresco × steampunk e il workflow asset/skybox/pavimenti della demo-4 Godot).
 - `.github/workflows/ci.yml`: suite completa (lint, build, API, unit, E2E desktop + portrait) su push e pull request; `deploy-pages.yml` resta dedicato al deploy.
-- `.opencode/skills/`: workflow specialistici OpenCode.
+- `scripts/deploy-online.sh`: pubblica su GitHub Pages partendo da `main` (test, build, commit, push, attesa del workflow e verifica di `/`, `/demo-2/`, `/demo-3/`, `/demo-4/`).
+- `.opencode/skills/`: workflow specialistici OpenCode (`palazzo-demo` per gameplay e verifica, `deploy-online` per pubblicare su GitHub Pages).
 - `.opencode/agent/`: subagenti specialistici:
   - `code-review.md`: code review (sola lettura, esegue lint e test);
   - `security.md`: revisione di sicurezza (sola lettura);
@@ -68,6 +69,7 @@ npm run test:unit
 PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium
 npm run test:local      # API + unit + E2E smoke desktop
 npm run test:e2e        # suite E2E completa, desktop + portrait
+scripts/deploy-online.sh -m "feat: descrizione"  # pubblica su GitHub Pages
 ```
 
 In locale si usa `npm run test:local` (API e unit completi, E2E smoke desktop); la suite E2E completa gira in CI su ogni push e pull request. Dettagli in `docs/design/testing.md`.
